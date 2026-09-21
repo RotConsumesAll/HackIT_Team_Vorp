@@ -1,6 +1,8 @@
 # Navigation
 - TeamVorpProject/app/page.tsx is our home page.
 
+- All pages for display e.g. credits, home need to be named as "page.jsx" or it will not render.
+
 - app/filenamehere is our individual features
 
 - app/api/ is for API calls to LLM
@@ -20,7 +22,7 @@
 Desc of team and how we tackle problem statement here.
 
 # How to run
-Run `npm run dev` in command line interface
+Run `npm run dev` in command line interface<br>
 Using React for frontend and Next.js template since React itself is purely frontend.
 
 

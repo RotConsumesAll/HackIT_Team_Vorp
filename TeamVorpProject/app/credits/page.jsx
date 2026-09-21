@@ -1,0 +1,70 @@
+export default function App(){
+    return(
+        <>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossOrigin="anonymous"></link>
+
+        <main className = "container">
+            <section>
+                <h2>General</h2>
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        <a href="https://nextjs.org/docs/pages/api-reference/components/link">Navigation between pages</a>
+                    </li>
+                    <li className="list-group-item">
+                        <a href="https://getbootstrap.com/docs/5.3/getting-started/download/">Compiled bootstrap 5 CSS jsDelivr CDN</a>
+                    </li>
+                    <li className="list-group-item">
+                        <a href="https://nextjs.org/docs/app/api-reference/directives/use-client">Use client</a>
+                    </li>                              
+                </ul>
+            </section>
+            
+            <section>
+                <h2>Idiom Flashcards</h2>
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        <a href=""></a>
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Sentence Builder</h2>
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        <a href="https://www.w3schools.com/react/react_forms.asp">React Forms and useState hook</a>
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Vocab Via Images</h2>
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        <a href=""></a>
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Name here</h2>
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        <a href=""></a>
+                    </li>
+                </ul>
+            </section>         
+
+            <section>
+                <h2>Name here</h2>
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        <a href=""></a>
+                    </li>
+                </ul>
+            </section>         
+        </main>                   
+        </>
+    )
+}
