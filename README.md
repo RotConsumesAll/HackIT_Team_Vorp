@@ -1,9 +1,32 @@
+# Navigation
+- TeamVorpProject/app/page.tsx is our home page.
+
+- app/filenamehere is our individual features
+
+- app/api/ is for API calls to LLM
+
+- globals.css is our global css, not sure if we are using tailwind css or vanilla css.
+
+- Naming for individual page css in your features has to end with ".module.css" e.g. page.module.css
+
+- app/layout.tsx is for anything that should persist across page navigations without re-rendering.
+
+- lib/ is for shared javascript
+
+- components/ is for shared UI
+
+
 # HackIT Team Vorp
-Add desc here
+Desc of team and how we tackle problem statement here.
+
+# How to run
+Run `npm run dev` in command line interface
+Using React for frontend and Next.js template since React itself is purely frontend.
+
 
 
 # Figma wireframing 
-Add link here
+[Wireframe link](https://www.figma.com/design/y6EjeLEndbZzAgAke1slRh/HackIT-wireframe?node-id=0-1&t=C3fNilFaBsavW9Tn-1)
 
 
 # Google Docs discussion
@@ -16,6 +39,6 @@ https://docs.google.com/document/d/1bWnFUjsIkvIGe7DRwe2-Kcbe6fgvTSDnIYdTIaecSPA/
 | ------------------------------------- | --------------------|
 | Wynn Lee (Team Leader)                | wxnn7               |
 | Jovan Soo                             | Hilowandlowhi       |
-| Matthew Tay                           |   |
+| Matthew Tay                           | Spadnana            |
 | Low Bao Shen                          | RotConsumesAll      |
 | Soh Yong Jia                          | yoooongjiaaaa39b-ux |
