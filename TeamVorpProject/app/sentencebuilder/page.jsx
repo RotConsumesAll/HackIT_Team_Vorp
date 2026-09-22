@@ -1,7 +1,7 @@
 "use client"
 import {useState} from "react";
 import styles from "./page.module.css";
-import Navbar from "../components/Navbar"
+import Navbar from "../components/Navbar/Navbar"
 
 function EnglishInput(){
     const [sentence, setSentance] = useState("");
