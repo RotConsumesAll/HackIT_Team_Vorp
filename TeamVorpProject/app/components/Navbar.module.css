@@ -1,0 +1,11 @@
+.nav-ul {
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    flex-direction: row;
+    list-style-type: none;
+}
+
+.li {
+    flex:0 1 auto;
+}

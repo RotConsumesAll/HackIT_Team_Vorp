@@ -1,6 +1,7 @@
 "use client"
 import {useState} from "react";
 import styles from "./page.module.css";
+import Navbar from "../components/Navbar"
 
 function EnglishInput(){
     const [sentence, setSentance] = useState("");
@@ -45,6 +46,7 @@ function ChineseInput(){
 function App(){
     return(
         <>
+            <Navbar/>
             <main>
                 <h1>Sentence Builder</h1>
                     <EnglishInput/>
