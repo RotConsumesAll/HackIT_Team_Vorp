@@ -1,12 +1,12 @@
-import Navbar from "../components/Navbar/Navbar"
+import Navbar from '../../components/Navbar/Navbar'
 
 function PlaceholderView(){
     return(
-        <h1>Hello I am an idiom</h1>
+        <h1>Hello I am mix and match</h1>
     )
 }
 
-function App(){
+export default function IMixnmatch(){
     return(
         <>
             <Navbar/>
@@ -14,5 +14,3 @@ function App(){
         </>
     )
 }
-
-export default App
