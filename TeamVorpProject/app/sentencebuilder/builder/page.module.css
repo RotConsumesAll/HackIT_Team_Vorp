@@ -1,0 +1,65 @@
+.main {
+  display: flex;
+  flex-direction: row;
+}
+
+
+/* Source: https://www.w3schools.com/css/css_forms.asp */
+.form {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 10px 20px;
+}
+
+.form label {
+  display: block;
+}
+
+.form input[type=text] {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; 
+}
+
+.eng-cont{
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
+.chi-cont{
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
+.sentence-display-container {
+  border-color: #000000;
+  border-radius: 5px;
+  border: 2px solid #D9D9D9;
+  width:100%;
+  min-width: 12px;
+  min-height: 55px;
+  padding: 0 12px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.sentence-display-text {
+  color: #000000;
+}
+
+
+.show-searchbar{
+  display: block;
+}
+
+.hide-searchbar{
+  display: none;
+}

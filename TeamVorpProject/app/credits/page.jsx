@@ -39,6 +39,11 @@ export default function App(){
                         <a href="https://www.w3schools.com/react/react_forms.asp">React Forms and useState hook</a>
                     </li>
                 </ul>
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        <a href="https://www.w3schools.com/howto/howto_js_filter_dropdown.asp">Filter dropdown</a>
+                    </li>
+                </ul>                
             </section>
 
             <section>

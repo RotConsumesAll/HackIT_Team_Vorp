@@ -39,8 +39,8 @@ https://docs.google.com/document/d/1bWnFUjsIkvIGe7DRwe2-Kcbe6fgvTSDnIYdTIaecSPA/
 
 | Name                                  | Github Username     |
 | ------------------------------------- | --------------------|
-| Wynn Lee (Team Leader)                | wxnn7               |
+| Low Bao Shen (Team Leader)            | RotConsumesAll      |
+| Wynn Lee                              | wxnn7               |
 | Jovan Soo                             | Hilowandlowhi       |
 | Matthew Tay                           | Spadnana            |
-| Low Bao Shen                          | RotConsumesAll      |
 | Soh Yong Jia                          | yoooongjiaaaa39b-ux |
