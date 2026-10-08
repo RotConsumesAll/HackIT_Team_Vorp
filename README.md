@@ -19,13 +19,15 @@
 
 
 # HackIT Team Vorp
-Desc of team and how we tackle problem statement here.
+NameOfApp is our one stop learning platform to help young adults integreate mother tongue into their daily lives by tackling the hesitation of practicing an unfamiliar language from multiple angles.
 
 # How to run
 Run `npm run dev` in command line interface<br>
-Using React for frontend and Next.js template since React itself is purely frontend.
+Using React for frontend and Next.js template since React itself is purely frontend.<br>
+.env file: Check discord pinned messages.
 
-
+# Firebase link
+[Firebase link](https://hackit-vorp-db-default-rtdb.asia-southeast1.firebasedatabase.app/)
 
 # Figma wireframing 
 [Wireframe link](https://www.figma.com/design/y6EjeLEndbZzAgAke1slRh/HackIT-wireframe?node-id=0-1&t=C3fNilFaBsavW9Tn-1)

@@ -1,12 +1,17 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./SlangGlossSearch.module.css";
-import glossary from "../../../lib/slangGlossary.json";
+import {getAllTerms} from "../../../lib/glossary";
+//import glossary from "../../../lib/slangGlossary.json";
 
 export default function SlangGlossSearch({variant = "dropdown"}){
+    const [allTerms, setAllTerms] = useState([]); //Store in memory instead of calling READ all terms repeatedly
     const [dropOpen, setdropOpen] = useState(false);
     const [term, setTerm] = useState("");
-    const [result, setResult] = useState([]);
+
+    useEffect(()=>{
+        getAllTerms().then(setAllTerms);
+    }, []); //[] as 2nd param only calls when app first renders        
 
     function updateTerm(e){
         setTerm(e.target.value)
@@ -14,16 +19,15 @@ export default function SlangGlossSearch({variant = "dropdown"}){
 
     function lookupTerm(e){
         e.preventDefault();
-        const searchResults = glossary.glossaryTerms.filter(entry=>
-            entry.term.includes(term)
-        );
-        console.log(searchResults)
-        setResult(searchResults);
     }
 
     function toggleDropdown(){
         setdropOpen(prev => !prev);
     }
+
+    const resultList = !term.trim()
+    ? allTerms.slice(0, 3)
+    : allTerms.filter(entry => entry.term.includes(term));
 
     return(
         <>
@@ -36,9 +40,11 @@ export default function SlangGlossSearch({variant = "dropdown"}){
                         <form className={styles.form} onSubmit={lookupTerm}>
                             <input type="text" value={term} onChange={updateTerm} placeholder="Search slang..."></input>
                         </form>
-                        {/* Display list of matches */}
-                        {result.map(entry => (
-                            <p key={entry.term}>{entry.term}: {entry.definition}</p>
+
+                        {/* Display first 3 as "suggested" searches if searchbar is empty, hide if not.*/}
+                        {!term.trim() && (<h5>Suggested searches:</h5>)}
+                        {resultList.map(entry=>(
+                            <p key={entry.id}>{entry.term}: {entry.definition}</p>
                         ))}
                     </div>
                 )}
