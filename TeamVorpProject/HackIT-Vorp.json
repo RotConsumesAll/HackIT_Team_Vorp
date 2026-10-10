@@ -1,0 +1,38 @@
+{
+  "glossaryTerms": {
+    "TERM_01":{
+      "term": "巴刹",
+      "standardEquivalent": "市场",
+      "definition": "Market",
+      "tone": "casual, spoken",
+      "originNote": "loanword from Malay 'pasar' ",
+      "exampleUsage": "我要去巴刹买菜。"
+    },
+    "TERM_02": {
+      "term": "打包",
+      "standardEquivalent": "带走",
+      "definition": "Takeaway",
+      "tone": "casual, spoken",
+      "originNote": "borrowed from Cantonese",
+      "exampleUsage": "今天没时间煮饭，现在出去打包食物。"      
+    }
+  },
+  "users": {
+    "g7sMMXxYnMbTUEijtxsG6x0iQX03": {
+      "userName": "Alice Tan",
+      "highScores": {
+        "vocabViaImages": 12,
+        "idiomFlashcards": 30
+      },
+      "masteryLevel": 2
+    },
+    "nHjBTzSDwtZ7idGirJU8uGDTgLs1": {
+      "userName": "John Ben",
+      "highScores": {
+        "vocabViaImages": 8,
+        "idiomFlashcards": 50
+      },
+      "masteryLevel": 4
+    }
+  }
+}

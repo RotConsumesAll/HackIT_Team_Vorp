@@ -1,8 +1,8 @@
 "use client"
 import {useState} from "react";
 import styles from "./page.module.css";
-import Navbar from "../../components/Navbar/Navbar";
-import SlangGlossSearch from "../../components/SlangGlossSearch/SlangGlossSearch";
+import Navbar from "../../../components/Navbar/Navbar";
+import SlangGlossSearch from "../../../components/SlangGlossSearch/SlangGlossSearch";
 
 function EnglishInput(){
     const [sentence, setSentance] = useState("");

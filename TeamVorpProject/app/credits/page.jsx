@@ -19,7 +19,10 @@ export default function App(){
                     </li>
                     <li className="list-group-item">
                         <a href="https://nextjs.org/docs/app/api-reference/directives/use-client">Use client</a>
-                    </li>                              
+                    </li>
+                    <li className="list-group-item">
+                        <a href="https://nextjs.org/docs/pages/api-reference/functions/use-router">Use router</a>
+                    </li>                                                  
                 </ul>
             </section>
             

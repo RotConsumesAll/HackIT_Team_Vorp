@@ -46,3 +46,26 @@ https://docs.google.com/document/d/1bWnFUjsIkvIGe7DRwe2-Kcbe6fgvTSDnIYdTIaecSPA/
 | Jovan Soo                             | Hilowandlowhi       |
 | Matthew Tay                           | Spadnana            |
 | Soh Yong Jia                          | yoooongjiaaaa39b-ux |
+
+
+# Users
+| Email                                 | Password            |
+| ------------------------------------- | --------------------|
+| Alice@example.com                     | Alice123            |
+| Ben@example.com                       | Ben321              |
+
+
+# Features and explanations
+## Logging in
+1. Input email and password, saved in memory (React state).
+2. Form's submit handler checks both fields are not empty, calls login helper.
+3. `signInWithEmailAndPassword` sends email and password to Firebase.
+4. Firebase compares password against hash kept.
+5. If match fails, throw error obj containing code (`error.code`).<br>Custom error messages are mapped to different error codes. Error messages are displayed to user.
+6. If match, login succeeds.<br>Firebase sends signed token, browser saves.
+7. `AuthProvider` listening via `onAuthStateChanged`. Receives user obj, sets `loading` to false and updates state.
+8. Navbar swaps "Login" for "Logout". `RequireAuth` sees state of user obj and `loading`, lets protected pages render instead of redirect.
+
+Tl;dr: Firebase checks, app reacts(!!!) to result.
+
+## Feature here

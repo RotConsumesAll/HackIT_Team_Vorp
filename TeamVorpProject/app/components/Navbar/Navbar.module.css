@@ -1,4 +1,4 @@
-.nav-ul {
+.nav {
     display:flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -6,6 +6,6 @@
     list-style-type: none;
 }
 
-.li {
+.nav-btn {
     flex:0 1 auto;
 }
