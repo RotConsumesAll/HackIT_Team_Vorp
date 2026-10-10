@@ -3,7 +3,7 @@
 
 - All pages for display e.g. credits, home need to be named as "page.jsx" or it will not render.
 
-- app/filenamehere is our individual features
+- app/(protected)/filenamehere are our individual features
 
 - app/api/ is for API calls to LLM
 
@@ -11,7 +11,7 @@
 
 - Naming for individual page css in your features has to end with ".module.css" e.g. page.module.css
 
-- app/layout.tsx is for anything that should persist across page navigations without re-rendering.
+- app/layout.jsx is for anything that should persist across page navigations without re-rendering.
 
 - lib/ is for shared javascript
 
