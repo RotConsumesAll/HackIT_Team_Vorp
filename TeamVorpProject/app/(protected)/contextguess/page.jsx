@@ -1,5 +1,5 @@
 import Link from "next/link"
-import Navbar from "../components/Navbar/Navbar"
+import Navbar from "../../components/Navbar/Navbar"
 
 function ContextGuess(){
   return(

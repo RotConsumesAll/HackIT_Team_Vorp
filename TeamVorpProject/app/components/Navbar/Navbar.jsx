@@ -31,6 +31,9 @@ function Navbar(){
       <button className={styles["nav-btn"]} onClick={()=>(router.push("/vocabviaimages"))}>
         <p>Vocab Via Images</p>
       </button>
+      <button className={styles["nav-btn"]} onClick={()=>(router.push("/contextguess"))}>
+        <p>Context Guess</p>
+      </button>      
 
       {/* 
       loading is true: show neither logout nor login 
