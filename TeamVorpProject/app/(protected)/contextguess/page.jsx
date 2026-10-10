@@ -13,7 +13,7 @@ function ContextGuess(){
         <li><Link href="/quiz/sound">Sound Guess</Link></li>
         <li><Link href="/quiz/character">Character Guess</Link></li>
         <li><Link href="/quiz/tone">Tone Guess</Link></li>
-        <li><Link href="/measureword">Measure Word</Link></li>
+        <li><Link href="/quiz/measureword">Measure Word</Link></li>
       </ul>
     </>
   )
