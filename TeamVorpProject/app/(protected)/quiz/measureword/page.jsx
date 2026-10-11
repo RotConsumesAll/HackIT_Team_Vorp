@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import Navbar from "../../../components/Navbar/Navbar"
 import { getQuestions } from "../../../../lib/questions"
+import { recordAnswer, recordHighScore, currentUid, BADGE_NAMES } from "../../../../lib/progress"
 
 function shuffle(list){
   const a = [...list]
@@ -24,6 +25,8 @@ function MeasureWord(){
   const [score, setScore] = useState(0)
   const [firstTry, setFirstTry] = useState(true)
   const [error, setError] = useState("")
+  const [streak, setStreak] = useState(0)
+  const [badgeMsg, setBadgeMsg] = useState("")
 
   useEffect(() => {
     async function load(){
@@ -37,6 +40,12 @@ function MeasureWord(){
     }
     load()
   }, [])
+  
+  useEffect(() => {
+    if (questions && questions.length > 0 && index >= questions.length) {
+      recordHighScore(currentUid(), "quiz_measure", score)
+    }
+  }, [index])
 
   if (questions === null) return <p>Loading...</p>
   if (error) return <p>{error}</p>
@@ -62,6 +71,15 @@ function MeasureWord(){
 
   const q = questions[index]
 
+  async function track(correct){
+    const result = await recordAnswer(currentUid(), "measure", correct)
+    if (!result) return
+    setStreak(result.streak)
+    if (result.newBadges.length > 0) {
+      setBadgeMsg("New badge: " + result.newBadges.map((b) => BADGE_NAMES[b] || b).join(", "))
+    }
+  }
+
   function check(e){
     e.preventDefault()
     const answer = input.trim()
@@ -69,10 +87,10 @@ function MeasureWord(){
     if (answer === q.answerText) {
       setDone(true)
       setMessage("")
-      if (firstTry) setScore((s) => s + 1)
+      if (firstTry) { setScore((s) => s + 1); track(true) }
     } else {
+      if (firstTry) track(false)
       setFirstTry(false)
-      
       const specific = q.wrongAnswers && q.wrongAnswers[answer]
       setMessage(specific || "Not quite. Think about what kind of thing it is and try again.")
       setInput("")
@@ -80,6 +98,7 @@ function MeasureWord(){
   }
 
   function skip(){
+    if (firstTry) track(false)
     setSkipped(true)
     setDone(true)
     setFirstTry(false)
@@ -87,6 +106,7 @@ function MeasureWord(){
   }
 
   function next(){
+    setBadgeMsg("")
     setIndex((i) => i + 1)
     setInput("")
     setMessage("")
@@ -99,6 +119,7 @@ function MeasureWord(){
     <>
       <p><Link href="/contextguess">Back</Link></p>
       <p>Measure Word · {index + 1} / {questions.length}</p>
+      <p>Streak: {streak}</p>
 
       <h2>一 ___ {q.prompt}</h2>
       {q.gloss && <p>({q.gloss})</p>}
@@ -118,6 +139,8 @@ function MeasureWord(){
 
       {done && !skipped && <p><strong>Correct!</strong> 一{q.answerText}{q.prompt}. {q.explanation}</p>}
       {done && skipped && <p>The answer is <strong>{q.answerText}</strong>: 一{q.answerText}{q.prompt}. {q.explanation}</p>}
+
+      {badgeMsg && <p><strong>{badgeMsg}</strong></p>}
 
       {done && (
         <button onClick={next}>

@@ -5,6 +5,7 @@ import { useParams } from "next/navigation"
 import Link from "next/link"
 import Navbar from "../../../components/Navbar/Navbar"
 import { getQuestions, getMixedQuestions } from "../../../../lib/questions"
+import { recordAnswer, recordHighScore, currentUid, BADGE_NAMES } from "../../../../lib/progress"
 
 const ALL_TYPES = ["naturalPhrase", "naturalGuess", "sound", "character", "tone", "measure"]
 
@@ -40,6 +41,8 @@ function Quiz(){
   const [input, setInput] = useState("")
   const [message, setMessage] = useState("")
   const [skipped, setSkipped] = useState(false)
+  const [streak, setStreak] = useState(0)
+  const [badgeMsg, setBadgeMsg] = useState("")
 
   useEffect(() => {
     async function load(){
@@ -53,6 +56,12 @@ function Quiz(){
     }
     load()
   }, [type])
+
+  useEffect(() => {
+    if (questions && questions.length > 0 && index >= questions.length) {
+      recordHighScore(currentUid(), "quiz_" + type, score)
+    }
+  }, [index])
 
   if (questions === null) return <p>Loading...</p>
   if (error) return <p>{error}</p>
@@ -81,13 +90,23 @@ function Quiz(){
   const typed = q.options.length === 0
   const correctOption = q.options.find((o) => o.isCorrect)
 
+  async function track(correct){
+    const result = await recordAnswer(currentUid(), q.quizType, correct)
+    if (!result) return
+    setStreak(result.streak)
+    if (result.newBadges.length > 0) {
+      setBadgeMsg("New badge: " + result.newBadges.map((b) => BADGE_NAMES[b] || b).join(", "))
+    }
+  }
+
   function choose(option){
     if (answered || wrongKeys.includes(option.key)) return
     if (option.isCorrect) {
       setCorrectKey(option.key)
       setLastWrong(null)
-      if (firstTry) setScore((s) => s + 1)
+      if (firstTry) { setScore((s) => s + 1); track(true) }
     } else {
+      if (firstTry) track(false)
       setWrongKeys((w) => [...w, option.key])
       setLastWrong(option)
       setFirstTry(false)
@@ -101,8 +120,9 @@ function Quiz(){
     if (answer === q.answerText) {
       setCorrectKey("typed")
       setMessage("")
-      if (firstTry) setScore((s) => s + 1)
+      if (firstTry) { setScore((s) => s + 1); track(true) }
     } else {
+      if (firstTry) track(false)
       setFirstTry(false)
       const specific = q.wrongAnswers && q.wrongAnswers[answer]
       setMessage(specific || "Not quite. Think about what kind of thing it is and try again.")
@@ -111,6 +131,7 @@ function Quiz(){
   }
 
   function skipTyped(){
+    if (firstTry) track(false)
     setSkipped(true)
     setCorrectKey("typed")
     setFirstTry(false)
@@ -118,6 +139,7 @@ function Quiz(){
   }
 
   function next(){
+    setBadgeMsg("")
     setSkipped(false)
     setInput("")
     setMessage("")
@@ -132,6 +154,7 @@ function Quiz(){
     <>
       <p><Link href="/contextguess">Back</Link></p>
       <p>{TITLES[type] || "Quiz"} · {index + 1} / {questions.length}</p>
+      <p>Streak: {streak}</p>
 
       {q.target && <p>How do you say <strong>{q.target}</strong> here?</p>}
       <h2>{typed ? "一 ___ " + q.prompt : q.prompt}</h2>
@@ -166,6 +189,8 @@ function Quiz(){
 
       {answered && !skipped && <p><strong>Correct!</strong> {correctOption ? correctOption.reason + ". " : ""}{q.explanation}</p>}
       {answered && skipped && <p>The answer is <strong>{q.answerText}</strong>: 一{q.answerText}{q.prompt}. {q.explanation}</p>}
+
+      {badgeMsg && <p><strong>{badgeMsg}</strong></p>}
 
       {answered && (
         <button onClick={next}>
