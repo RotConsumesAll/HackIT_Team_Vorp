@@ -5,7 +5,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { ref, get } from "firebase/database"
 import Navbar from "../../components/Navbar/Navbar"
 import { db } from "../../../lib/firebase"
-import { BADGE_NAMES, MASTERY_SCORE } from "../../../lib/progress"
+import { BADGE_NAMES, MASTERY_SCORE, dailyStatus } from "../../../lib/progress"
 
 const SKILL_NAMES = {
   phrasing: "Phrasing",
@@ -41,6 +41,7 @@ function Progress(){
   const streak = user.streak || {}
   const mastery = user.mastery || {}
   const badges = user.badges || {}
+  const daily = dailyStatus((user.dailyStreak || {}).contextGuess)
 
   return (
     <>
@@ -49,6 +50,11 @@ function Progress(){
       <h2>Streak</h2>
       <p>Current: {streak.current || 0}</p>
       <p>Best: {streak.best || 0}</p>
+
+      <h2>Daily streak (Context Guess)</h2>
+      <p>Current: {daily.current} day(s)</p>
+      <p>Best: {daily.best} day(s)</p>
+      <p>{daily.doneToday ? "Today's goal done!" : "Today: " + daily.todayCount + " / " + daily.goal + " questions"}</p>
 
       <h2>Skills</h2>
       <ul>

@@ -5,7 +5,7 @@ import { useParams } from "next/navigation"
 import Link from "next/link"
 import Navbar from "../../../components/Navbar/Navbar"
 import { getQuestions, getMixedQuestions } from "../../../../lib/questions"
-import { recordAnswer, recordHighScore, currentUid, BADGE_NAMES } from "../../../../lib/progress"
+import { recordAnswer, recordDaily, recordHighScore, currentUid, BADGE_NAMES } from "../../../../lib/progress"
 
 const ALL_TYPES = ["naturalPhrase", "naturalGuess", "sound", "character", "tone", "measure"]
 
@@ -42,6 +42,7 @@ function Quiz(){
   const [message, setMessage] = useState("")
   const [skipped, setSkipped] = useState(false)
   const [streak, setStreak] = useState(0)
+  const [daily, setDaily] = useState(null)
   const [badgeMsg, setBadgeMsg] = useState("")
 
   useEffect(() => {
@@ -91,11 +92,14 @@ function Quiz(){
   const correctOption = q.options.find((o) => o.isCorrect)
 
   async function track(correct){
-    const result = await recordAnswer(currentUid(), q.quizType, correct)
-    if (!result) return
-    setStreak(result.streak)
-    if (result.newBadges.length > 0) {
-      setBadgeMsg("New badge: " + result.newBadges.map((b) => BADGE_NAMES[b] || b).join(", "))
+    const uid = currentUid()
+    const result = await recordAnswer(uid, q.quizType, correct)
+    const dailyResult = await recordDaily(uid, "contextGuess")
+    if (result) setStreak(result.streak)
+    if (dailyResult) setDaily(dailyResult)
+    const earned = [...(result ? result.newBadges : []), ...(dailyResult ? dailyResult.newBadges : [])]
+    if (earned.length > 0) {
+      setBadgeMsg("New badge: " + earned.map((b) => BADGE_NAMES[b] || b).join(", "))
     }
   }
 
@@ -106,6 +110,7 @@ function Quiz(){
       setLastWrong(null)
       if (firstTry) { setScore((s) => s + 1); track(true) }
     } else {
+      // Only show why this option is wrong. Never reveal the right answer.
       if (firstTry) track(false)
       setWrongKeys((w) => [...w, option.key])
       setLastWrong(option)
@@ -155,6 +160,7 @@ function Quiz(){
       <p><Link href="/contextguess">Back</Link></p>
       <p>{TITLES[type] || "Quiz"} · {index + 1} / {questions.length}</p>
       <p>Streak: {streak}</p>
+      {daily && <p>Daily streak: {daily.current} day(s) · Today: {Math.min(daily.todayCount, daily.goal)} / {daily.goal}</p>}
 
       {q.target && <p>How do you say <strong>{q.target}</strong> here?</p>}
       <h2>{typed ? "一 ___ " + q.prompt : q.prompt}</h2>
