@@ -1,14 +1,24 @@
-import { ref, get, update } from "firebase/database";
+import { ref, get, update, increment } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { db } from "./firebase";
 
-// Score a skill needs before its mastery badge is earned. Change it here.
+
+export const POINTS_PER_CORRECT = 10;
+export const DAILY_GOAL_BONUS = 20;
+export const POINTS_PER_LEVEL = 100;
+
+
+export function levelFromScore(totalScore) {
+  return Math.floor((totalScore || 0) / POINTS_PER_LEVEL) + 1;
+}
+
+
 export const MASTERY_SCORE = 20;
 
-// Streak lengths that earn a badge.
+
 const STREAK_BADGES = { 5: "streak5", 10: "streak10" };
 
-// Which skill each quiz type counts towards. Teammates can add their own.
+
 export const SKILL_BY_QUIZ = {
   naturalPhrase: "phrasing",
   naturalGuess: "context",
@@ -18,7 +28,7 @@ export const SKILL_BY_QUIZ = {
   measure: "grammar",
 };
 
-// Names shown to the user.
+
 export const BADGE_NAMES = {
   streak5: "5 in a row",
   streak10: "10 in a row",
@@ -30,7 +40,7 @@ export const BADGE_NAMES = {
   daily7: "7 days in a row",
 };
 
-// Daily streak 
+// Daily streak
 export const DAILY_GOAL = 5;
 
 const DAILY_BADGES = { 3: "daily3", 7: "daily7" };
@@ -88,6 +98,9 @@ export async function recordAnswer(uid, quizType, correct) {
     updates[`users/${uid}/streak/best`] = best;
     updates[`users/${uid}/mastery/${skill}/answered`] = answered;
     updates[`users/${uid}/mastery/${skill}/score`] = score;
+    if (correct) {
+      updates[`users/${uid}/totalScore`] = increment(POINTS_PER_CORRECT);
+    }
     newBadges.forEach((id) => {
       updates[`users/${uid}/badges/${id}`] = { earnedAt: Date.now() };
     });
@@ -148,6 +161,9 @@ export async function recordDaily(uid, feature) {
     updates[`${base}/current`] = current;
     updates[`${base}/best`] = best;
     updates[`${base}/lastCountedDay`] = lastCountedDay;
+    if (goalReached) {
+      updates[`users/${uid}/totalScore`] = increment(DAILY_GOAL_BONUS);
+    }
     newBadges.forEach((id) => {
       updates[`users/${uid}/badges/${id}`] = { earnedAt: Date.now() };
     });
