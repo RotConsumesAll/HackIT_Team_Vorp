@@ -22,8 +22,8 @@ function Navbar(){
   return(
     <>
     <nav className ={styles.nav}>
-      <button className={styles["nav-btn"]} onClick={()=>(router.push("/idiomFlashcards"))}>
-        <p>Idiom Flashcards</p>
+      <button className={styles["nav-btn"]} onClick={()=>(router.push("/proverbflashcards"))}>
+        <p>Proverb Flashcards</p>
       </button>
       <button className={styles["nav-btn"]} onClick={()=>(router.push("/sentencebuilder"))}>
         <p>Sentence Builder</p>

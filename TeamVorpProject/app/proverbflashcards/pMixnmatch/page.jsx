@@ -1,12 +1,12 @@
-import Navbar from "../../components/Navbar/Navbar"
+import Navbar from '../../components/Navbar/Navbar'
 
 function PlaceholderView(){
     return(
-        <h1>Hello I am a Quiz</h1>
+        <h1>Hello I am mix and match</h1>
     )
 }
 
-export default function IQuiz(){
+export default function PMixnmatch(){
     return(
         <>
             <Navbar/>

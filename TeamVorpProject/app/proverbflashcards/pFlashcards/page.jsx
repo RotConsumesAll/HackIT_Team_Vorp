@@ -7,14 +7,14 @@ function PlaceholderView(){
             <h1>Hello I am a flashcard</h1>
             <div class="flex gap-10">
                 <Link 
-                    href="/idiomflashcards/iMixnmatch" 
+                    href="/proverbflashcards/pMixnmatch" 
                     className="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
                 > 
                     Mix and Match 
                 </Link>
 
                 <Link 
-                    href="/idiomflashcards/iQuiz" 
+                    href="/proverbflashcards/pQuiz" 
                     className="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
                 > 
                     Quiz
@@ -24,7 +24,7 @@ function PlaceholderView(){
     )
 }
 
-export default function IFlashcards(){
+export default function PFlashcards(){
     return(
         <>
             <Navbar/>
