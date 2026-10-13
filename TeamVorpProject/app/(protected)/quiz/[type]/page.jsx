@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "next/navigation"
 import Link from "next/link"
 import Navbar from "../../../components/Navbar/Navbar"
+import ShareButton from "../../../components/ShareButton/ShareButton"
 import { getQuestions, getMixedQuestions } from "../../../../lib/questions"
 import { recordAnswer, recordDaily, recordHighScore, currentUid, BADGE_NAMES } from "../../../../lib/progress"
 
@@ -80,6 +81,7 @@ function Quiz(){
       <>
         <h1>Nice one!</h1>
         <p>{score} / {questions.length} right on the first try</p>
+        <ShareButton text={"I got " + score + " / " + questions.length + " on " + (TITLES[type] || "a quiz") + " in the Mother Tongue app!"} />
         <button onClick={() => window.location.reload()}>Play again</button>
         <p><Link href="/contextguess">Pick another quiz</Link></p>
       </>
