@@ -37,6 +37,9 @@ function Navbar(){
       <button className={styles["nav-btn"]} onClick={()=>(router.push("/progress"))}>
         <p>Progress</p>
       </button>
+      <button className={styles["nav-btn"]} onClick={()=>(router.push("/leaderboard"))}>
+        <p>Leaderboard</p>
+      </button>
 
       {/* 
       loading is true: show neither logout nor login 
