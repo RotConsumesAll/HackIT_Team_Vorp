@@ -6,7 +6,7 @@ import Link from "next/link"
 import Navbar from "../../../components/Navbar/Navbar"
 import ShareButton from "../../../components/ShareButton/ShareButton"
 import { getQuestions, getMixedQuestions } from "../../../../lib/questions"
-import { recordAnswer, recordDaily, recordHighScore, currentUid, BADGE_NAMES } from "../../../../lib/progress"
+import { recordAnswer, recordDaily, recordHighScore, recordDailyQuiz, getDailyQuizResult, todayString, DAILY_QUIZ_COUNT, currentUid, BADGE_NAMES } from "../../../../lib/progress"
 
 const ALL_TYPES = ["naturalPhrase", "naturalGuess", "sound", "character", "tone", "measure"]
 
@@ -18,6 +18,7 @@ const TITLES = {
   tone: "Tone Guess",
   measure: "Measure Word",
   mix: "Mix it up",
+  daily: "Quiz of the Day",
 }
 
 function shuffle(list){
@@ -27,6 +28,35 @@ function shuffle(list){
     ;[a[i], a[j]] = [a[j], a[i]]
   }
   return a
+}
+
+function seededRandom(seed){
+  let a = seed
+  return function(){
+    a |= 0
+    a = (a + 0x6D2B79F5) | 0
+    let t = Math.imul(a ^ (a >>> 15), 1 | a)
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
+}
+
+function hashString(str){
+  let h = 0
+  for (let i = 0; i < str.length; i++) {
+    h = (Math.imul(31, h) + str.charCodeAt(i)) | 0
+  }
+  return h
+}
+
+function pickDaily(all){
+  const sorted = [...all].sort((a, b) => (a.quizType + a.id).localeCompare(b.quizType + b.id))
+  const rand = seededRandom(hashString(todayString()))
+  for (let i = sorted.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1))
+    ;[sorted[i], sorted[j]] = [sorted[j], sorted[i]]
+  }
+  return sorted.slice(0, DAILY_QUIZ_COUNT)
 }
 
 function Quiz(){
@@ -44,13 +74,27 @@ function Quiz(){
   const [skipped, setSkipped] = useState(false)
   const [streak, setStreak] = useState(0)
   const [daily, setDaily] = useState(null)
+  const [playedToday, setPlayedToday] = useState(null)
   const [badgeMsg, setBadgeMsg] = useState("")
 
   useEffect(() => {
     async function load(){
       try {
-        const list = type === "mix" ? await getMixedQuestions(ALL_TYPES) : await getQuestions(type)
-        setQuestions(shuffle(list).map((q) => ({ ...q, options: shuffle(q.options) })))
+        let list
+        if (type === "daily") {
+          const done = await getDailyQuizResult(currentUid())
+          if (done) {
+            setPlayedToday(done)
+            setQuestions([])
+            return
+          }
+          list = pickDaily(await getMixedQuestions(ALL_TYPES))
+        } else if (type === "mix") {
+          list = shuffle(await getMixedQuestions(ALL_TYPES))
+        } else {
+          list = shuffle(await getQuestions(type))
+        }
+        setQuestions(list.map((q) => ({ ...q, options: shuffle(q.options) })))
       } catch (e) {
         setError("Could not load questions. Check your connection and the database rules.")
         setQuestions([])
@@ -61,12 +105,26 @@ function Quiz(){
 
   useEffect(() => {
     if (questions && questions.length > 0 && index >= questions.length) {
-      recordHighScore(currentUid(), "quiz_" + type, score)
+      if (type === "daily") {
+        recordDailyQuiz(currentUid(), score, questions.length)
+      } else {
+        recordHighScore(currentUid(), "quiz_" + type, score)
+      }
     }
   }, [index])
 
   if (questions === null) return <p>Loading...</p>
   if (error) return <p>{error}</p>
+  if (playedToday) {
+    return (
+      <>
+        <h1>Quiz of the Day</h1>
+        <p>You already played today. You got {playedToday.score} / {playedToday.total}.</p>
+        <p>Come back tomorrow for a new set of questions!</p>
+        <Link href="/leaderboard">See today's ranking</Link>
+      </>
+    )
+  }
   if (questions.length === 0) {
     return (
       <>

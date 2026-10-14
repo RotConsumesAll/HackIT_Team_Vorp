@@ -6,12 +6,13 @@ import { ref, get } from "firebase/database"
 import Navbar from "../../components/Navbar/Navbar"
 import ShareButton from "../../components/ShareButton/ShareButton"
 import { db } from "../../../lib/firebase"
-import { levelFromScore } from "../../../lib/progress"
+import { levelFromScore, todayString } from "../../../lib/progress"
 
 const TOP = 10
 
 function Leaderboard(){
   const [rows, setRows] = useState(null)
+  const [todayRows, setTodayRows] = useState([])
   const [myUid, setMyUid] = useState(null)
   const [error, setError] = useState("")
 
@@ -32,6 +33,18 @@ function Leaderboard(){
         }))
         list.sort((a, b) => b.score - a.score)
         setRows(list)
+
+        const today = todayString()
+        const todayList = Object.entries(users)
+          .filter(([, u]) => u.dailyQuiz && u.dailyQuiz.date === today)
+          .map(([uid, u]) => ({
+            uid,
+            name: u.userName || "Player",
+            score: u.dailyQuiz.score,
+            total: u.dailyQuiz.total,
+          }))
+        todayList.sort((a, b) => b.score - a.score)
+        setTodayRows(todayList)
       } catch (e) {
         setError("Could not load the leaderboard.")
         setRows([])
@@ -58,6 +71,16 @@ function Leaderboard(){
         {top.map((r) => (
           <li key={r.uid}>
             {r.name}{r.uid === myUid ? " (you)" : ""} · Level {levelFromScore(r.score)} · {r.score} points
+          </li>
+        ))}
+      </ol>
+
+      <h2>Quiz of the Day (today)</h2>
+      {todayRows.length === 0 && <p>Nobody has played today's quiz yet. Be the first!</p>}
+      <ol>
+        {todayRows.slice(0, TOP).map((r) => (
+          <li key={r.uid}>
+            {r.name}{r.uid === myUid ? " (you)" : ""} · {r.score} / {r.total}
           </li>
         ))}
       </ol>
