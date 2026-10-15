@@ -4,6 +4,8 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import Navbar from "../../../components/Navbar/Navbar"
 import ShareButton from "../../../components/ShareButton/ShareButton"
+import SavePhrase from "../../../components/SavePhrase/SavePhrase"
+import { phraseChoices } from "../../../../lib/phraseChoices"
 import { getQuestions } from "../../../../lib/questions"
 import { recordAnswer, recordDaily, recordHighScore, currentUid, BADGE_NAMES } from "../../../../lib/progress"
 
@@ -42,7 +44,7 @@ function MeasureWord(){
     }
     load()
   }, [])
-  
+
   useEffect(() => {
     if (questions && questions.length > 0 && index >= questions.length) {
       recordHighScore(currentUid(), "quiz_measure", score)
@@ -148,6 +150,8 @@ function MeasureWord(){
       {done && skipped && <p>The answer is <strong>{q.answerText}</strong>: 一{q.answerText}{q.prompt}. {q.explanation}</p>}
 
       {badgeMsg && <p><strong>{badgeMsg}</strong></p>}
+
+      {done && <SavePhrase key={q.quizType + q.id} choices={phraseChoices(q)} />}
 
       {done && (
         <button onClick={next}>

@@ -5,6 +5,8 @@ import { useParams } from "next/navigation"
 import Link from "next/link"
 import Navbar from "../../../components/Navbar/Navbar"
 import ShareButton from "../../../components/ShareButton/ShareButton"
+import SavePhrase from "../../../components/SavePhrase/SavePhrase"
+import { phraseChoices } from "../../../../lib/phraseChoices"
 import { getQuestions, getMixedQuestions } from "../../../../lib/questions"
 import { recordAnswer, recordDaily, recordHighScore, recordDailyQuiz, getDailyQuizResult, todayString, DAILY_QUIZ_COUNT, currentUid, BADGE_NAMES } from "../../../../lib/progress"
 
@@ -257,6 +259,8 @@ function Quiz(){
       {answered && skipped && <p>The answer is <strong>{q.answerText}</strong>: 一{q.answerText}{q.prompt}. {q.explanation}</p>}
 
       {badgeMsg && <p><strong>{badgeMsg}</strong></p>}
+
+      {answered && <SavePhrase key={q.quizType + q.id} choices={phraseChoices(q)} />}
 
       {answered && (
         <button onClick={next}>
