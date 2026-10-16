@@ -27,10 +27,10 @@ export default function App(){
             </section>
             
             <section>
-                <h2>Idiom Flashcards</h2>
+                <h2>Proverb Flashcards</h2>
                 <ul className="list-group">
                     <li className="list-group-item">
-                        <a href=""></a>
+                        <a href="https://github.com/praxeds/chinese-proverbs-api">chinese proverbs api</a>
                     </li>
                 </ul>
             </section>
