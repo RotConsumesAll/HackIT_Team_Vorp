@@ -8,6 +8,7 @@ function ContextGuess(){
       <h1>Context Guess</h1>
       <p>Pick a quiz, or mix it up.</p>
       <ul>
+        <li><Link href="/quiz/daily">Quiz of the Day</Link></li>
         <li><Link href="/quiz/mix">Mix it up</Link></li>
         <li><Link href="/quiz/naturalGuess">Natural Guess</Link></li>
         <li><Link href="/quiz/sound">Sound Guess</Link></li>

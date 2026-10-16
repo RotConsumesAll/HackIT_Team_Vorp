@@ -33,8 +33,16 @@ function Navbar(){
       </button>
       <button className={styles["nav-btn"]} onClick={()=>(router.push("/contextguess"))}>
         <p>Context Guess</p>
-      </button>      
-
+      </button>
+      <button className={styles["nav-btn"]} onClick={()=>(router.push("/progress"))}>
+        <p>Progress</p>
+      </button>
+      <button className={styles["nav-btn"]} onClick={()=>(router.push("/leaderboard"))}>
+        <p>Leaderboard</p>
+      </button>
+      <button className={styles["nav-btn"]} onClick={()=>(router.push("/phrases"))}>
+        <p>Saved Phrases</p>
+      </button>
       {/* 
       loading is true: show neither logout nor login 
       loading is false, user exists: show logout
