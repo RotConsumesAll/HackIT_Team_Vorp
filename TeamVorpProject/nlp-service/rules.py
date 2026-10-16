@@ -28,7 +28,7 @@ def prepare_answers(exercise):
 
 """ 
 -------------------Step 1---------------------
-Find where each segment's forms appear in text
+For each segment, list where its forms appear in the learner's text.
 ----------------------------------------------
 
 For every segment of an answer, search raw text and for each of its forms, longest first.
@@ -61,7 +61,7 @@ def candidates_for_answer(text, segments):
 
 """ 
 -------------------Step 2---------------------
-Assign matches to segments, 1 ans at a time
+Walking the answer in order, give each segment one non-overlapping occurrence, preferring text after what is already matched, otherwise any. A segment with none has no match.
 ----------------------------------------------
 
 Treat answer's clauses as 1 flat segment list. Go through segments in answer order.
@@ -97,7 +97,7 @@ def match_answer(text, segments):
 
 """ 
 -------------------Step 3---------------------
-Pick closest answer.
+Score each answer by fewest missing required segments, then missing expected ones, then order inversions, then most characters explained. The lowest score wins.
 ----------------------------------------------
 Score each ans as a tuple. Tuples means no weight tuning.
 Lowest score wins, report errors against that ans only.
@@ -134,7 +134,7 @@ def closest_answer(text, prepared_answers):
 
 """ 
 -------------------Step 4---------------------
-Missing check
+In the chosen answer, a segment with no match becomes an error (required) or a warning (expected), unless an unexplained word with a fitting part of speech exists. That word is passed on as unrecognised.
 ----------------------------------------------
 
 """
@@ -189,7 +189,7 @@ def find_missing(exercise, segments, matches, tokens, include_tips=False):
 
 """ 
 -------------------Step 5---------------------
-Order check
+Keep the heaviest set of matched segments that are in the answer's order. Every other matched segment is displaced and gets an error with the most specific hint available.
 ----------------------------------------------
 
 """
@@ -236,7 +236,7 @@ def find_order_errors(exercise, segments, matches):
 
 """ 
 -------------------Step 6---------------------
-
+Map spans to tokens and return errors, matches, unexplained tokens, unrecognised words, the closest answer, ok, and the cleaned text.
 ----------------------------------------------
 
 """

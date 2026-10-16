@@ -19,15 +19,18 @@
 
 
 # HackIT Team Vorp
-NameOfApp is our one stop learning platform to help young adults integreate mother tongue into their daily lives by tackling the hesitation of practicing an unfamiliar language from multiple angles.
+NameOfApp is our one stop learning platform to help young adults integrate mother tongue into their daily lives by tackling the hesitation of practicing an unfamiliar language from multiple angles. We have decided to focus on aspects that range from general vocabulary and grammar to appropriate usage of localized slang:
+- Naming objects to maintain vocabulary,
+- Idioms gamified into flashcards to not only retain understanding but also mastery of Chinese,
+- Understanding the nuances of how words and sentences morph based on context,
+- Pronounciation and reading aloud to reinforce real time organization of thoughts,
+- Spoken interactions in local environments involves the use of localized slang/Singlish.
+
+From these perspectives, we have created solutions that aim to tackle these problems. 
 
 <br>
-<br>
 
-# How to run
-Run `npm run dev` in command line interface<br>
-Using React for frontend and Next.js template since React itself is purely frontend.<br>
-.env file: Check discord pinned messages.
+# REMOVE LATER ↓↓↓
 
 # Firebase link
 [Firebase link](https://hackit-vorp-db-default-rtdb.asia-southeast1.firebasedatabase.app/)
@@ -50,7 +53,6 @@ https://docs.google.com/document/d/1bWnFUjsIkvIGe7DRwe2-Kcbe6fgvTSDnIYdTIaecSPA/
 | Matthew Tay                           | Spadnana            |
 | Soh Yong Jia                          | yoooongjiaaaa39b-ux |
 
-<br>
 <br>
 
 # Users
@@ -85,16 +87,16 @@ A learner types a Chinese sentence and wants to know what they got right, what i
 A sequence alignment engine is needed to try to line up the learner's text against the model answer and report gaps/mismatches. Said engine also needs to have localized words in its context.
 
 ### Rule engine
-#### <u>Setup</u><br>
+#### Setup<br>
 At startup, each predefined answer is flattened into 1 segment list and every segment gets a `level` (required, expected or optional). The segment's own `optional` flag overrides exercise's `roles` map. Otherwise, the level comes from roles.<br>
 
 The engine's logic can be split into 6 steps. Steps 1 and 2 run for every model answer while Steps 4 to 6 run only against the closest model answer.<br>
 
-The endpoint strips whitespace and tokenizes the text (jieba, then Stanza). Steps 1–3 and 5 use only the raw text, Step 4 uses the tokens’ part-of-speech tags, and Step 6 uses their character offsets.<br>
+The endpoint strips whitespace and tokenizes the text (jieba, then Stanza). Steps 1–3 and 5 use only the raw text, Step 4 uses the tokens' part-of-speech tags, and Step 6 uses their character offsets.<br>
 
 <br>
 
-#### <u>Step 1: Find where each piece of the model answer(s) appears in the learner's text.</u><br>
+#### Step 1: Find where each piece of the model answer(s) appears in the learner's text.<br>
 Each answer consists of segments which are made up of a role (function in the sentence) and forms (accepted word variations.) <br>
 For each segment, the engine searches for every place forms appear in the learner's text.<br>
 The search runs on the characters of the raw text, and that candidates are sorted by start position, with the longer form first only when two start at the same spot.
@@ -102,7 +104,7 @@ Overlapping spans are deliberately returned.<br>
 
 <br>
 
-#### <u>Step 2: Assign an occurrence to each segment.</u><br>
+#### Step 2: Assign an occurrence to each segment.<br>
 Go through the segments in the model answer's order.<br>
 Pick at most one occurrence for each segment.<br>
 Discard candidates overlapping claimed text, then prefer the leftmost remaining one that starts at or after the furthest end reached so far.<br> 
@@ -113,7 +115,7 @@ The fallback is why a swapped word counts as out of order and not as missing.<br
 
 <br>
 
-#### <u>Step 3: Pick the closest model answer.</u><br>
+#### Step 3: Pick the closest model answer.<br>
 Scoring is based on 4 criteria, compared in priority order, lower is better. The lowest scoring model answer wins.
 1. How many required segments are missing.
 2. How many expected segments are missing.
@@ -124,7 +126,7 @@ Optional segments are not counted in criteria 1 and 2, and exact ties go to the 
 
 <br>
 
-#### <u>Step 4: Report missing segments from the learner's answer.</u><br>
+#### Step 4: Report missing segments from the learner's answer.<br>
 Runs only against the closest answer. Every segment of that answer with no match is a missing segment, and its `level` decides how it is reported:
 1. required: severity `error`.
 2. expected: severity `warning`.
@@ -132,13 +134,13 @@ Runs only against the closest answer. Every segment of that answer with no match
 
 The message comes from the exercise's `hints.missing` for that role (falling back to "Missing: role"). A missing segment has no text to point at, so it has no span and no highlighted tokens.<br>
 
-Before reporting a segment as missing, the engine looks for an unexplained token whose part of speech fits the segment’s role. If one exists, the learner probably used their own wording, so the segment is not reported as missing and the word goes to unrecognised instead. Each unexplained token can fill only one segment, and roles with no entry in the tag table are always reported as missing.
+Before reporting a segment as missing, the engine looks for an unexplained token whose part of speech fits the segment's role. If one exists, the learner probably used their own wording, so the segment is not reported as missing and the word goes to unrecognised instead. Each unexplained token can fill only one segment, and roles with no entry in the tag table are always reported as missing.
 
 Thus, `ok` can be true while unrecognised word is shown e.g. 咬 (bite) instead of 吃 (eat) appears as unrecognized instead of missing verb. 
 
 <br>
 
-#### <u>Step 5: Report order errors in the learner's answer.</u><br>
+#### Step 5: Report order errors in the learner's answer.<br>
 Runs only against the closest answer, and only on matched segments (missing ones belong to Step 4).<br>
 1. Find the heaviest in-order run. The largest group of matched segments whose positions in the learner's text increase in the same order as in the answer. Segments are weighted by level (required 3, expected 2, optional 1), so when two segments swap, the lighter one is blamed rather than the verb.
 2. Segments in that run count as correctly placed. Every other matched segment is displaced (not in the heaviest run).
@@ -149,7 +151,7 @@ If there is no entry, use the exercise's general `order` hint.
 
 <br>
 
-#### <u>Step 6: Build the response.</u><br>
+#### Step 6: Build the response.<br>
 Convert every reported character span into token indices that overlap the span for the UI to highlight. <br>
 Return leftover tokens (excluding punctuation) as `unmatched` so the UI highlights it as "unknown."<br>
 Full response: `errors`, `matches`, `unmatched`, `unrecognised`, `closestAnswer`, `ok`, `text`, and `tokens`.<br>
@@ -157,12 +159,12 @@ Full response: `errors`, `matches`, `unmatched`, `unrecognised`, `closestAnswer`
 
 <br>
 
-#### <u>Summary</u>
+#### Summary
 
-The engine compares the learner’s sentence with every accepted answer, then reports problems against the closest one. An answer is an ordered list of segments: a role (its job in the sentence), accepted forms (wordings), and a level (required, expected, or optional).
+The engine compares the learner's sentence with every accepted answer, then reports problems against the closest one. An answer is an ordered list of segments: a role (its job in the sentence), accepted forms (wordings), and a level (required, expected, or optional).
 
 1. Find<br>
-&nbsp;For each segment, list where its forms appear in the learner’s text.
+&nbsp;For each segment, list where its forms appear in the learner's text.
 
 2. Assign<br>
 &nbsp;Walking the answer in order, give each segment one non-overlapping occurrence, preferring text after what is already matched, otherwise any. A segment with none has no match.
@@ -174,11 +176,11 @@ The engine compares the learner’s sentence with every accepted answer, then re
 &nbsp;In the chosen answer, a segment with no match becomes an error (required) or a warning (expected), unless an unexplained word with a fitting part of speech exists. That word is passed on as unrecognised.
 
 5. Order<br>
-&nbsp;Keep the heaviest set of matched segments that are in the answer’s order. Every other matched segment is displaced and gets an error with the most specific hint available.
+&nbsp;Keep the heaviest set of matched segments that are in the answer's order. Every other matched segment is displaced and gets an error with the most specific hint available.
 
 6. Respond<br>
 &nbsp;Map spans to tokens and return errors, matches, unexplained tokens, unrecognised words, the closest answer, ok, and the cleaned text.
 
-#### Local context
+### Local context
 
 # Glossary
