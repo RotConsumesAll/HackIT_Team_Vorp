@@ -8,6 +8,12 @@ export default function SlangGlossSearch({variant = "dropdown"}){
     const [allTerms, setAllTerms] = useState([]); //Store in memory instead of calling READ all terms repeatedly
     const [dropOpen, setdropOpen] = useState(false);
     const [term, setTerm] = useState("");
+    const [termDef, setTermDef] = useState("");
+    const [termStndEqv, setTermStndEqv] = useState("");
+    const [termOri, setTermOri] = useState("");
+    const [termTone, setTermTone] = useState("");
+    const [termSampSent, setTermSampSent] = useState("");
+    const [termPOS, setTermPOS] = useState("");
 
     useEffect(()=>{
         getAllTerms().then(setAllTerms);
@@ -23,6 +29,10 @@ export default function SlangGlossSearch({variant = "dropdown"}){
 
     function toggleDropdown(){
         setdropOpen(prev => !prev);
+    }
+
+    function viewDefinition(termKey){
+        console.log(termKey);
     }
 
     const resultList = !term.trim()
@@ -44,7 +54,7 @@ export default function SlangGlossSearch({variant = "dropdown"}){
                         {/* Display first 3 as "suggested" searches if searchbar is empty, hide if not.*/}
                         {!term.trim() && (<h5>Suggested searches:</h5>)}
                         {resultList.map(entry=>(
-                            <p key={entry.id}>{entry.term}: {entry.definition}</p>
+                            <button key={entry.id} onClick = {()=>(viewDefinition(entry.id))}>{entry.term}: {entry.definition}</button>
                         ))}
                     </div>
                 )}

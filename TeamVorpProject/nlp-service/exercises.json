@@ -1,0 +1,489 @@
+{
+    "Exercises":{
+        "Exer_01": {
+            "id": "mackerel-market-cook",
+            "pattern": "two-clause-sequence",
+            "english": "I went to the nearby market to buy some mackerel, I will be cooking it soon.",
+            "roles": {
+                "subject": "expected",
+                "relativeTime": "expected",
+                "predicate": "required",
+                "aspect": "optional",
+                "object": "required",
+                "adverb": "optional",
+                "auxiliary": "optional"
+            },
+            "answers": [
+                {
+                "clauses": [
+                    {
+                    "segments": [
+                        { "role": "subject",      "forms": ["我"] },
+                        { "role": "relativeTime", "forms": ["刚刚", "刚才"], "optional": true },
+                        { "role": "predicate",    "forms": ["去"] },
+                        { "role": "object",       "forms": ["附近的巴刹", "巴刹"] },
+                        { "role": "predicate",    "forms": ["买"] },
+                        { "role": "aspect",       "forms": ["了"], "optional": true },
+                        { "role": "object",       "forms": ["马鲛鱼"] }
+                    ]
+                    },
+                    {
+                    "segments": [
+                        { "role": "relativeTime", "forms": ["回来后", "回来以后", "回家后"] },
+                        { "role": "subject",      "forms": ["我"] },
+                        { "role": "adverb",       "forms": ["就"] },
+                        { "role": "auxiliary",    "forms": ["开始"] },
+                        { "role": "predicate",    "forms": ["煮"] },
+                        { "role": "object",       "forms": ["饭", "鱼"] }
+                    ]
+                    }
+                ]
+                },
+                {
+                "clauses": [
+                    {
+                    "segments": [
+                        { "role": "subject",      "forms": ["我"] },
+                        { "role": "relativeTime", "forms": ["刚刚", "刚才"], "optional": true },
+                        { "role": "predicate",    "forms": ["去"] },
+                        { "role": "object",       "forms": ["附近的巴刹", "巴刹"] },
+                        { "role": "predicate",    "forms": ["买"] },
+                        { "role": "aspect",       "forms": ["了"], "optional": true },
+                        { "role": "object",       "forms": ["马鲛鱼"] }
+                    ]
+                    },
+                    {
+                    "segments": [
+                        { "role": "subject",      "forms": ["我"] },
+                        { "role": "relativeTime", "forms": ["回来后", "回来以后", "回家后"] },
+                        { "role": "adverb",       "forms": ["就"] },
+                        { "role": "auxiliary",    "forms": ["开始"] },
+                        { "role": "predicate",    "forms": ["煮"] },
+                        { "role": "object",       "forms": ["饭", "鱼"] }
+                    ]
+                    }
+                ]
+                },
+                {
+                "clauses": [
+                    {
+                    "segments": [
+                        { "role": "subject",      "forms": ["我"] },
+                        { "role": "relativeTime", "forms": ["刚刚", "刚才"] },
+                        { "role": "predicate",    "forms": ["去"] },
+                        { "role": "object",       "forms": ["附近的巴刹", "巴刹"] },
+                        { "role": "predicate",    "forms": ["买"] },
+                        { "role": "aspect",       "forms": ["了"], "optional": true },
+                        { "role": "object",       "forms": ["马鲛鱼"] }
+                    ]
+                    },
+                    {
+                    "segments": [
+                        { "role": "relativeTime", "forms": ["等下", "等一下", "待会儿"] },
+                        { "role": "subject",      "forms": ["我"] },
+                        { "role": "adverb",       "forms": ["就"] },
+                        { "role": "auxiliary",    "forms": ["开始"] },
+                        { "role": "predicate",    "forms": ["煮"] },
+                        { "role": "object",       "forms": ["饭", "鱼"] }
+                    ]
+                    }
+                ]
+                },
+                {
+                "clauses": [
+                    {
+                    "segments": [
+                        { "role": "subject",      "forms": ["我"] },
+                        { "role": "relativeTime", "forms": ["刚刚", "刚才"] },
+                        { "role": "predicate",    "forms": ["去"] },
+                        { "role": "object",       "forms": ["附近的巴刹", "巴刹"] },
+                        { "role": "predicate",    "forms": ["买"] },
+                        { "role": "aspect",       "forms": ["了"], "optional": true },
+                        { "role": "object",       "forms": ["马鲛鱼"] }
+                    ]
+                    },
+                    {
+                    "segments": [
+                        { "role": "subject",      "forms": ["我"] },
+                        { "role": "relativeTime", "forms": ["等下", "等一下", "待会儿"] },
+                        { "role": "adverb",       "forms": ["就"] },
+                        { "role": "auxiliary",    "forms": ["开始"] },
+                        { "role": "predicate",    "forms": ["煮"] },
+                        { "role": "object",       "forms": ["饭", "鱼"] }
+                    ]
+                    }
+                ]
+                },
+                {
+                "clauses": [
+                    {
+                    "segments": [
+                        { "role": "subject",      "forms": ["我"] },
+                        { "role": "predicate",    "forms": ["去"] },
+                        { "role": "object",       "forms": ["附近的巴刹", "巴刹"] },
+                        { "role": "predicate",    "forms": ["买"] },
+                        { "role": "aspect",       "forms": ["了"], "optional": true },
+                        { "role": "object",       "forms": ["马鲛鱼"] }
+                    ]
+                    },
+                    {
+                    "segments": [
+                        { "role": "relativeTime", "forms": ["回来后", "回来以后", "回家后"] },
+                        { "role": "subject",      "forms": ["我"] },
+                        { "role": "adverb",       "forms": ["就"] },
+                        { "role": "auxiliary",    "forms": ["开始"] },
+                        { "role": "predicate",    "forms": ["煮"] },
+                        { "role": "object",       "forms": ["饭", "鱼"] }
+                    ]
+                    }
+                ]
+                },
+                {
+                "clauses": [
+                    {
+                    "segments": [
+                        { "role": "subject",      "forms": ["我"] },
+                        { "role": "predicate",    "forms": ["去"] },
+                        { "role": "object",       "forms": ["附近的巴刹", "巴刹"] },
+                        { "role": "predicate",    "forms": ["买"] },
+                        { "role": "aspect",       "forms": ["了"], "optional": true },
+                        { "role": "object",       "forms": ["马鲛鱼"] }
+                    ]
+                    },
+                    {
+                    "segments": [
+                        { "role": "subject",      "forms": ["我"] },
+                        { "role": "relativeTime", "forms": ["回来后", "回来以后", "回家后"] },
+                        { "role": "adverb",       "forms": ["就"] },
+                        { "role": "auxiliary",    "forms": ["开始"] },
+                        { "role": "predicate",    "forms": ["煮"] },
+                        { "role": "object",       "forms": ["饭", "鱼"] }
+                    ]
+                    }
+                ]
+                },
+                {
+                "clauses": [
+                    {
+                    "segments": [
+                        { "role": "subject",      "forms": ["我"] },
+                        { "role": "predicate",    "forms": ["去"] },
+                        { "role": "object",       "forms": ["附近的巴刹", "巴刹"] },
+                        { "role": "predicate",    "forms": ["买"] },
+                        { "role": "aspect",       "forms": ["了"], "optional": true },
+                        { "role": "object",       "forms": ["马鲛鱼"] }
+                    ]
+                    },
+                    {
+                    "segments": [
+                        { "role": "relativeTime", "forms": ["等下", "等一下", "待会儿"] },
+                        { "role": "subject",      "forms": ["我"] },
+                        { "role": "adverb",       "forms": ["就"] },
+                        { "role": "auxiliary",    "forms": ["开始"] },
+                        { "role": "predicate",    "forms": ["煮"] },
+                        { "role": "object",       "forms": ["饭", "鱼"] }
+                    ]
+                    }
+                ]
+                },
+                {
+                "clauses": [
+                    {
+                    "segments": [
+                        { "role": "subject",      "forms": ["我"] },
+                        { "role": "predicate",    "forms": ["去"] },
+                        { "role": "object",       "forms": ["附近的巴刹", "巴刹"] },
+                        { "role": "predicate",    "forms": ["买"] },
+                        { "role": "aspect",       "forms": ["了"], "optional": true },
+                        { "role": "object",       "forms": ["马鲛鱼"] }
+                    ]
+                    },
+                    {
+                    "segments": [
+                        { "role": "subject",      "forms": ["我"] },
+                        { "role": "relativeTime", "forms": ["等下", "等一下", "待会儿"] },
+                        { "role": "adverb",       "forms": ["就"] },
+                        { "role": "auxiliary",    "forms": ["开始"] },
+                        { "role": "predicate",    "forms": ["煮"] },
+                        { "role": "object",       "forms": ["饭", "鱼"] }
+                    ]
+                    }
+                ]
+                }
+            ],
+            "glossaryTerms": ["TERM_01"],
+            "hints": {
+            "order": "In Chinese, time phrases tend to come before the verb, and the verb comes before its object.",
+            "orderPairs": {
+                "relativeTime>>predicate": "Time phrases usually come before the verb.",
+                "subject>>relativeTime": "Time phrases can sit right after the subject.",
+                "predicate>>aspect": "Aspect markers follow the verb.",
+                "aspect>>object": "Aspect markers sit between the verb and its object.",
+                "object>>predicate": "When two actions are chained, the first verb's object comes before the second verb.",
+                "relativeTime>>subject": "A time phrase can also open the clause, before the subject.",
+                "subject>>adverb": "This adverb sits after the subject.",
+                "adverb>>auxiliary": "This adverb comes before the auxiliary.",
+                "auxiliary>>predicate": "The auxiliary comes before the main verb."
+            },
+            "missing": {
+                "subject": "Say who is doing the action.",
+                "relativeTime": "Say when this happened or will happen.",
+                "predicate": "This clause needs a verb.",
+                "object": "Say what was bought or what will be cooked.",
+                "adverb": "Optional, but adding this adverb makes the sentence flow more naturally.",
+                "auxiliary": "Optional, but an auxiliary here signals the action is starting.",
+                "aspect": "Optional, but an aspect marker here shows the action is completed."
+            }
+            }
+        },
+        "Exer_02": {
+            "id": "takeaway-fried-noodles",
+            "pattern": "yes-no-question+intent",
+            "english": "Do you want me to help you takeaway anything? I will be going to the foodcourt to order fried noodles.",
+            "roles": {
+                "subject": "required",
+                "predicate": "required",
+                "object": "expected",
+                "particle": "required",
+                "relativeTime": "expected",
+                "adverb": "optional"
+            },
+            "answers": [
+                {
+                "clauses": [
+                    {
+                    "segments": [
+                        { "role": "subject",   "forms": ["你"] },
+                        { "role": "predicate", "forms": ["要"] },
+                        { "role": "subject",   "forms": ["我"] },
+                        { "role": "predicate", "forms": ["帮"] },
+                        { "role": "subject",   "forms": ["你"] },
+                        { "role": "predicate", "forms": ["打包"] },
+                        { "role": "object",    "forms": ["什么", "东西"] },
+                        { "role": "particle",  "forms": ["吗"] }
+                    ]
+                    },
+                    {
+                    "segments": [
+                        { "role": "subject",      "forms": ["我"] },
+                        { "role": "relativeTime", "forms": ["等下", "等一下", "待会儿"] },
+                        { "role": "adverb",       "forms": ["就"] },
+                        { "role": "predicate",    "forms": ["去"] },
+                        { "role": "object",       "forms": ["食阁", "熟食中心"] },
+                        { "role": "predicate",    "forms": ["买", "打包"] },
+                        { "role": "object",       "forms": ["炒面"] }
+                    ]
+                    }
+                ]
+                },
+                {
+                "clauses": [
+                    {
+                    "segments": [
+                        { "role": "subject",   "forms": ["你"] },
+                        { "role": "predicate", "forms": ["要"] },
+                        { "role": "subject",   "forms": ["我"] },
+                        { "role": "predicate", "forms": ["帮"] },
+                        { "role": "subject",   "forms": ["你"] },
+                        { "role": "predicate", "forms": ["打包"] },
+                        { "role": "object",    "forms": ["什么", "东西"] },
+                        { "role": "particle",  "forms": ["吗"] }
+                    ]
+                    },
+                    {
+                    "segments": [
+                        { "role": "subject",   "forms": ["我"] },
+                        { "role": "predicate", "forms": ["会"] },
+                        { "role": "predicate", "forms": ["去"] },
+                        { "role": "object",    "forms": ["食阁", "熟食中心"] },
+                        { "role": "predicate", "forms": ["打包", "买"] },
+                        { "role": "object",    "forms": ["炒面"] }
+                    ]
+                    }
+                ]
+                }
+            ],
+            "glossaryTerms": ["TERM_02"],
+            "hints": {
+            "order": "The yes/no question particle goes at the end of the question, and time phrases go before the verb.",
+            "orderPairs": {
+                "object>>particle": "The question particle always comes last.",
+                "relativeTime>>predicate": "Time phrases usually come before the verb.",
+                "subject>>relativeTime": "Time phrases can sit right after the subject.",
+                "subject>>adverb": "This adverb sits after the subject.",
+                "adverb>>predicate": "This adverb comes before the verb.",
+                "predicate>>subject": "The verb 要 comes before the person who will do the next action (我 in 你要我帮你…).",
+                "predicate>>object": "The verb comes before what is being ordered or taken away.",
+                "object>>predicate": "When two actions are chained, the first verb's object comes before the second verb."
+            },
+            "missing": {
+                "subject": "Say who is asking and who is being asked.",
+                "predicate": "This clause needs a verb.",
+                "object": "Say what is being taken away or ordered.",
+                "particle": "A yes/no question needs a question particle at the end.",
+                "relativeTime": "Say when you will go.",
+                "adverb": "Optional, but adding this adverb makes the sentence flow more naturally."
+            }
+            }
+        },
+        "Exer_03": {
+            "id": "grandfather-coffeeshop",
+            "pattern": "habitual-frequency",
+            "english": "My grandfather goes to the coffeeshop near our neighbourhood daily to drink his morning coffee.",
+            "semanticNote": "爷爷 = paternal grandfather; 外公 = maternal grandfather. Both are grammatically correct; meaning differs by which side of the family.",
+            "roles": {
+                "subject": "required",
+                "frequency": "expected",
+                "timeOfDay": "expected",
+                "predicate": "required",
+                "object": "required",
+                "possessor": "optional",
+                "ordinal": "optional",
+                "particle": "optional"
+            },
+            "answers": [
+                {
+                "clauses": [
+                    {
+                    "segments": [
+                        { "role": "subject",   "forms": ["我的爷爷", "我的外公", "爷爷", "外公"] },
+                        { "role": "frequency", "forms": ["每天", "天天"] },
+                        { "role": "timeOfDay", "forms": ["早上"] },
+                        { "role": "predicate", "forms": ["去"] },
+                        { "role": "object",    "forms": ["附近的咖啡店", "咖啡店"] },
+                        { "role": "predicate", "forms": ["喝"] },
+                        { "role": "object",    "forms": ["咖啡"] }
+                    ]
+                    }
+                ]
+                },
+                {
+                "clauses": [
+                    {
+                    "segments": [
+                        { "role": "subject",   "forms": ["我的爷爷", "我的外公", "爷爷", "外公"] },
+                        { "role": "frequency", "forms": ["每天", "天天"] },
+                        { "role": "predicate", "forms": ["去"] },
+                        { "role": "object",    "forms": ["附近的咖啡店", "咖啡店"] },
+                        { "role": "predicate", "forms": ["喝"] },
+                        { "role": "possessor", "forms": ["他"], "optional": true },
+                        { "role": "timeOfDay", "forms": ["早上"], "optional": true },
+                        { "role": "particle",  "forms": ["的"], "optional": true },
+                        { "role": "ordinal",   "forms": ["第一杯"], "optional": true },
+                        { "role": "object",    "forms": ["咖啡"] }                        
+                    ]
+                    }
+                ]
+                }
+            ],
+            "glossaryTerms": ["TERM_03"],
+            "hints": {
+                "order": "Frequency words come first, then the time-of-day phrase, then the verb.",
+                "orderPairs": {
+                    "frequency>>timeOfDay": "The frequency word comes before the time-of-day phrase.",
+                    "timeOfDay>>predicate": "The time-of-day phrase comes before the verb.",
+                    "subject>>frequency": "The frequency word sits after the subject.",
+                    "frequency>>predicate": "The frequency word comes before the verb.",
+                    "predicate>>object": "The verb comes before its object.",
+                    "object>>predicate": "When two actions are chained, the first verb's object comes before the second verb."
+                },
+                "missing": {
+                    "subject": "Say whose grandfather this is.",
+                    "frequency": "Say how often he goes.",
+                    "timeOfDay": "Say what time of day he goes.",
+                    "predicate": "This clause needs a verb.",
+                    "object": "Say where he goes or what he drinks."
+                }
+            }
+        },
+        "Exer_04": {
+            "id": "kaya-toast-breakfast",
+            "pattern": "frequency-adverbial",
+            "english": "I frequently eat kaya toast for breakfast.",
+            "roles": {
+                "subject": "optional",
+                "frequency": "expected",
+                "meal": "expected",
+                "predicate": "required",
+                "object": "required"
+            },
+            "answers": [
+                {
+                "clauses": [
+                    {
+                    "segments": [
+                        { "role": "subject",   "forms": ["我"] },
+                        { "role": "meal",      "forms": ["早餐"] },
+                        { "role": "frequency", "forms": ["经常", "常常", "时常"] },
+                        { "role": "predicate", "forms": ["吃"] },
+                        { "role": "object",    "forms": ["咖椰吐司", "咖椰土司"] }
+                    ]
+                    }
+                ]
+                },
+                {
+                "clauses": [
+                    {
+                    "segments": [
+                        { "role": "subject",   "forms": ["我"] },
+                        { "role": "frequency", "forms": ["经常", "常常", "时常"] },
+                        { "role": "meal",      "forms": ["早餐"] },
+                        { "role": "predicate", "forms": ["吃"] },
+                        { "role": "object",    "forms": ["咖椰吐司", "咖椰土司"] }
+                    ]
+                    }
+                ]
+                },
+                {
+                "clauses": [
+                    {
+                    "segments": [
+                        { "role": "subject",   "forms": ["我"] },
+                        { "role": "frequency", "forms": ["经常", "常常", "时常"] },
+                        { "role": "predicate", "forms": ["把"] },
+                        { "role": "object",    "forms": ["咖椰吐司", "咖椰土司"] },
+                        { "role": "predicate", "forms": ["当作"] },
+                        { "role": "meal",      "forms": ["我的早餐", "早餐"] }
+                    ]
+                    }
+                ]
+                },
+                {
+                "clauses": [
+                    {
+                    "segments": [
+                        { "role": "subject",   "forms": ["我"] },
+                        { "role": "frequency", "forms": ["经常", "常常", "时常"] },
+                        { "role": "predicate", "forms": ["把"] },
+                        { "role": "object",    "forms": ["咖椰吐司", "咖椰土司"] },
+                        { "role": "predicate", "forms": ["当"] },
+                        { "role": "meal",      "forms": ["早餐"] },
+                        { "role": "predicate", "forms": ["吃"] }
+                    ]
+                    }
+                ]
+                }
+            ],
+            "glossaryTerms": ["TERM_04"],
+            "hints": {
+            "order": "Frequency words and meal phrases usually come before the verb.",
+            "orderPairs": {
+                "meal>>predicate": "The meal phrase comes before the verb, unless it appears in a 把 construction",
+                "frequency>>predicate": "The frequency word comes before the verb.",
+                "frequency>>meal": "Unless 早餐 comes first (我早餐经常吃…), the frequency word comes before the meal phrase.",
+                "subject>>frequency": "The frequency word sits after the subject.",
+                "subject>>meal": "The meal phrase sits after the subject.",
+                "predicate>>object": "The verb comes before what is being eaten.",
+                "object>>meal": "When the meal phrase is a complement, it comes after the object."
+            },
+            "missing": {
+                "subject": "Optional in spoken Chinese, but adding it makes the sentence clearer.",
+                "frequency": "Say how often this happens.",
+                "meal": "Say which meal this is.",
+                "predicate": "This sentence needs a verb.",
+                "object": "Say what is being eaten."
+            }
+            }
+        }        
+    }
+}

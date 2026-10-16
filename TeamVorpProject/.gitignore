@@ -42,3 +42,12 @@ next-env.d.ts
 
 # firebase keys
 firebaseConfig.js
+
+# Stanza models
+stanza_resources/
+
+#NLP packages in venv
+.venv/
+
+#Rule engine tests
+RuleEngineTests/

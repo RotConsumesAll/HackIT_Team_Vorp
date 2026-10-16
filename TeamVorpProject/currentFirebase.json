@@ -1,0 +1,468 @@
+{
+  "glossaryTerms": {
+    "TERM_01": {
+      "definition": "Market",
+      "sampleSentence": "我要去巴刹买菜。",
+      "originNote": "loanword from Malay 'pasar' ",
+      "standardEquivalent": "市场",
+      "term": "巴刹",
+      "tone": "casual, spoken",
+      "posTag": "noun"
+    },
+    "TERM_02": {
+      "definition": "Takeaway",
+      "sampleSentence": "今天没时间煮饭，现在出去打包食物。",
+      "originNote": "borrowed from Cantonese",
+      "standardEquivalent": "带走",
+      "term": "打包",
+      "tone": "casual, spoken",
+      "posTag": "verb"
+    },
+    "TERM_03": {
+      "definition": "Coffeeshop. Locally, it strictly refers to a neighbourhood eatery selling local coffee and tea alongside meals.",
+      "sampleSentence": "爷爷每天去附近的咖啡店喝咖啡。",
+      "originNote": "Shared origins from Hokkien and Malay.",
+      "standardEquivalent": "咖啡店",
+      "term": "咖啡店",
+      "tone": "casual, spoken",
+      "posTag": "noun"
+    },
+    "TERM_04": {
+      "definition": "A rich paste, spread on toast.",
+      "sampleSentence": "我早餐经常吃咖椰土司。",
+      "originNote": "Differing accounts of origin, from Malay and/or localised version of Portuguese egg jam.",
+      "standardEquivalent": null,
+      "term": "咖椰",
+      "tone": "casual, spoken",
+      "posTag": "noun"
+    }   
+  },
+  "questions": {
+    "character": {
+      "ch1": {
+        "context": "grammar",
+        "explanation": "地 goes before a verb to describe how the action is done. 慢慢地走 means walking slowly.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "的 links a describing word to a noun, not to a verb",
+            "text": "的"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "地 sits between a describing word and a verb",
+            "text": "地"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "得 comes after a verb, not before it",
+            "text": "得"
+          }
+        },
+        "prompt": "他慢慢__走过来。"
+      },
+      "ch2": {
+        "context": "grammar",
+        "explanation": "得 comes after a verb to show how well or how fast something is done.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "的 goes before a noun",
+            "text": "的"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "地 goes before a verb",
+            "text": "地"
+          },
+          "c": {
+            "isCorrect": true,
+            "reason": "得 comes right after the verb 跑",
+            "text": "得"
+          }
+        },
+        "prompt": "他跑__很快。"
+      },
+      "ch3": {
+        "context": "grammar",
+        "explanation": "的 shows who something belongs to. Here it links 我 to 书.",
+        "options": {
+          "a": {
+            "isCorrect": true,
+            "reason": "的 shows possession",
+            "text": "的"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "地 is used before verbs",
+            "text": "地"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "得 is used after verbs",
+            "text": "得"
+          }
+        },
+        "prompt": "这是我__书。"
+      },
+      "ch4": {
+        "context": "grammar",
+        "explanation": "再 means again or then, so 再见 means see you again.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "在 means at, or in the middle of doing something",
+            "text": "在"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "再 means again, as in 再见",
+            "text": "再"
+          }
+        },
+        "prompt": "我们明天__见!"
+      }
+    },
+    "measure": {
+      "me1": {
+        "answerText": "只",
+        "context": "measure words",
+        "explanation": "只 is used for most animals, like 一只猫 and 一只狗.",
+        "gloss": "cat",
+        "prompt": "猫"
+      },
+      "me2": {
+        "answerText": "本",
+        "context": "measure words",
+        "explanation": "本 is used for books and volumes, like 一本书.",
+        "gloss": "book",
+        "prompt": "书"
+      },
+      "me3": {
+        "answerText": "辆",
+        "context": "measure words",
+        "explanation": "辆 is used for vehicles like cars and buses, like 一辆车.",
+        "gloss": "car",
+        "prompt": "车"
+      },
+      "me4": {
+        "answerText": "把",
+        "context": "measure words",
+        "explanation": "把 is used for things with a handle or that you can grip, like 一把椅子 and 一把伞.",
+        "gloss": "chair",
+        "prompt": "椅子"
+      }
+    },
+    "naturalGuess": {
+      "ng1": {
+        "context": "hawker stall",
+        "explanation": "打包 means to pack food to go, so this only fits a food ordering situation.",
+        "options": {
+          "a": {
+            "isCorrect": true,
+            "reason": "打包 is what you say when you want food to take away",
+            "text": "Ordering at a hawker stall"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "Nothing in this sentence is about deadlines or school work",
+            "text": "Asking a teacher for an extension"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "Rescheduling would use words like 改时间 or 改天",
+            "text": "Texting a friend to reschedule plans"
+          },
+          "d": {
+            "isCorrect": false,
+            "reason": "The apology words are there, but 打包 shows it is about food",
+            "text": "Apologising to a stranger for bumping into them"
+          }
+        },
+        "prompt": "不好意思，可以帮我打包吗?"
+      },
+      "ng2": {
+        "context": "school",
+        "explanation": "迟交 means to hand something in late, and 老师 shows who is being asked.",
+        "options": {
+          "a": {
+            "isCorrect": true,
+            "reason": "迟交 means to hand in late",
+            "text": "Asking a teacher for an extension"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "Nothing here is about food",
+            "text": "Ordering at a hawker stall"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "There is no greeting or festive wish in this sentence",
+            "text": "Greeting relatives at Chinese New Year"
+          },
+          "d": {
+            "isCorrect": false,
+            "reason": "迟交 is about handing work in, not appointments",
+            "text": "Booking a doctor's appointment"
+          }
+        },
+        "prompt": "老师，我可以迟交吗?"
+      },
+      "ng3": {
+        "context": "festive greetings",
+        "explanation": "新年快乐 is the New Year greeting, and 祝你身体健康 is a wish for good health that is often said to elders.",
+        "options": {
+          "a": {
+            "isCorrect": true,
+            "reason": "新年 means New Year",
+            "text": "Greeting relatives at Chinese New Year"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "Birthday wishes use 生日快乐",
+            "text": "Wishing a friend happy birthday"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "Thanks would use 谢谢",
+            "text": "Thanking a waiter after a meal"
+          },
+          "d": {
+            "isCorrect": false,
+            "reason": "Goodbyes would use 再见",
+            "text": "Saying goodbye after dinner"
+          }
+        },
+        "prompt": "新年快乐，祝你身体健康!"
+      }
+    },
+    "naturalPhrase": {
+      "np1": {
+        "context": "texting a friend",
+        "explanation": "This is how it is actually said. The textbook version sounds stiff here.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "Too formal, sounds like a work reply",
+            "text": "我有空闲时间。"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "Natural and casual",
+            "text": "可以啊，几点?"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "Word order is off",
+            "text": "可以几点啊"
+          },
+          "d": {
+            "isCorrect": false,
+            "reason": "This means you are busy, the opposite of what you meant",
+            "text": "不好意思，我很忙。"
+          }
+        },
+        "prompt": "Your friend just asked if you're free to hang out later today."
+      },
+      "np2": {
+        "context": "hawker stall",
+        "explanation": "At a stall people keep it short. Long, formal sentences sound out of place.",
+        "options": {
+          "a": {
+            "isCorrect": true,
+            "reason": "Short and natural, what people really say at a stall",
+            "text": "打包，谢谢。"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "Correct, but far too wordy and stiff",
+            "text": "我想要把食物放进袋子里带走。"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "Word order is off, this sounds like you are offering to pack food for them",
+            "text": "打包我帮你。"
+          },
+          "d": {
+            "isCorrect": false,
+            "reason": "This means you are eating here, not taking away",
+            "text": "我在这里吃。"
+          }
+        },
+        "prompt": "You are at a hawker stall and want your food packed to take away."
+      },
+      "np3": {
+        "context": "grandparents",
+        "explanation": "With family, warm and simple wins. Textbook phrasing sounds cold.",
+        "options": {
+          "a": {
+            "isCorrect": true,
+            "reason": "Warm and natural",
+            "text": "我吃饱了，谢谢阿嬷。"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "Far too formal, sounds like a textbook",
+            "text": "我已经摄取足够的食物。"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "Word order is off, the words are in the wrong order",
+            "text": "我饱吃了。"
+          },
+          "d": {
+            "isCorrect": false,
+            "reason": "This accepts more food, the opposite of what you meant",
+            "text": "好啊，再来一碗!"
+          }
+        },
+        "prompt": "Your grandmother offers you more food but you are already full."
+      }
+    },
+    "sound": {
+      "so1": {
+        "context": "everyday",
+        "explanation": "长 here means to grow up, so it is read zhǎng, not cháng.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "cháng means long, as in 长头发",
+            "text": "cháng (long)"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "zhǎng is used for growing up, as in 长大",
+            "text": "zhǎng (to grow up)"
+          }
+        },
+        "prompt": "他从小看着弟弟长大。",
+        "target": "长"
+      },
+      "so2": {
+        "context": "everyday",
+        "explanation": "还 means still or yet here, so it is read hái. When it means to return something, it is read huán, as in 还钱.",
+        "options": {
+          "a": {
+            "isCorrect": true,
+            "reason": "hái is used in 还没, meaning not yet",
+            "text": "hái (still, yet)"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "huán is for returning things, as in 还书",
+            "text": "huán (to return)"
+          }
+        },
+        "prompt": "我还没吃饭。",
+        "target": "还"
+      },
+      "so3": {
+        "context": "everyday",
+        "explanation": "In 睡觉 (to sleep), 觉 is read jiào. In 感觉 (to feel), it is read jué.",
+        "options": {
+          "a": {
+            "isCorrect": true,
+            "reason": "jiào is used in 睡觉",
+            "text": "jiào (sleep)"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "jué is used in 感觉",
+            "text": "jué (to feel)"
+          }
+        },
+        "prompt": "我昨晚睡觉睡得很好。",
+        "target": "觉"
+      }
+    },
+    "tone": {
+      "to1": {
+        "context": "neutral tone",
+        "explanation": "子 loses its tone in everyday nouns like 椅子, 桌子 and 房子, and is said lightly as zi.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "A full third tone sounds too heavy here",
+            "text": "zǐ (third tone)"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "A full fourth tone sounds too heavy here",
+            "text": "zì (fourth tone)"
+          },
+          "c": {
+            "isCorrect": true,
+            "reason": "Light and short, with no tone mark",
+            "text": "zi (neutral tone)"
+          }
+        },
+        "prompt": "椅子",
+        "target": "子"
+      },
+      "to2": {
+        "context": "neutral tone",
+        "explanation": "In 觉得 (to feel or think), 得 is said lightly as de.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "A full second tone sounds too heavy here",
+            "text": "dé (second tone)"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "děi means must, which is a different word",
+            "text": "děi (third tone)"
+          },
+          "c": {
+            "isCorrect": true,
+            "reason": "Light and short, with no tone mark",
+            "text": "de (neutral tone)"
+          }
+        },
+        "prompt": "觉得",
+        "target": "得"
+      },
+      "to3": {
+        "context": "neutral tone",
+        "explanation": "In 东西 meaning thing or item, 西 is said lightly as xi. The same characters meaning east and west are read dōngxī with a full tone.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "That is the east and west meaning, not the word for thing",
+            "text": "xī (first tone)"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "A full second tone sounds too heavy here",
+            "text": "xí (second tone)"
+          },
+          "c": {
+            "isCorrect": true,
+            "reason": "Light and short, with no tone mark",
+            "text": "xi (neutral tone)"
+          }
+        },
+        "prompt": "东西",
+        "target": "西"
+      }
+    }
+  },
+  "users": {
+    "g7sMMXxYnMbTUEijtxsG6x0iQX03": {
+      "highScores": {
+        "idiomFlashcards": 30,
+        "vocabViaImages": 12
+      },
+      "masteryLevel": 2,
+      "userName": "Alice Tan"
+    },
+    "nHjBTzSDwtZ7idGirJU8uGDTgLs12": {
+      "highScores": {
+        "idiomFlashcards": 50,
+        "vocabViaImages": 8
+      },
+      "masteryLevel": 4,
+      "userName": "John Ben"
+    }
+  }
+}
