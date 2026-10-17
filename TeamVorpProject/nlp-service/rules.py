@@ -260,7 +260,7 @@ def check_sentence(exercise, prepared_answers, text, tokens, include_tips=False)
     score, index, matches = closest_answer(text, prepared_answers)
     segments = prepared_answers[index]
 
-    errors = find_missing(exercise, segments, matches, include_tips)
+    errors, unrecognised = find_missing(exercise, segments, matches, tokens, include_tips)    
     for e in errors:
         e["tokens"] = [] #missing errors have no tokens to highlight
     for e in find_order_errors(exercise, segments, matches):
@@ -277,5 +277,6 @@ def check_sentence(exercise, prepared_answers, text, tokens, include_tips=False)
             for seg, m in zip(segments, matches) if m
         ], #list of words that were recognized
         "unmatched": leftover_tokens(tokens, matches),
+        "unrecognised": unrecognised,
         "tokens": tokens,
     }
