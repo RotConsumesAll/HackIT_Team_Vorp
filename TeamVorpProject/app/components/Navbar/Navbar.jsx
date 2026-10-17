@@ -43,6 +43,9 @@ function Navbar(){
       <button className={styles["nav-btn"]} onClick={()=>(router.push("/phrases"))}>
         <p>Saved Phrases</p>
       </button>
+      <button className={styles["nav-btn"]} onClick={()=>(router.push("/community"))}>
+        <p>Teh Talk</p>
+      </button>
       {/* 
       loading is true: show neither logout nor login 
       loading is false, user exists: show logout

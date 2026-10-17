@@ -1,12 +1,14 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import Navbar from "../../components/Navbar/Navbar"
-import { useUid } from "../../../lib/useuid"
+import { useUid } from "../../../lib/useUid"
 import { getSavedPhrases, addSavedPhrase, deleteSavedPhrase } from "../../../lib/phrases"
 import { toPinyin } from "../../../lib/pinyin"
 
 function Phrases(){
+  const router = useRouter()
   const { uid, ready } = useUid()
   const [phrases, setPhrases] = useState(null)
   const [chinese, setChinese] = useState("")
@@ -54,6 +56,16 @@ function Phrases(){
     }
   }
 
+  // Opens the Community page with this phrase in the share form. Nothing is posted until the user presses Post there.
+  function handleShare(p){
+    const params = new URLSearchParams({
+      chinese: p.chinese || "",
+      pinyin: p.pinyin || "",
+      meaning: p.meaning || "",
+    })
+    router.push("/community?" + params.toString())
+  }
+
   if (!ready) return <p>Loading...</p>
   if (!uid) return <p>Please log in to see your saved phrases.</p>
 
@@ -79,6 +91,7 @@ function Phrases(){
           <li key={p.id}>
             <strong>{p.chinese}</strong> {p.pinyin && "(" + p.pinyin + ")"} - {p.meaning}
             {" "}
+            <button onClick={() => handleShare(p)}>Share to community</button>
             <button onClick={() => handleDelete(p.id)}>Delete</button>
           </li>
         ))}
