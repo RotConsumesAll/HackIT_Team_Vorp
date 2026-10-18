@@ -46,7 +46,27 @@ export default function App(){
                     <li className="list-group-item">
                         <a href="https://www.w3schools.com/howto/howto_js_filter_dropdown.asp">Filter dropdown</a>
                     </li>
-                </ul>                
+                </ul>
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        <a href="https://www.w3schools.com/python/python_virtualenv.asp">Virtual environment</a>
+                    </li>
+                </ul>
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        <a href="https://stanfordnlp.github.io/stanza/pipeline.html">Stanza pipeline for part-of-speech tagging</a>
+                    </li>
+                </ul>
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        <a href="https://github.com/fxsjy/jieba">Jie ba for tokenizing Chinese words</a>
+                    </li>
+                </ul>
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        <a href="https://react-bootstrap.netlify.app/docs/components/overlays#tooltips">React Bootstrap tooltips</a>
+                    </li>
+                </ul>                                                        
             </section>
 
             <section>

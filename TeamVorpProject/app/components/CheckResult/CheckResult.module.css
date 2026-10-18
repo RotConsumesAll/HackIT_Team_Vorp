@@ -1,0 +1,10 @@
+.result { margin-top: 16px; }
+.sentence { font-size: 1.5rem; }
+.phrase { background: none; border: 0; padding: 0 2px; font: inherit; color: inherit; cursor: pointer; }
+.bad { background: #ffd6d6; color: #000; border-radius: 4px; }
+.unknown { border-bottom: 2px dotted #888; }
+.hintIcon { color: #FF8D28; font-weight: 700; margin-left: 6px; }
+.error { color: #e5484d; list-style-type:none;}
+.errorList {padding:0px;}
+.ok { color: #2da44e; font-weight: 600; }
+.notOk { color: #FF8D28; font-weight: 600; }

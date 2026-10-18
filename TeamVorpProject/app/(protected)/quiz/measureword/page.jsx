@@ -3,8 +3,11 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import Navbar from "../../../components/Navbar/Navbar"
+import ShareButton from "../../../components/ShareButton/ShareButton"
+import SavePhrase from "../../../components/SavePhrase/SavePhrase"
+import { phraseChoices } from "../../../../lib/phraseChoices"
 import { getQuestions } from "../../../../lib/questions"
-import { recordAnswer, recordHighScore, currentUid, BADGE_NAMES } from "../../../../lib/progress"
+import { recordAnswer, recordDaily, recordHighScore, currentUid, BADGE_NAMES } from "../../../../lib/progress"
 
 function shuffle(list){
   const a = [...list]
@@ -26,6 +29,7 @@ function MeasureWord(){
   const [firstTry, setFirstTry] = useState(true)
   const [error, setError] = useState("")
   const [streak, setStreak] = useState(0)
+  const [daily, setDaily] = useState(null)
   const [badgeMsg, setBadgeMsg] = useState("")
 
   useEffect(() => {
@@ -40,7 +44,7 @@ function MeasureWord(){
     }
     load()
   }, [])
-  
+
   useEffect(() => {
     if (questions && questions.length > 0 && index >= questions.length) {
       recordHighScore(currentUid(), "quiz_measure", score)
@@ -63,6 +67,7 @@ function MeasureWord(){
       <>
         <h1>Nice one!</h1>
         <p>{score} / {questions.length} right on the first try</p>
+        <ShareButton text={"I got " + score + " / " + questions.length + " on " + "Measure Word" + " in the Mother Tongue app!"} />
         <button onClick={() => window.location.reload()}>Play again</button>
         <p><Link href="/contextguess">Pick another quiz</Link></p>
       </>
@@ -72,11 +77,14 @@ function MeasureWord(){
   const q = questions[index]
 
   async function track(correct){
-    const result = await recordAnswer(currentUid(), "measure", correct)
-    if (!result) return
-    setStreak(result.streak)
-    if (result.newBadges.length > 0) {
-      setBadgeMsg("New badge: " + result.newBadges.map((b) => BADGE_NAMES[b] || b).join(", "))
+    const uid = currentUid()
+    const result = await recordAnswer(uid, "measure", correct)
+    const dailyResult = await recordDaily(uid, "contextGuess")
+    if (result) setStreak(result.streak)
+    if (dailyResult) setDaily(dailyResult)
+    const earned = [...(result ? result.newBadges : []), ...(dailyResult ? dailyResult.newBadges : [])]
+    if (earned.length > 0) {
+      setBadgeMsg("New badge: " + earned.map((b) => BADGE_NAMES[b] || b).join(", "))
     }
   }
 
@@ -120,6 +128,7 @@ function MeasureWord(){
       <p><Link href="/contextguess">Back</Link></p>
       <p>Measure Word · {index + 1} / {questions.length}</p>
       <p>Streak: {streak}</p>
+      {daily && <p>Daily streak: {daily.current} day(s) · Today: {Math.min(daily.todayCount, daily.goal)} / {daily.goal}</p>}
 
       <h2>一 ___ {q.prompt}</h2>
       {q.gloss && <p>({q.gloss})</p>}
@@ -141,6 +150,8 @@ function MeasureWord(){
       {done && skipped && <p>The answer is <strong>{q.answerText}</strong>: 一{q.answerText}{q.prompt}. {q.explanation}</p>}
 
       {badgeMsg && <p><strong>{badgeMsg}</strong></p>}
+
+      {done && <SavePhrase key={q.quizType + q.id} choices={phraseChoices(q)} />}
 
       {done && (
         <button onClick={next}>

@@ -1,0 +1,52 @@
+Exercises
+└── Exer_XX
+    ├── id 
+    ├── pattern
+    ├── english
+    ├── semanticNote?
+    ├── glossaryTerms
+    ├── roles   → role name → required | expected | optional
+    ├── answers → [ answer ]
+    │              └── clauses → [ clause ]
+    │                              └── segments → [ segment ]
+    │                                                ├── role
+    │                                                ├── forms [strings]
+    │                                                └── optional? (boolean)
+    └── hints   → order (string)
+                  orderPairs (map of "a>>b" → string)
+                  missing   (map of role → string)
+
+pattern:
+two-clause-sequence, 
+yes-no-question+intent...
+
+
+
+role names (part of speech)
+    "subject"
+    "object"
+    "adverb"
+    ...
+Repeated allowed. Matching is positional.
+
+
+
+answers: array of accepted variants
+variants: a sentence
+sentence: made up of clauses, ordered.
+clauses: made up of segments
+segments: POS, word variants, can omit?
+
+
+
+glossaryTerms: manually defined local/slang terms
+    "definition": "Market",
+    "sampleSentence": "我要去巴刹买菜。"
+    "standardEquivalent": "市场",
+
+
+
+hints:
+order: generic message
+orderPairs: "subject>>frequency": "The frequency word sits after the subject."
+missing: POS required (e.g. subject missing) or expected
