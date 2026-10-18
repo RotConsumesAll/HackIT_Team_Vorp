@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import Navbar from "../../components/Navbar/Navbar"
-import { useUid } from "../../../lib/useUid"
+import { useUid } from "../../../lib/useuid"
 import {
   getPosts, createPost, deletePost, toggleLike,
   getReplies, addReply,
