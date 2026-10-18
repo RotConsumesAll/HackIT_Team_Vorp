@@ -1,6 +1,8 @@
 import { ref, get } from "firebase/database";
 import { db } from "./firebase";
 
+export const QUIZ_LENGTH = 10;
+
 function toList(obj) {
   return Object.entries(obj || {}).map(([key, value]) => ({ key, ...value }));
 }

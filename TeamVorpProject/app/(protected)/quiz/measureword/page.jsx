@@ -6,7 +6,7 @@ import Navbar from "../../../components/Navbar/Navbar"
 import ShareButton from "../../../components/ShareButton/ShareButton"
 import SavePhrase from "../../../components/SavePhrase/SavePhrase"
 import { phraseChoices } from "../../../../lib/phraseChoices"
-import { getQuestions } from "../../../../lib/questions"
+import { getQuestions, QUIZ_LENGTH } from "../../../../lib/questions"
 import { recordAnswer, recordDaily, recordHighScore, currentUid, BADGE_NAMES } from "../../../../lib/progress"
 
 function shuffle(list){
@@ -36,7 +36,7 @@ function MeasureWord(){
     async function load(){
       try {
         const list = await getQuestions("measure")
-        setQuestions(shuffle(list))
+        setQuestions(shuffle(list).slice(0, QUIZ_LENGTH))
       } catch (e) {
         setError("Could not load questions. Check your connection and the database rules.")
         setQuestions([])
