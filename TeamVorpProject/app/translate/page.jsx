@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import Navbar from "../components/Navbar/Navbar"; // <-- adjust path if different
 import "./translate.css";
+import { useRouter } from "next/navigation";
 
 const MODES = [
   { id: "text", label: "Text" },
@@ -12,32 +13,69 @@ const MODES = [
 ];
 const MAX_CHARS = 2000;
 
-// Set to true to preview the result layout with sample data (no API call needed).
 const SHOW_DEMO = false;
 
-const DEMO_ENGLISH = "Oil prices jump 4% as Houthis fire missiles at Saudi Arabia.";
+const DEMO_ENGLISH =
+  "Oil prices jump 4% as Houthis fire missiles at Saudi Arabia.";
 const DEMO_RESULT = [
-  [{ zh: "纽约，9月24日——周四，油价大幅上涨约4%，", py: "Niǔ Yuē, jiǔ yuè èr shí sì rì zhōu sì, yóu jià dà fú shàng zhǎng yuē bǎi fēn zhī sì," }],
+  [
+    {
+      zh: "纽约，9月24日——周四，油价大幅上涨约4%，",
+      py: "Niǔ Yuē, jiǔ yuè èr shí sì rì zhōu sì, yóu jià dà fú shàng zhǎng yuē bǎi fēn zhī sì,",
+    },
+  ],
   [{ zh: "升至一周高位。", py: "shēng zhì yì zhōu gāo wèi." }],
-  [{ zh: "市场主要受到也门获伊朗支持的胡塞武装向", py: "Shì chǎng zhǔ yào shòu dào Yě Mén huò Yī Lǎng zhī chí de Hú Sāi wǔ zhuāng xiàng" }],
+  [
+    {
+      zh: "市场主要受到也门获伊朗支持的胡塞武装向",
+      py: "Shì chǎng zhǔ yào shòu dào Yě Mén huò Yī Lǎng zhī chí de Hú Sāi wǔ zhuāng xiàng",
+    },
+  ],
   [{ zh: "沙特阿拉伯发射导弹，", py: "Shā Tè Ā Lā Bó fā shè dǎo dàn," }],
   [
     { zh: "以及美伊外交谈判", py: "yǐ jí Měi Yī wài jiāo tán pàn " },
-    { zh: "进展甚微", py: "jìn zhǎn shèn wēi", hard: true, note: "Very little progress" },
+    {
+      zh: "进展甚微",
+      py: "jìn zhǎn shèn wēi",
+      hard: true,
+      note: "Very little progress",
+    },
     { zh: "、", py: ", " },
-    { zh: "举步维艰", py: "jǔ bù wéi jiān", hard: true, note: "Progress is extremely difficult" },
+    {
+      zh: "举步维艰",
+      py: "jǔ bù wéi jiān",
+      hard: true,
+      note: "Progress is extremely difficult",
+    },
     { zh: "的影响。", py: " de yǐng xiǎng." },
   ],
 ];
 
 /* ---------- inline icons ---------- */
 const IconPlus = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+  >
     <path d="M12 5v14M5 12h14" />
   </svg>
 );
 const IconArrowUp = () => (
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="26"
+    height="26"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="M12 20V5M5 12l7-7 7 7" />
   </svg>
 );
@@ -47,12 +85,21 @@ const IconPlay = () => (
   </svg>
 );
 const IconClose = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+  >
     <path d="M6 6l12 12M18 6L6 18" />
   </svg>
 );
 
 export default function TranslatePage() {
+  const router = useRouter();
   const [mode, setMode] = useState("text");
   const [menuOpen, setMenuOpen] = useState(false);
   const [text, setText] = useState("");
@@ -77,7 +124,8 @@ export default function TranslatePage() {
   // close mode menu on outside click
   useEffect(() => {
     function onClick(e) {
-      if (menuRef.current && !menuRef.current.contains(e.target)) setMenuOpen(false);
+      if (menuRef.current && !menuRef.current.contains(e.target))
+        setMenuOpen(false);
     }
     document.addEventListener("mousedown", onClick);
     return () => document.removeEventListener("mousedown", onClick);
@@ -109,7 +157,9 @@ export default function TranslatePage() {
         if (e.data.size > 0) chunksRef.current.push(e.data);
       };
       rec.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: rec.mimeType || "audio/webm" });
+        const blob = new Blob(chunksRef.current, {
+          type: rec.mimeType || "audio/webm",
+        });
         setRecordedUrl(URL.createObjectURL(blob));
         setHasRecording(true);
         stream.getTracks().forEach((t) => t.stop());
@@ -187,33 +237,51 @@ export default function TranslatePage() {
     }
     if (mode === "website") {
       if (!url.trim()) return setStatus("Enter a website link first.");
-      if (!isValidUrl(url.trim())) return setStatus("Enter a valid link starting with http:// or https://");
+      if (!isValidUrl(url.trim()))
+        return setStatus(
+          "Enter a valid link starting with http:// or https://",
+        );
       return runTranslate({ type: "website", content: url.trim() });
     }
     if (mode === "audio") {
       if (!audioFile) return setStatus("Choose an audio file first.");
-      return setStatus("Audio is ready, but transcription is not implemented yet.");
+      return setStatus(
+        "Audio is ready, but transcription is not implemented yet.",
+      );
     }
     if (mode === "video") {
       if (!videoFile) return setStatus("Choose a video file first.");
-      return setStatus("Video is ready, but transcription is not implemented yet.");
+      return setStatus(
+        "Video is ready, but transcription is not implemented yet.",
+      );
     }
     if (mode === "voice") {
       if (recording) return setStatus("Stop recording first.");
       if (!hasRecording) return setStatus("Record something first.");
-      return setStatus("Recording is ready, but transcription is not implemented yet.");
+      return setStatus(
+        "Recording is ready, but transcription is not implemented yet.",
+      );
     }
   }
 
   function handleNext() {
-    setResult(null);
-    setEnglish("");
-    setActiveNote(null);
-    setStatus("");
+    if (!result) return;
+
+    const chineseText = result
+      .map((line) => line.map((segment) => segment.zh).join(""))
+      .join("\n");
+
+    const params = new URLSearchParams({
+      text: chineseText,
+      english: english || "",
+    });
+
+    router.push(`/conversation?${params.toString()}`);
   }
 
   function playChinese() {
-    if (!result || typeof window === "undefined" || !window.speechSynthesis) return;
+    if (!result || typeof window === "undefined" || !window.speechSynthesis)
+      return;
     const full = result.map((line) => line.map((s) => s.zh).join("")).join("");
     const u = new SpeechSynthesisUtterance(full);
     u.lang = "zh-CN";
@@ -250,26 +318,39 @@ export default function TranslatePage() {
                           <button
                             type="button"
                             className="tr-hard"
-                            onClick={() => setActiveNote(activeNote === `${i}-${j}` ? null : `${i}-${j}`)}
+                            onClick={() =>
+                              setActiveNote(
+                                activeNote === `${i}-${j}` ? null : `${i}-${j}`,
+                              )
+                            }
                           >
                             {s.zh}
                           </button>
-                          {activeNote === `${i}-${j}` && <span className="tr-note">{s.note}</span>}
+                          {activeNote === `${i}-${j}` && (
+                            <span className="tr-note">{s.note}</span>
+                          )}
                         </span>
                       ) : (
                         <span key={j}>{s.zh}</span>
-                      )
+                      ),
                     )}
                   </p>
                   <p className="tr-py">
                     {line.map((s, j) => (
-                      <span key={j} className={s.hard ? "tr-py-hard" : ""}>{s.py}</span>
+                      <span key={j} className={s.hard ? "tr-py-hard" : ""}>
+                        {s.py}
+                      </span>
                     ))}
                   </p>
                 </div>
               ))}
               <div className="tr-play-row">
-                <button type="button" className="tr-play" onClick={playChinese} aria-label="Play Chinese audio">
+                <button
+                  type="button"
+                  className="tr-play"
+                  onClick={playChinese}
+                  aria-label="Play Chinese audio"
+                >
                   <IconPlay />
                 </button>
                 {english && <p className="tr-english">{english}</p>}
@@ -279,8 +360,14 @@ export default function TranslatePage() {
 
           <div className="tr-input-area">
             <div className="tr-label-row">
-              <span className="tr-label">File text or link are all accepted</span>
-              {mode === "text" && <span className="tr-count">{text.length}/{MAX_CHARS}</span>}
+              <span className="tr-label">
+                File text or link are all accepted
+              </span>
+              {mode === "text" && (
+                <span className="tr-count">
+                  {text.length}/{MAX_CHARS}
+                </span>
+              )}
             </div>
 
             <div className="tr-bar">
@@ -343,9 +430,15 @@ export default function TranslatePage() {
                       type="file"
                       accept="audio/*"
                       hidden
-                      onChange={(e) => setAudioFile(e.target.files?.[0] || null)}
+                      onChange={(e) =>
+                        setAudioFile(e.target.files?.[0] || null)
+                      }
                     />
-                    <button type="button" className="tr-file-btn" onClick={() => audioInputRef.current?.click()}>
+                    <button
+                      type="button"
+                      className="tr-file-btn"
+                      onClick={() => audioInputRef.current?.click()}
+                    >
                       {audioFile ? audioFile.name : "Choose audio file"}
                     </button>
                   </>
@@ -358,9 +451,15 @@ export default function TranslatePage() {
                       type="file"
                       accept="video/*"
                       hidden
-                      onChange={(e) => setVideoFile(e.target.files?.[0] || null)}
+                      onChange={(e) =>
+                        setVideoFile(e.target.files?.[0] || null)
+                      }
                     />
-                    <button type="button" className="tr-file-btn" onClick={() => videoInputRef.current?.click()}>
+                    <button
+                      type="button"
+                      className="tr-file-btn"
+                      onClick={() => videoInputRef.current?.click()}
+                    >
                       {videoFile ? videoFile.name : "Choose video file"}
                     </button>
                   </>
@@ -369,11 +468,19 @@ export default function TranslatePage() {
                 {mode === "voice" && (
                   <div className="tr-voice">
                     {!recording ? (
-                      <button type="button" className="tr-file-btn" onClick={startRecording}>
+                      <button
+                        type="button"
+                        className="tr-file-btn"
+                        onClick={startRecording}
+                      >
                         {hasRecording ? "Record again" : "Start recording"}
                       </button>
                     ) : (
-                      <button type="button" className="tr-file-btn is-rec" onClick={stopRecording}>
+                      <button
+                        type="button"
+                        className="tr-file-btn is-rec"
+                        onClick={stopRecording}
+                      >
                         ● Stop recording
                       </button>
                     )}
@@ -385,7 +492,12 @@ export default function TranslatePage() {
               </div>
 
               {hasValue && (
-                <button type="button" className="tr-clear" onClick={clearInput} aria-label="Clear input">
+                <button
+                  type="button"
+                  className="tr-clear"
+                  onClick={clearInput}
+                  aria-label="Clear input"
+                >
                   <IconClose />
                 </button>
               )}
@@ -401,11 +513,17 @@ export default function TranslatePage() {
               </button>
             </div>
 
-            {status && <p className="tr-status" role="status">{status}</p>}
+            {status && (
+              <p className="tr-status" role="status">
+                {status}
+              </p>
+            )}
 
             {result && (
               <div className="tr-next-row">
-                <button type="button" className="tr-next" onClick={handleNext}>Next</button>
+                <button type="button" className="tr-next" onClick={handleNext}>
+                  Next
+                </button>
               </div>
             )}
           </div>
