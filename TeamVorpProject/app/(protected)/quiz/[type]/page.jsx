@@ -7,7 +7,7 @@ import Navbar from "../../../components/Navbar/Navbar"
 import ShareButton from "../../../components/ShareButton/ShareButton"
 import SavePhrase from "../../../components/SavePhrase/SavePhrase"
 import { phraseChoices } from "../../../../lib/phraseChoices"
-import { getQuestions, getMixedQuestions } from "../../../../lib/questions"
+import { getQuestions, getMixedQuestions, QUIZ_LENGTH } from "../../../../lib/questions"
 import { recordAnswer, recordDaily, recordHighScore, recordDailyQuiz, getDailyQuizResult, todayString, DAILY_QUIZ_COUNT, currentUid, BADGE_NAMES } from "../../../../lib/progress"
 
 const ALL_TYPES = ["naturalPhrase", "naturalGuess", "sound", "character", "tone", "measure"]
@@ -92,9 +92,9 @@ function Quiz(){
           }
           list = pickDaily(await getMixedQuestions(ALL_TYPES))
         } else if (type === "mix") {
-          list = shuffle(await getMixedQuestions(ALL_TYPES))
+          list = shuffle(await getMixedQuestions(ALL_TYPES)).slice(0, QUIZ_LENGTH)
         } else {
-          list = shuffle(await getQuestions(type))
+          list = shuffle(await getQuestions(type)).slice(0, QUIZ_LENGTH)
         }
         setQuestions(list.map((q) => ({ ...q, options: shuffle(q.options) })))
       } catch (e) {
