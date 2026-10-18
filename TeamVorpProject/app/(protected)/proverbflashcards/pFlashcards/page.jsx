@@ -7,7 +7,7 @@ import Navbar from "../../../components/Navbar/Navbar";
 import { useProverbs, chunk } from "../../../../lib/useProverbs";
 
 const btn =
-    "inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700";
+    "inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-700";
 
 function FlashcardView() {
     const params = useSearchParams();
@@ -39,6 +39,7 @@ function FlashcardView() {
             >
                 {flipped ? (
                     <>
+                        <p className="text-4xl font-bold">{card.proverb}</p>
                         <p className="text-sm">{card.pinyin}</p>
                         <p>{card.translation}</p>
                     </>
