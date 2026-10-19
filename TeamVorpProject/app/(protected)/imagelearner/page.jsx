@@ -23,7 +23,7 @@ function Category(props){
     const router = useRouter()
     // replaceAll so multi-word names like "Everyday Objects" always work
     const urlName = props.name.toLowerCase().replaceAll(" ", "-")
-    const url = `/vocabviaimages/${urlName}`
+    const url = `/imagelearner/${urlName}`
     return (
         <button className={styles.categoryButton} onClick={() => router.push(url)}>
             {props.name}
