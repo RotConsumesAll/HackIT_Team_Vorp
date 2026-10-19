@@ -8,7 +8,7 @@
       "term": "巴刹",
       "tone": "casual, spoken",
       "posTag": "noun",
-      "pronounciation":"bā shā"
+      "pronunciation":"bā shā"
     },
     "TERM_02": {
       "definition": "Takeaway",
@@ -18,17 +18,18 @@
       "term": "打包",
       "tone": "casual, spoken",
       "posTag": "verb",
-      "pronounciation":"dǎ bāo"
+      "pronunciation":"dǎ bāo"
     },
     "TERM_03": {
-      "definition": "Coffeeshop. Locally, it strictly refers to a neighbourhood eatery selling local coffee and tea alongside meals.",
+      "definition": "Coffeeshop",
       "sampleSentence": "爷爷每天去附近的咖啡店喝咖啡。",
       "originNote": "Shared origins from Hokkien and Malay.",
       "standardEquivalent": "咖啡店",
       "term": "咖啡店",
       "tone": "casual, spoken",
       "posTag": "noun",
-      "pronounciation":"kā fēi diàn"
+      "pronounciation":"kā fēi diàn",
+      "notes": "Locally, it strictly refers to a neighbourhood eatery selling local coffee and tea alongside meals."
     },
     "TERM_04": {
       "definition": "A rich paste, spread on toast.",

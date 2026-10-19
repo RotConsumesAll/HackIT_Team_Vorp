@@ -78,6 +78,9 @@ Tl;dr: Firebase checks, app reacts(!!!) to result.
 
 ## Sentence builder feature (Bao Shen)
 
+### How to run
+Create a venv based on `requirements.txt` and run "python -m uvicorn main:app --reload --port 8000" in terminal for grammar check logic.
+
 ### Overview
 A learner types a Chinese sentence and wants to know what they got right, what is wrong and feedback on why its wrong. Simple string comparison is invalid since:<br>
 - Chinese has many ways to say the same things (synonyms, word order),
@@ -86,7 +89,15 @@ A learner types a Chinese sentence and wants to know what they got right, what i
 
 A sequence alignment engine is needed to try to line up the learner's text against the model answer and report gaps/mismatches. Said engine also needs to have localized words in its context.
 
-### Rule engine
+### Flow
+1. Learner selects an English sentence to translate.
+2. Learner types in their attempt and clicks "Check sentence" button.
+3. (Request 1, grammar check) The browser calls /api/check, which calls Python /check. The route strips each expected list from unrecognised and returns the result.
+4. (Show grammar result immediately)The grammar result renders. If unrecognised is non-empty, those dotted words show a small spinner, and the banner says “Checking your words…” instead of “Looks good!”.
+5. (Request 2, vocabulary check) The browser calls /api/vocab with { exerciseId, text }. The route calls Python /check again to get unrecognised with the accepted forms, looks up the glossary, calls DeepSeek, validates the reply, and returns only { verdicts }.
+6. (Merge results) The browser stores the verdicts by token index. Each dotted word’s tooltip now shows the reason and suggestion, and ok is recalculated: grammar OK, and no different_meaning or incorrect verdict.
+
+### Rule engine for grammar
 #### Setup<br>
 At startup, each predefined answer is flattened into 1 segment list and every segment gets a `level` (required, expected or optional). The segment's own `optional` flag overrides exercise's `roles` map. Otherwise, the level comes from roles.<br>
 
@@ -180,6 +191,9 @@ The engine compares the learner's sentence with every accepted answer, then repo
 
 6. Respond<br>
 &nbsp;Map spans to tokens and return errors, matches, unexplained tokens, unrecognised words, the closest answer, ok, and the cleaned text.
+
+### Vocabulary check with Deepseek LLM
+text
 
 ### Local context
 

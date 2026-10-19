@@ -8,3 +8,10 @@
 .errorList {padding:0px;}
 .ok { color: #2da44e; font-weight: 600; }
 .notOk { color: #FF8D28; font-weight: 600; }
+.pending {opacity:0.8;}
+.checking {
+  border-bottom: 2px dotted currentColor;
+  animation: pulse 1s ease-in-out infinite;
+}
+@keyframes pulse { 50% { opacity: 0.4; } }
+.tip { border-bottom: 2px dotted #b58900; }

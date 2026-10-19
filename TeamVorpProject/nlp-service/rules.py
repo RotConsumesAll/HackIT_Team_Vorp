@@ -156,13 +156,20 @@ ROLE_POS = {
     "particle": {"PART"},
 }
 
+LEVEL_RANK = {"required": 0, "expected": 1, "optional": 2}
 
 def find_missing(exercise, segments, matches, tokens, include_tips=False):
     #Return (errors, unrecognised). A segment with no match counts as missing unless an unexplained token has a fitting part of speech; that word is passed on as unrecognised.
     hints = exercise["hints"]["missing"]
     free = set(leftover_tokens(tokens, matches))  # unexplained tokens not yet used
     errors, unrecognised = [], []
-    for seg, m in zip(segments, matches):
+
+    # Required segments get first pick of the leftover words, then expected, then optional.
+    # sorted() is stable, so segments of the same level keep the answer's order.
+    order = sorted(range(len(segments)), key=lambda i: LEVEL_RANK[segments[i]["level"]])
+
+    for i in order:
+        seg, m = segments[i], matches[i]
         if m is not None:
             continue
         if seg["level"] == "optional" and not include_tips:
@@ -171,17 +178,21 @@ def find_missing(exercise, segments, matches, tokens, include_tips=False):
         word = next((t for t in tokens if t["index"] in free and t["upos"] in allowed), None)
         if word is not None:
             free.discard(word["index"])  # one leftover word excuses only one segment
-            unrecognised.append({"role": seg["role"], "tokens": [word["index"]],
-                                 "text": word["text"], "expected": seg["forms"]})
+            unrecognised.append((i, {"role": seg["role"], "tokens": [word["index"]],
+                                     "text": word["text"], "expected": seg["forms"]}))
             continue
-        errors.append({
+        errors.append((i, {
             "type": "missing",
             "severity": SEVERITY[seg["level"]],
             "role": seg["role"],
             "clause": seg["clause"],
             "message": hints.get(seg["role"], f"Missing: {seg['role']}"),
-        })
-    return errors, unrecognised
+        }))
+
+    # Put the results back in the answer's order.
+    errors.sort(key=lambda pair: pair[0])
+    unrecognised.sort(key=lambda pair: pair[0])
+    return [e for _, e in errors], [u for _, u in unrecognised]
 
 
 
