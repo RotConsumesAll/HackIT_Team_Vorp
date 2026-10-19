@@ -3798,9 +3798,9 @@
           "image": "banana.jpg"
         },
         "f3": {
-          "chinese": "米饭",
-          "meaning": "cooked rice",
-          "pinyin": "mǐ fàn",
+          "chinese": "炒饭",
+          "meaning": "fried rice",
+          "pinyin": "chǎo fàn",
           "image": "rice.jpg"
         },
         "f4": {
@@ -3991,9 +3991,9 @@
         },
         "c4": {
           "chinese": "韩国",
-          "meaning": "South Korea",
+          "meaning": "Korea",
           "pinyin": "Hán guó",
-          "image": "south-korea.jpg"
+          "image": "korea.jpg"
         },
         "c5": {
           "chinese": "马来西亚",
