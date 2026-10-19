@@ -6,7 +6,7 @@ import { ref, get } from "firebase/database"
 import Navbar from "../../components/Navbar/Navbar"
 import { db } from "../../../lib/firebase"
 import {
-  tierStatus, dailyStatus, levelFromScore, TIERED_BADGES, LEVEL_NAMES,
+  tierStatus, dailyStatus, levelFromScore, TIERED_BADGES,
   POINTS_PER_LEVEL, POINTS_PER_CORRECT, DAILY_GOAL, DAILY_GOAL_BONUS, DAILY_QUIZ_BONUS,
 } from "../../../lib/progress"
 import styles from "./page.module.css"
@@ -67,7 +67,7 @@ function allBadges(user){
   const owned = user.badges || {}
   const list = ONE_OFF.map((b) => ({
     id: b.id, name: b.name, han: b.han, how: b.how,
-    earned: !!owned[b.id], tag: null, progress: null,
+    earned: !!owned[b.id], level: 0, progress: null,
   }))
   Object.entries(TIERED_INFO).forEach(([key, info]) => {
     const t = TIERED_BADGES[key]
@@ -77,7 +77,7 @@ function allBadges(user){
       const earned = !!owned[id] || value >= need
       list.push({
         id, name: t.name, han: info.han, how: info.how(need),
-        earned, tag: LEVEL_NAMES[i],
+        earned, level: i + 1,
         progress: earned ? null : Math.min(value, need) + " / " + need,
       })
     })
@@ -87,6 +87,10 @@ function allBadges(user){
 
 function list(levels){
   return levels.slice(0, -1).join(", ") + " and " + levels[levels.length - 1]
+}
+
+function levelLine(level){
+  return level ? "Level " + level + " of 4" : "No level yet"
 }
 
 function prettyName(key){
@@ -137,6 +141,14 @@ function Card({ title, label, help, children, className = "" }){
       {open && <p id={id} role="tooltip" className={styles.helpText}>{help}</p>}
       {children}
     </div>
+  )
+}
+
+function Stars({ level, max = 4 }){
+  return (
+    <span className={styles.stars} role="img" aria-label={"Level " + level + " of " + max}>
+      {"★".repeat(level)}<span className={styles.starOff}>{"★".repeat(max - level)}</span>
+    </span>
   )
 }
 
@@ -207,7 +219,7 @@ function Progress(){
           help="The most questions you have got right in a row. A wrong answer ends a run, but your best streak stays. It earns the Streak star badge."
         >
           <p className={styles.big}>{streak.best || 0}</p>
-          <p className={styles.small}>{tierStatus("streak", streak.best).levelName}</p>
+          <p className={styles.small}>{levelLine(tierStatus("streak", streak.best).level)}</p>
         </Card>
 
         <Card
@@ -215,7 +227,7 @@ function Progress(){
           help="Counts each day you open the site while logged in, once per day. It earns the Regular visitor badge."
         >
           <p className={styles.big}>{days}</p>
-          <p className={styles.small}>{tierStatus("login", days).levelName}</p>
+          <p className={styles.small}>{levelLine(tierStatus("login", days).level)}</p>
         </Card>
 
         <Card
@@ -241,8 +253,8 @@ function Progress(){
             <Card
               key={id}
               title={s.name}
-              label={<span className={t.level ? styles.levelOn : styles.levelOff}>{t.levelName}</span>}
-              help={"Answer " + s.quizzes + " questions correctly. Each correct answer is 1 point. Reach " + list(levels) + " points for Bronze, Silver, Gold and Diamond."}
+              label={<span className={t.level ? styles.levelOn : styles.levelOff}><Stars level={t.level} /></span>}
+              help={"Answer " + s.quizzes + " questions correctly. Each correct answer is 1 point. Reach " + list(levels) + " points for levels 1, 2, 3 and 4 (shown as stars)."}
             >
               <p className={styles.big}>{score}<span className={styles.unit}> points</span></p>
               <Bar percent={barPercent(levels, score)} label={s.name + " progress"} />
@@ -261,7 +273,7 @@ function Progress(){
           <Card
             key={b.id}
             title={b.name}
-            label={<span className={b.earned ? styles.levelOn : styles.levelOff}>{b.tag || (b.earned ? "Earned" : "Locked")}</span>}
+            label={<span className={b.earned ? styles.levelOn : styles.levelOff}>{b.level ? <Stars level={b.level} /> : (b.earned ? "Earned" : "Locked")}</span>}
             help={b.how}
             className={b.earned ? "" : styles.locked}
           >
