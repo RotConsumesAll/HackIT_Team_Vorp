@@ -11,6 +11,7 @@ function ContextGuess(){
         <li><Link href="/quiz/daily">Quiz of the Day</Link></li>
         <li><Link href="/quiz/mix">Mix it up</Link></li>
         <li><Link href="/quiz/naturalGuess">Natural Guess</Link></li>
+        <li><Link href="/quiz/naturalPhrase">Natural Phrase</Link></li>
         <li><Link href="/quiz/sound">Sound Guess</Link></li>
         <li><Link href="/quiz/character">Character Guess</Link></li>
         <li><Link href="/quiz/tone">Tone Guess</Link></li>

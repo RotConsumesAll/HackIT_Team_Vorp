@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Suspense, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Navbar from "../../../components/Navbar/Navbar";
+import SavePhrase from "../../../components/SavePhrase/SavePhrase";
 import { useProverbs, chunk, shuffle } from "../../../../lib/useProverbs";
 
 const btn =
@@ -117,6 +118,13 @@ function MixView() {
                         <p className="text-2xl font-bold">{card.proverb}</p>
                         <p className="text-sm">{card.pinyin}</p>
                     </div>
+                )}
+
+                {(status === "correct" || status === "passed") && (
+                    <SavePhrase
+                        key={card.proverb}
+                        choices={[{ chinese: card.proverb, pinyin: card.pinyin, meaning: card.translation }]}
+                    />
                 )}
 
                 {/* Buttons change with the state */}

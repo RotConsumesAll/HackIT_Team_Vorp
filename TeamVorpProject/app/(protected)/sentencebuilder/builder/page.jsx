@@ -1,24 +1,16 @@
 "use client"
-import {useState} from "react";
+import {useState, useRef} from "react";
 import styles from "./page.module.css";
 import Navbar from "../../../components/Navbar/Navbar";
 import SlangGlossSearch from "../../../components/SlangGlossSearch/SlangGlossSearch";
-import CheckSent from "../../../../lib/checkSent";
+import CheckSentence from "../../../../lib/checkSentence";
+import CheckVocab from "../../../../lib/checkVocab";
 import CheckResult from "../../../components/CheckResult/CheckResult";
 import { PROMPTS } from "../../../../lib/prompts";
 
-function EnglishInput({exerciseSent}){
-    // const [sentence, setSentance] = useState("");
-    // const [displaySent, setDispSent] = useState("");
+const IDLE = { status: "idle", items: [] };
 
-    // function updateDisplay(e){
-    //     setSentance(e.target.value)
-    // }
-    
-    // function handleSubmit(e){
-    //     e.preventDefault();
-    //     setDispSent(sentence);
-    // }
+function EnglishInput({exerciseSent}){
     return(
         <>  
             <section className={styles["eng-cont"]}>
@@ -26,11 +18,6 @@ function EnglishInput({exerciseSent}){
                 <div className={styles["sentence-display-container"]}>
                     <p className={styles["sentence-display-text"]}>{exerciseSent}</p>
                 </div>
-                {/* <form className = {styles.form} onSubmit={handleSubmit}>
-                    <label> 
-                        <input type = "text"  value={sentence} onChange={updateDisplay} placeholder="English sentence here..."></input>
-                    </label>
-                </form> */}
             </section>
         </>
     )
@@ -39,30 +26,70 @@ function EnglishInput({exerciseSent}){
 function ChineseInput({exerciseId}){
     const [sentence, setSentance] = useState("");
     const [result, setResult] = useState(null);
+    const [vocab, setVocab] = useState(IDLE);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const latestCheckTag = useRef(0); //useRef stores a value that dones not trigger re render. 
+    //Used to drop any res that belongs to an older sentence.
+    //Behaviour: Button renables when grammar check finishes while vocab req is still running. If learner submits again during taht time, old vocab is discarded. 
+
 
     async function handleSubmit(e){
+        setResult(null);
         e.preventDefault();
         if (!sentence.trim()) return;
+        const newCheckTag = ++latestCheckTag.current; //Gives each submit its own number
         setLoading(true);
         setError("");
+        setVocab(IDLE);
+
+        let res;
         try {
-            setResult(await CheckSent(exerciseId, sentence));
+            res = await CheckSentence(exerciseId, sentence);
         } 
-        catch {
-            setError("Couldn't check your sentence. Is the service running?");
+        catch (err) {
+            console.error("check failed:", err);
+            if (newCheckTag === latestCheckTag.current){
+                setError("Couldn't check your sentence. Is the service running?");
+            }
+            return;
         } 
         finally {
-            setLoading(false);
-        }        
+            if (newCheckTag === latestCheckTag.current){
+                setLoading(false);
+            }
+        }
+        
+        if (newCheckTag !== latestCheckTag.current){
+            return;
+        }
+
+        setResult(res);
+
+        if (!res.unrecognised?.length){
+            return;
+        }
+
+        setVocab({status:"loading", items: []});
+        try {
+            const items = await CheckVocab(exerciseId, res.text);
+            if (newCheckTag === latestCheckTag.current){
+                setVocab({status: "done", items});
+            }
+        }
+        catch (err) {
+            console.error("vocab failed:", err);
+            if (newCheckTag === latestCheckTag.current){
+                setVocab({status: "failed", items: []});
+            }
+        }
     }
 
     return(
         <section className={styles["chi-cont"]}>
             <div>Chinese</div>
             <div className={styles["sentence-display-container"]}>
-            {result && <CheckResult result={result}/>}                
+            {result && <CheckResult result={result} vocab={vocab}/>}                
             </div>
             {error && <p>{error}</p>}
             <form className = {styles.form} onSubmit={handleSubmit}>
@@ -81,7 +108,7 @@ function App(){
     return(
         <>
             <Navbar/>
-            <main className={styles.main}>
+            <main className={styles.main}>               
                 <section>
                     <h1>Sentence Builder</h1>
                     { <EnglishInput exerciseSent={prompt.english}/>}

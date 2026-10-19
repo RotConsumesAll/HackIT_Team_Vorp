@@ -1,5 +1,6 @@
 import { ref, get, set, push, remove, update } from "firebase/database";
 import { db } from "./firebase";
+import { awardBadge } from "./progress";
 
 function toList(obj) {
   return Object.entries(obj || {})
@@ -28,6 +29,7 @@ export async function createPost(uid, data) {
   if (data.pinyin) post.pinyin = data.pinyin;
   if (data.meaning) post.meaning = data.meaning;
   await set(push(ref(db, "community/posts")), post);
+  return awardBadge(uid, "first_post");
 }
 
 export async function getPosts() {
@@ -42,7 +44,6 @@ export async function deletePost(postId) {
 export async function toggleLike(uid, postId, liked) {
   await update(ref(db), { [`community/posts/${postId}/likes/${uid}`]: liked ? null : true });
 }
-
 
 export async function getReplies(postId) {
   const snap = await get(ref(db, `community/replies/${postId}`));
