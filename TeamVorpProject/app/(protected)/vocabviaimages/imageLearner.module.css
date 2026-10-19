@@ -1,0 +1,181 @@
+.main {
+    position: relative;
+    min-height: calc(100vh - 64px); /* adjust to your Navbar height */
+    background: #faf9f5;
+    padding: 32px 16px 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #6479f5;
+    text-align: center;
+}
+
+.subtitle {
+    margin: 4px 0 32px;
+    font-size: 0.8rem;
+    color: #444;
+    text-align: center;
+}
+
+.message {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.messageError {
+    color: #c5221f;
+}
+
+/* ---------- Category page ---------- */
+.categoryList {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: min(100%, 320px);
+}
+
+.categoryButton {
+    width: 100%;
+    padding: 12px 14px;
+    text-align: left;
+    font-size: 0.85rem;
+    color: #222;
+    background: #fff;
+    border: 1px solid #d6d6d6;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.categoryButton:hover {
+    border-color: #6479f5;
+}
+
+/* ---------- Naming page ---------- */
+.imageBox {
+    width: min(100%, 270px);
+    aspect-ratio: 270 / 220;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    color: #999;
+    font-size: 0.8rem;
+}
+
+.imageBox img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.english {
+    margin: 8px 0 0;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.answerArea {
+    margin-top: 32px;
+    width: min(100%, 420px);
+    min-height: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.inputRow {
+    display: flex;
+    gap: 4px;
+    width: 100%;
+}
+
+.input {
+    flex: 1;
+    min-width: 0;
+    padding: 6px 8px;
+    font-size: 0.85rem;
+    border: 1px solid #d6d6d6;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.input:focus-visible,
+.button:focus-visible,
+.categoryButton:focus-visible,
+.submitButton:focus-visible {
+    outline: 2px solid #6479f5;
+    outline-offset: 2px;
+}
+
+.submitButton {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    background: #fff;
+    border: 1px solid #d6d6d6;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button {
+    padding: 8px 28px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #fff;
+    background: #6479f5;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background: #5063d9;
+}
+
+.feedback {
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+.correct { color: #1e8e3e; }
+.wrong { color: #c5221f; }
+
+.revealWrap {
+    margin-top: 8px;
+    width: min(100%, 420px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chinese {
+    margin: 24px 0 0;
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: 1.1;
+}
+
+.pinyin {
+    margin: 4px 0 0;
+    font-size: 0.8rem;
+}
+
+.nextWrap {
+    margin-top: 48px;
+}
+
+.categoryLabel {
+    position: absolute;
+    right: 16px;
+    bottom: 12px;
+    margin: 0;
+    font-size: 0.75rem;
+}

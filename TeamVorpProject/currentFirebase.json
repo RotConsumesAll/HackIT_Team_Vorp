@@ -2,44 +2,43 @@
   "glossaryTerms": {
     "TERM_01": {
       "definition": "Market",
-      "sampleSentence": "我要去巴刹买菜。",
       "originNote": "loanword from Malay 'pasar' ",
+      "posTag": "noun",
+      "pronounciation": "bā shā",
+      "sampleSentence": "我要去巴刹买菜。",
       "standardEquivalent": "市场",
       "term": "巴刹",
-      "tone": "casual, spoken",
-      "posTag": "noun",
-      "pronounciation":"bā shā"
+      "tone": "casual, spoken"
     },
     "TERM_02": {
       "definition": "Takeaway",
-      "sampleSentence": "今天没时间煮饭，现在出去打包食物。",
       "originNote": "borrowed from Cantonese",
+      "posTag": "verb",
+      "pronounciation": "dǎ bāo",
+      "sampleSentence": "今天没时间煮饭，现在出去打包食物。",
       "standardEquivalent": "带走",
       "term": "打包",
-      "tone": "casual, spoken",
-      "posTag": "verb",
-      "pronounciation":"dǎ bāo"
+      "tone": "casual, spoken"
     },
     "TERM_03": {
       "definition": "Coffeeshop. Locally, it strictly refers to a neighbourhood eatery selling local coffee and tea alongside meals.",
-      "sampleSentence": "爷爷每天去附近的咖啡店喝咖啡。",
       "originNote": "Shared origins from Hokkien and Malay.",
+      "posTag": "noun",
+      "pronounciation": "kā fēi diàn",
+      "sampleSentence": "爷爷每天去附近的咖啡店喝咖啡。",
       "standardEquivalent": "咖啡店",
       "term": "咖啡店",
-      "tone": "casual, spoken",
-      "posTag": "noun",
-      "pronounciation":"kā fēi diàn"
+      "tone": "casual, spoken"
     },
     "TERM_04": {
       "definition": "A rich paste, spread on toast.",
-      "sampleSentence": "我早餐经常吃咖椰土司。",
       "originNote": "Differing accounts of origin, from Malay and/or localised version of Portuguese egg jam.",
-      "standardEquivalent": null,
-      "term": "咖椰",
-      "tone": "casual, spoken",
       "posTag": "noun",
-      "pronounciation":"kā yē"
-    }   
+      "pronounciation": "kā yē",
+      "sampleSentence": "我早餐经常吃咖椰土司。",
+      "term": "咖椰",
+      "tone": "casual, spoken"
+    }
   },
   "questions": {
     "character": {
@@ -205,6 +204,228 @@
             "chinese": "得",
             "meaning": "particle after a verb that says how well or how fast",
             "pinyin": "de"
+          }
+        ]
+      },
+      "ch21": {
+        "context": "grammar",
+        "explanation": "地 goes before a verb to describe how the action is done. 高兴地跳 means jumped up happily.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "的 links a describing word to a noun",
+            "text": "的"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "得 comes after a verb, not before it",
+            "text": "得"
+          },
+          "c": {
+            "isCorrect": true,
+            "reason": "地 sits between a describing word and a verb",
+            "text": "地"
+          }
+        },
+        "prompt": "她高兴__跳了起来。",
+        "save": [
+          {
+            "chinese": "高兴地跳了起来",
+            "meaning": "jumped up happily",
+            "pinyin": "gāo xìng de tiào le qǐ lái"
+          }
+        ]
+      },
+      "ch22": {
+        "context": "grammar",
+        "explanation": "得 comes after a verb to describe how it was done or how well. 说得对 means you said it right.",
+        "options": {
+          "a": {
+            "isCorrect": true,
+            "reason": "得 comes right after the verb 说",
+            "text": "得"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "的 goes before a noun",
+            "text": "的"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "地 goes before a verb",
+            "text": "地"
+          }
+        },
+        "prompt": "你说__对!",
+        "save": [
+          {
+            "chinese": "你说得对!",
+            "meaning": "You're right!",
+            "pinyin": "nǐ shuō de duì"
+          }
+        ]
+      },
+      "ch23": {
+        "context": "grammar",
+        "explanation": "的 links the describing part 妈妈做 to the noun 菜, meaning the dish Mum cooked.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "地 goes before a verb",
+            "text": "地"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "的 links the description to the noun 菜",
+            "text": "的"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "得 comes after a verb",
+            "text": "得"
+          }
+        },
+        "prompt": "这是妈妈做__菜。",
+        "save": [
+          {
+            "chinese": "妈妈做的菜",
+            "meaning": "the dish Mum cooked",
+            "pinyin": "mā ma zuò de cài"
+          }
+        ]
+      },
+      "ch24": {
+        "context": "similar characters",
+        "explanation": "做 means to do or to make, so 做饭 means to cook. 作 is used in a few fixed words like 作业 and 作文.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "作 is used in words like 作业 and 工作",
+            "text": "作"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "做 is used for making and doing things, as in 做饭",
+            "text": "做"
+          }
+        },
+        "prompt": "我喜欢在家__饭。",
+        "save": [
+          {
+            "chinese": "做饭",
+            "meaning": "to cook",
+            "pinyin": "zuò fàn"
+          }
+        ]
+      },
+      "ch25": {
+        "context": "word choice",
+        "explanation": "以后 means afterwards. 以 is the one used in 以后 and 以前.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "已 means already, as in 已经",
+            "text": "已"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "以 is used in 以后 and 以前",
+            "text": "以"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "己 means self, as in 自己",
+            "text": "己"
+          }
+        },
+        "prompt": "吃完饭__后，我们去散步。",
+        "save": [
+          {
+            "chinese": "以后",
+            "meaning": "afterwards, later",
+            "pinyin": "yǐ hòu"
+          }
+        ]
+      },
+      "ch26": {
+        "context": "same sound",
+        "explanation": "他, 她 and 它 all sound like tā. 她 is used for a woman or a girl, and here it refers to Mum.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "他 is used for a man or a boy",
+            "text": "他"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "它 is used for animals and things",
+            "text": "它"
+          },
+          "c": {
+            "isCorrect": true,
+            "reason": "她 is used for a woman or a girl",
+            "text": "她"
+          }
+        },
+        "prompt": "我妈妈说__明天要出差。",
+        "save": [
+          {
+            "chinese": "出差",
+            "meaning": "to go on a business trip",
+            "pinyin": "chū chāi"
+          }
+        ]
+      },
+      "ch27": {
+        "context": "word choice",
+        "explanation": "为什么 means why. 为 is the one used to ask for a reason.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "位 is a measure word for people, as in 一位老师",
+            "text": "位"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "为 is used in 为什么 to ask why",
+            "text": "为"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "未 means not yet, as in 未来",
+            "text": "未"
+          }
+        },
+        "prompt": "你__什么不去?",
+        "save": [
+          {
+            "chinese": "为什么",
+            "meaning": "why",
+            "pinyin": "wèi shén me"
+          }
+        ]
+      },
+      "ch28": {
+        "context": "word choice",
+        "explanation": "买 means to buy and 卖 means to sell. They look alike but are read mǎi and mài.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "卖 means to sell, as in 卖东西",
+            "text": "卖"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "买 means to buy, as in 买东西",
+            "text": "买"
+          }
+        },
+        "prompt": "我想去商场__衣服。",
+        "save": [
+          {
+            "chinese": "买衣服",
+            "meaning": "to buy clothes",
+            "pinyin": "mǎi yī fu"
           }
         ]
       },
@@ -587,6 +808,138 @@
           "个": "个 is the all-purpose one, but there is a more specific word for this."
         }
       },
+      "me21": {
+        "answerText": "双",
+        "context": "measure words",
+        "explanation": "双 is used for things that come in pairs, like 一双鞋 and 一双筷子.",
+        "gloss": "shoes (a pair)",
+        "prompt": "鞋",
+        "save": [
+          {
+            "chinese": "一双鞋",
+            "meaning": "a pair of shoes",
+            "pinyin": "yì shuāng xié"
+          },
+          {
+            "chinese": "双",
+            "meaning": "measure word for pairs",
+            "pinyin": "shuāng"
+          }
+        ],
+        "wrongAnswers": {
+          "个": "个 is the all-purpose one, but there is a more specific word for this."
+        }
+      },
+      "me22": {
+        "answerText": "盏",
+        "context": "measure words",
+        "explanation": "盏 is used for lamps and lights, like 一盏灯.",
+        "gloss": "lamp",
+        "prompt": "灯",
+        "save": [
+          {
+            "chinese": "一盏灯",
+            "meaning": "a lamp",
+            "pinyin": "yì zhǎn dēng"
+          },
+          {
+            "chinese": "盏",
+            "meaning": "measure word for lamps",
+            "pinyin": "zhǎn"
+          }
+        ],
+        "wrongAnswers": {
+          "个": "个 is the all-purpose one, but there is a more specific word for this."
+        }
+      },
+      "me23": {
+        "answerText": "座",
+        "context": "measure words",
+        "explanation": "座 is used for large fixed things like mountains, bridges and buildings, like 一座山.",
+        "gloss": "mountain",
+        "prompt": "山",
+        "save": [
+          {
+            "chinese": "一座山",
+            "meaning": "a mountain",
+            "pinyin": "yí zuò shān"
+          },
+          {
+            "chinese": "座",
+            "meaning": "measure word for mountains and large buildings",
+            "pinyin": "zuò"
+          }
+        ],
+        "wrongAnswers": {
+          "个": "个 is the all-purpose one, but there is a more specific word for this."
+        }
+      },
+      "me24": {
+        "answerText": "间",
+        "context": "measure words",
+        "explanation": "间 is used for rooms and small buildings, like 一间房间.",
+        "gloss": "room",
+        "prompt": "房间",
+        "save": [
+          {
+            "chinese": "一间房间",
+            "meaning": "a room",
+            "pinyin": "yì jiān fáng jiān"
+          },
+          {
+            "chinese": "间",
+            "meaning": "measure word for rooms",
+            "pinyin": "jiān"
+          }
+        ],
+        "wrongAnswers": {
+          "个": "个 is the all-purpose one, but there is a more specific word for this."
+        }
+      },
+      "me25": {
+        "answerText": "封",
+        "context": "measure words",
+        "explanation": "封 is used for letters and things that are sealed, like 一封信.",
+        "gloss": "letter",
+        "prompt": "信",
+        "save": [
+          {
+            "chinese": "一封信",
+            "meaning": "a letter",
+            "pinyin": "yì fēng xìn"
+          },
+          {
+            "chinese": "封",
+            "meaning": "measure word for letters",
+            "pinyin": "fēng"
+          }
+        ],
+        "wrongAnswers": {
+          "个": "个 is the all-purpose one, but there is a more specific word for this."
+        }
+      },
+      "me26": {
+        "answerText": "块",
+        "context": "measure words",
+        "explanation": "块 is used for pieces and lumps, like 一块蛋糕.",
+        "gloss": "cake",
+        "prompt": "蛋糕",
+        "save": [
+          {
+            "chinese": "一块蛋糕",
+            "meaning": "a piece of cake",
+            "pinyin": "yí kuài dàn gāo"
+          },
+          {
+            "chinese": "块",
+            "meaning": "measure word for pieces and lumps",
+            "pinyin": "kuài"
+          }
+        ],
+        "wrongAnswers": {
+          "个": "个 is the all-purpose one, but there is a more specific word for this."
+        }
+      },
       "me3": {
         "answerText": "辆",
         "context": "measure words",
@@ -899,6 +1252,269 @@
           }
         ]
       },
+      "ng13": {
+        "context": "shopping",
+        "explanation": "刷卡 means to pay by card, so this is a question about how to pay.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "No place or toilet word here",
+            "text": "Asking where the toilet is"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "刷卡 means to pay by card",
+            "text": "Asking if you can pay by card"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "No food or drink word here",
+            "text": "Ordering a drink"
+          },
+          "d": {
+            "isCorrect": false,
+            "reason": "Nothing here is about lowering the price",
+            "text": "Asking for a discount"
+          }
+        },
+        "prompt": "请问这里可以刷卡吗?",
+        "save": [
+          {
+            "chinese": "请问这里可以刷卡吗?",
+            "meaning": "Excuse me, can I pay by card here?",
+            "pinyin": "qǐng wèn zhè lǐ kě yǐ shuā kǎ ma"
+          },
+          {
+            "chinese": "刷卡",
+            "meaning": "to pay by card",
+            "pinyin": "shuā kǎ"
+          }
+        ]
+      },
+      "ng14": {
+        "context": "school",
+        "explanation": "不舒服 means unwell and 请假 means to ask for leave, so you are saying you are unwell and need time off.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "Nothing here is about an invitation",
+            "text": "Inviting a friend to a party"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "No food words appear here",
+            "text": "Complaining about the food"
+          },
+          "c": {
+            "isCorrect": true,
+            "reason": "不舒服 is unwell and 请假 is to ask for leave",
+            "text": "Telling a teacher you are unwell and need leave"
+          },
+          "d": {
+            "isCorrect": false,
+            "reason": "No place or route is mentioned",
+            "text": "Asking for directions"
+          }
+        },
+        "prompt": "我今天不舒服，想请假。",
+        "save": [
+          {
+            "chinese": "我今天不舒服，想请假。",
+            "meaning": "I'm unwell today and would like to take leave.",
+            "pinyin": "wǒ jīn tiān bù shū fu xiǎng qǐng jià"
+          },
+          {
+            "chinese": "不舒服",
+            "meaning": "unwell",
+            "pinyin": "bù shū fu"
+          }
+        ]
+      },
+      "ng15": {
+        "context": "friends",
+        "explanation": "有空 means to be free, and 看电影 means to watch a movie, so you are inviting someone to the cinema.",
+        "options": {
+          "a": {
+            "isCorrect": true,
+            "reason": "有空 asks if they are free and 看电影 is to watch a movie",
+            "text": "Inviting a friend to watch a movie"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "Nothing here is about money",
+            "text": "Asking the stall uncle for the price"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "No apology words appear here",
+            "text": "Apologising for being late"
+          },
+          "d": {
+            "isCorrect": false,
+            "reason": "Nothing here is about food",
+            "text": "Asking for takeaway"
+          }
+        },
+        "prompt": "这个周末你有空吗? 我们去看电影。",
+        "save": [
+          {
+            "chinese": "这个周末你有空吗?",
+            "meaning": "Are you free this weekend?",
+            "pinyin": "zhè ge zhōu mò nǐ yǒu kòng ma"
+          },
+          {
+            "chinese": "我们去看电影。",
+            "meaning": "Let's go and watch a movie.",
+            "pinyin": "wǒ men qù kàn diàn yǐng"
+          }
+        ]
+      },
+      "ng16": {
+        "context": "travel",
+        "explanation": "麻烦你 is a polite way to ask for help, and 拍照片 is to take a photo.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "No money words appear here",
+            "text": "Asking someone to lend you money"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "Nothing here is about a table or a time",
+            "text": "Booking a table at a restaurant"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "Nothing here is about school work",
+            "text": "Telling the teacher you finished homework"
+          },
+          "d": {
+            "isCorrect": true,
+            "reason": "麻烦你 asks for a favour and 拍照片 is to take a photo",
+            "text": "Asking a stranger to take a photo of you"
+          }
+        },
+        "prompt": "麻烦你帮我拍一张照片，好吗?",
+        "save": [
+          {
+            "chinese": "麻烦你帮我拍一张照片，好吗?",
+            "meaning": "Could you please take a photo of me?",
+            "pinyin": "má fan nǐ bāng wǒ pāi yì zhāng zhào piàn hǎo ma"
+          },
+          {
+            "chinese": "麻烦你",
+            "meaning": "sorry to trouble you",
+            "pinyin": "má fan nǐ"
+          }
+        ]
+      },
+      "ng17": {
+        "context": "shopping",
+        "explanation": "太贵了 means too expensive and 我再看看 means I will look around some more, a polite way to say no thanks.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "No food words appear here",
+            "text": "Complimenting a dish"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "太贵了 is too expensive, 再看看 is to look some more",
+            "text": "Politely saying the price is too high and you will look around"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "No place is mentioned",
+            "text": "Asking for the way to the MRT"
+          },
+          "d": {
+            "isCorrect": false,
+            "reason": "Nothing here is about wishes",
+            "text": "Wishing someone good health"
+          }
+        },
+        "prompt": "这个太贵了，我再看看。",
+        "save": [
+          {
+            "chinese": "这个太贵了，我再看看。",
+            "meaning": "This is too expensive, I'll look around some more.",
+            "pinyin": "zhè ge tài guì le wǒ zài kàn kan"
+          },
+          {
+            "chinese": "太贵了",
+            "meaning": "too expensive",
+            "pinyin": "tài guì le"
+          }
+        ]
+      },
+      "ng18": {
+        "context": "school",
+        "explanation": "祝你 means I wish you and 顺利 means smoothly, so this wishes someone luck in their exam.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "Birthday wishes use 生日快乐",
+            "text": "Wishing a friend a happy birthday"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "No apology words appear here",
+            "text": "Saying sorry for being late"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "No food words appear here",
+            "text": "Ordering food"
+          },
+          "d": {
+            "isCorrect": true,
+            "reason": "考试 means exam and 顺利 means smoothly",
+            "text": "Wishing a friend luck for their exam"
+          }
+        },
+        "prompt": "祝你考试顺利!",
+        "save": [
+          {
+            "chinese": "祝你考试顺利!",
+            "meaning": "Good luck with your exam!",
+            "pinyin": "zhù nǐ kǎo shì shùn lì"
+          }
+        ]
+      },
+      "ng19": {
+        "context": "taxi",
+        "explanation": "找 here means to give change, so 不用找了 tells the other person to keep the change.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "No question about price is asked",
+            "text": "Asking how much something costs"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "不用找了 means no need to give change",
+            "text": "Telling someone to keep the change"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "Nothing here is about food",
+            "text": "Asking for your food to be packed"
+          },
+          "d": {
+            "isCorrect": false,
+            "reason": "Nothing here is about a table or a time",
+            "text": "Booking a table"
+          }
+        },
+        "prompt": "不用找了，谢谢。",
+        "save": [
+          {
+            "chinese": "不用找了，谢谢。",
+            "meaning": "Keep the change, thanks.",
+            "pinyin": "bú yòng zhǎo le xiè xiè"
+          }
+        ]
+      },
       "ng2": {
         "context": "school",
         "explanation": "迟交 means to hand something in late, and 老师 shows who is being asked.",
@@ -935,6 +1551,40 @@
             "chinese": "迟交",
             "meaning": "to hand in late",
             "pinyin": "chí jiāo"
+          }
+        ]
+      },
+      "ng20": {
+        "context": "making friends",
+        "explanation": "手机号码 is a mobile number and 是多少 asks what it is, so you are asking for someone's phone number.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "Asking a name uses 叫什么名字",
+            "text": "Asking someone's name"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "Time questions use 几点",
+            "text": "Asking what time it is"
+          },
+          "c": {
+            "isCorrect": true,
+            "reason": "手机号码 is a mobile number",
+            "text": "Asking for someone's phone number"
+          },
+          "d": {
+            "isCorrect": false,
+            "reason": "No place word appears here",
+            "text": "Asking where someone lives"
+          }
+        },
+        "prompt": "你的手机号码是多少?",
+        "save": [
+          {
+            "chinese": "你的手机号码是多少?",
+            "meaning": "What is your phone number?",
+            "pinyin": "nǐ de shǒu jī hào mǎ shì duō shao"
           }
         ]
       },
@@ -1349,6 +1999,244 @@
           }
         ]
       },
+      "np13": {
+        "context": "cafe",
+        "explanation": "When ordering a drink, people keep it short. A long explanation sounds out of place.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "Correct, but far too wordy for ordering a drink",
+            "text": "我不想要任何冰块在里面。"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "Short and natural, what people really say when ordering",
+            "text": "去冰，谢谢。"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "Word order is off",
+            "text": "冰去，谢谢。"
+          },
+          "d": {
+            "isCorrect": false,
+            "reason": "This asks for the opposite of what you want",
+            "text": "多冰，谢谢。"
+          }
+        },
+        "prompt": "You are ordering bubble tea and want no ice.",
+        "save": [
+          {
+            "chinese": "去冰，谢谢。",
+            "meaning": "No ice, thanks.",
+            "pinyin": "qù bīng xiè xiè"
+          }
+        ]
+      },
+      "np14": {
+        "context": "public transport",
+        "explanation": "A quick apology is all that is needed after a small bump.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "Far too formal, sounds like a public statement",
+            "text": "我为我的行为深表歉意。"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "This is what you say when someone else apologises to you",
+            "text": "没关系!"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "This means you feel shy or embarrassed, not that you are sorry",
+            "text": "我不好意思。"
+          },
+          "d": {
+            "isCorrect": true,
+            "reason": "Quick and natural for a small accident",
+            "text": "不好意思!"
+          }
+        },
+        "prompt": "You accidentally bump into someone on the MRT.",
+        "save": [
+          {
+            "chinese": "不好意思!",
+            "meaning": "Sorry! / Excuse me!",
+            "pinyin": "bù hǎo yì si"
+          }
+        ]
+      },
+      "np15": {
+        "context": "texting a friend",
+        "explanation": "Short and friendly keeps the chat going. Adding 你呢 hands the question back.",
+        "options": {
+          "a": {
+            "isCorrect": true,
+            "reason": "Short, natural and keeps the conversation going",
+            "text": "吃了，你呢?"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "Far too formal, sounds like a report",
+            "text": "我已经完成了用餐。"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "Word order is off",
+            "text": "了吃，你呢?"
+          },
+          "d": {
+            "isCorrect": false,
+            "reason": "This does not match what happened",
+            "text": "还没吃，你呢?"
+          }
+        },
+        "prompt": "Your friend asks if you have eaten, and you just finished lunch.",
+        "save": [
+          {
+            "chinese": "吃了，你呢?",
+            "meaning": "I've eaten, how about you?",
+            "pinyin": "chī le nǐ ne"
+          }
+        ]
+      },
+      "np16": {
+        "context": "school",
+        "explanation": "Be clear and polite when talking to a teacher. Say what you do not understand.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "This calls the question stupid, which is rude to a teacher",
+            "text": "这题太笨了。"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "This says something that does not match what you want to say",
+            "text": "老师，我明白这题。"
+          },
+          "c": {
+            "isCorrect": true,
+            "reason": "Clear and polite, suits talking to a teacher",
+            "text": "老师，我不明白这题。"
+          },
+          "d": {
+            "isCorrect": false,
+            "reason": "Word order is off",
+            "text": "老师，题我不这明白。"
+          }
+        },
+        "prompt": "You do not understand a question and want to tell your teacher.",
+        "save": [
+          {
+            "chinese": "老师，我不明白这题。",
+            "meaning": "Teacher, I don't understand this question.",
+            "pinyin": "lǎo shī wǒ bù míng bai zhè tí"
+          }
+        ]
+      },
+      "np17": {
+        "context": "hawker stall",
+        "explanation": "A short, warm compliment is what people say at a stall.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "Correct, but sounds like a review, not something you say to an uncle",
+            "text": "这个食物的味道非常令人满意。"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "Word order is off",
+            "text": "好吃很!"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "This says the opposite of a compliment",
+            "text": "很难吃!"
+          },
+          "d": {
+            "isCorrect": true,
+            "reason": "Short, warm and natural",
+            "text": "很好吃!"
+          }
+        },
+        "prompt": "You want to tell the stall uncle his noodles are delicious.",
+        "save": [
+          {
+            "chinese": "很好吃!",
+            "meaning": "It's very tasty!",
+            "pinyin": "hěn hǎo chī"
+          }
+        ]
+      },
+      "np18": {
+        "context": "friends",
+        "explanation": "For a small favour, a light reply is enough.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "Too heavy and stiff for a small favour",
+            "text": "这是我应该做的义务。"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "Word order is off",
+            "text": "客气不!"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "This sounds like you are refusing thanks, which is not the usual reply",
+            "text": "不谢谢!"
+          },
+          "d": {
+            "isCorrect": true,
+            "reason": "Light and friendly",
+            "text": "不客气!"
+          }
+        },
+        "prompt": "A friend thanks you for a small favour.",
+        "save": [
+          {
+            "chinese": "不客气!",
+            "meaning": "You're welcome!",
+            "pinyin": "bú kè qi"
+          }
+        ]
+      },
+      "np19": {
+        "context": "friends",
+        "explanation": "Keep it short and add 一下 to make it soft and casual.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "Far too stiff, sounds like an order to freeze",
+            "text": "请你保持静止不动。"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "Short and casual, 一下 makes it soft",
+            "text": "等我一下!"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "This says you will wait, not that you want them to",
+            "text": "我等一下!"
+          },
+          "d": {
+            "isCorrect": false,
+            "reason": "Word order is off",
+            "text": "一下等我!"
+          }
+        },
+        "prompt": "You need a moment and want your friend to wait for you.",
+        "save": [
+          {
+            "chinese": "等我一下!",
+            "meaning": "Wait for me a moment!",
+            "pinyin": "děng wǒ yí xià"
+          }
+        ]
+      },
       "np2": {
         "context": "hawker stall",
         "explanation": "At a stall people keep it short. Long, formal sentences sound out of place.",
@@ -1380,6 +2268,40 @@
             "chinese": "打包，谢谢。",
             "meaning": "Takeaway please, thanks.",
             "pinyin": "dǎ bāo xiè xiè"
+          }
+        ]
+      },
+      "np20": {
+        "context": "texting a friend",
+        "explanation": "People text short updates like this when they are travelling.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "Far too formal, sounds like a notice",
+            "text": "我正处于前往的过程中。"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "Word order is off",
+            "text": "我路在上了!"
+          },
+          "c": {
+            "isCorrect": false,
+            "reason": "This says you have already arrived",
+            "text": "我到了!"
+          },
+          "d": {
+            "isCorrect": true,
+            "reason": "Short and natural",
+            "text": "我在路上了!"
+          }
+        },
+        "prompt": "You are on your way and want to tell your friend you will be there soon.",
+        "save": [
+          {
+            "chinese": "我在路上了!",
+            "meaning": "I'm on the way!",
+            "pinyin": "wǒ zài lù shang le"
           }
         ]
       },
@@ -1773,6 +2695,206 @@
         ],
         "target": "还"
       },
+      "so21": {
+        "context": "everyday",
+        "explanation": "In 睡着, 着 shows the action was achieved, so you actually fell asleep. It is read zháo. As a light particle, as in 看着, it is read zhe.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "zhe is the light particle, as in 看着 and 走着",
+            "text": "zhe (continuing action)"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "zháo is used in 睡着 and 找着",
+            "text": "zháo (achieved)"
+          }
+        },
+        "prompt": "我昨晚太累，一下子就睡着了。",
+        "save": [
+          {
+            "chinese": "睡着了",
+            "meaning": "fell asleep",
+            "pinyin": "shuì zháo le"
+          }
+        ],
+        "target": "着"
+      },
+      "so22": {
+        "context": "everyday",
+        "explanation": "干 means to do here, so it is read gàn. When it means dry, as in 干净, it is read gān.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "gān is used in 干净 and 干杯",
+            "text": "gān (dry)"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "gàn is used in 干什么 and 干活",
+            "text": "gàn (to do)"
+          }
+        },
+        "prompt": "你在干什么?",
+        "save": [
+          {
+            "chinese": "你在干什么?",
+            "meaning": "What are you doing?",
+            "pinyin": "nǐ zài gàn shén me"
+          }
+        ],
+        "target": "干"
+      },
+      "so23": {
+        "context": "everyday",
+        "explanation": "In 少年 (a young person), 少 is read shào. Meaning few or less, as in 很少, it is read shǎo.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "shǎo is used in 很少 and 少糖",
+            "text": "shǎo (few, less)"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "shào is used in 少年 and 少女",
+            "text": "shào (young)"
+          }
+        },
+        "prompt": "他还是一个少年。",
+        "save": [
+          {
+            "chinese": "少年",
+            "meaning": "a young person, a youth",
+            "pinyin": "shào nián"
+          }
+        ],
+        "target": "少"
+      },
+      "so24": {
+        "context": "everyday",
+        "explanation": "In 便宜 (cheap), 便 is read pián. Meaning convenient, as in 方便, it is read biàn.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "biàn is used in 方便 and 随便",
+            "text": "biàn (convenient)"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "pián is used in 便宜",
+            "text": "pián (cheap)"
+          }
+        },
+        "prompt": "这个很便宜。",
+        "save": [
+          {
+            "chinese": "这个很便宜。",
+            "meaning": "This is very cheap.",
+            "pinyin": "zhè ge hěn pián yi"
+          }
+        ],
+        "target": "便"
+      },
+      "so25": {
+        "context": "everyday",
+        "explanation": "In 调查 (to investigate), 调 is read diào. Meaning to adjust, as in 调整, it is read tiáo.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "tiáo is used in 调整 and 空调",
+            "text": "tiáo (to adjust)"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "diào is used in 调查 and 调动",
+            "text": "diào (to investigate, to transfer)"
+          }
+        },
+        "prompt": "警察正在调查这件事。",
+        "save": [
+          {
+            "chinese": "调查",
+            "meaning": "to investigate",
+            "pinyin": "diào chá"
+          }
+        ],
+        "target": "调"
+      },
+      "so26": {
+        "context": "everyday",
+        "explanation": "种 as a verb means to plant, so it is read zhòng. As a noun meaning a kind or type, as in 种类, it is read zhǒng.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "zhǒng is used in 种类 and 各种",
+            "text": "zhǒng (kind, type)"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "zhòng is used in 种花 and 种树",
+            "text": "zhòng (to plant)"
+          }
+        },
+        "prompt": "奶奶很喜欢种花。",
+        "save": [
+          {
+            "chinese": "种花",
+            "meaning": "to grow flowers",
+            "pinyin": "zhòng huā"
+          }
+        ],
+        "target": "种"
+      },
+      "so27": {
+        "context": "everyday",
+        "explanation": "In 差一点 (almost), 差 means lacking and is read chà. Meaning a difference, as in 差别, it is read chā.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "chā is used in 差别 and 时差",
+            "text": "chā (a difference)"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "chà is used in 差一点 and 太差",
+            "text": "chà (lacking, almost)"
+          }
+        },
+        "prompt": "我差一点就迟到了。",
+        "save": [
+          {
+            "chinese": "差一点",
+            "meaning": "almost, nearly",
+            "pinyin": "chà yì diǎn"
+          }
+        ],
+        "target": "差"
+      },
+      "so28": {
+        "context": "everyday",
+        "explanation": "In 数学 (mathematics), 数 is read shù. Meaning to count, as in 数一数, it is read shǔ.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "shǔ is used in 数一数 and 数数",
+            "text": "shǔ (to count)"
+          },
+          "b": {
+            "isCorrect": true,
+            "reason": "shù is used in 数学 and 数字",
+            "text": "shù (number)"
+          }
+        },
+        "prompt": "我最喜欢上数学课。",
+        "save": [
+          {
+            "chinese": "数学",
+            "meaning": "mathematics",
+            "pinyin": "shù xué"
+          }
+        ],
+        "target": "数"
+      },
       "so3": {
         "context": "everyday",
         "explanation": "In 睡觉 (to sleep), 觉 is read jiào. In 感觉 (to feel), it is read jué.",
@@ -2110,6 +3232,216 @@
         ],
         "target": "息"
       },
+      "to13": {
+        "context": "neutral tone",
+        "explanation": "In 学生 (student), 生 is said lightly as sheng.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "A full tone sounds too heavy here",
+            "text": "shēng (first tone)"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "A full tone sounds too heavy here",
+            "text": "shèng (fourth tone)"
+          },
+          "c": {
+            "isCorrect": true,
+            "reason": "Light and short, with no tone mark",
+            "text": "sheng (neutral tone)"
+          }
+        },
+        "prompt": "学生",
+        "save": [
+          {
+            "chinese": "学生",
+            "meaning": "student",
+            "pinyin": "xué sheng"
+          }
+        ],
+        "target": "生"
+      },
+      "to14": {
+        "context": "neutral tone",
+        "explanation": "In 头发 (hair), 发 is said lightly as fa.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "A full tone sounds too heavy here",
+            "text": "fā (first tone)"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "A full tone sounds too heavy here",
+            "text": "fà (fourth tone)"
+          },
+          "c": {
+            "isCorrect": true,
+            "reason": "Light and short, with no tone mark",
+            "text": "fa (neutral tone)"
+          }
+        },
+        "prompt": "头发",
+        "save": [
+          {
+            "chinese": "头发",
+            "meaning": "hair",
+            "pinyin": "tóu fa"
+          }
+        ],
+        "target": "发"
+      },
+      "to15": {
+        "context": "neutral tone",
+        "explanation": "In 事情 (matter, thing), 情 is said lightly as qing.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "A full tone sounds too heavy here",
+            "text": "qíng (second tone)"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "A full tone sounds too heavy here",
+            "text": "qìng (fourth tone)"
+          },
+          "c": {
+            "isCorrect": true,
+            "reason": "Light and short, with no tone mark",
+            "text": "qing (neutral tone)"
+          }
+        },
+        "prompt": "事情",
+        "save": [
+          {
+            "chinese": "事情",
+            "meaning": "matter, thing",
+            "pinyin": "shì qing"
+          }
+        ],
+        "target": "情"
+      },
+      "to16": {
+        "context": "neutral tone",
+        "explanation": "In 衣服 (clothes), 服 is said lightly as fu.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "A full tone sounds too heavy here",
+            "text": "fú (second tone)"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "A full tone sounds too heavy here",
+            "text": "fù (fourth tone)"
+          },
+          "c": {
+            "isCorrect": true,
+            "reason": "Light and short, with no tone mark",
+            "text": "fu (neutral tone)"
+          }
+        },
+        "prompt": "衣服",
+        "save": [
+          {
+            "chinese": "衣服",
+            "meaning": "clothes",
+            "pinyin": "yī fu"
+          }
+        ],
+        "target": "服"
+      },
+      "to17": {
+        "context": "neutral tone",
+        "explanation": "In 清楚 (clear), 楚 is said lightly as chu.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "A full tone sounds too heavy here",
+            "text": "chǔ (third tone)"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "A full tone sounds too heavy here",
+            "text": "chù (fourth tone)"
+          },
+          "c": {
+            "isCorrect": true,
+            "reason": "Light and short, with no tone mark",
+            "text": "chu (neutral tone)"
+          }
+        },
+        "prompt": "清楚",
+        "save": [
+          {
+            "chinese": "清楚",
+            "meaning": "clear",
+            "pinyin": "qīng chu"
+          }
+        ],
+        "target": "楚"
+      },
+      "to18": {
+        "context": "neutral tone",
+        "explanation": "In 地方 (place), 方 is said lightly as fang.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "A full tone sounds too heavy here",
+            "text": "fāng (first tone)"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "A full tone sounds too heavy here",
+            "text": "fàng (fourth tone)"
+          },
+          "c": {
+            "isCorrect": true,
+            "reason": "Light and short, with no tone mark",
+            "text": "fang (neutral tone)"
+          }
+        },
+        "prompt": "地方",
+        "save": [
+          {
+            "chinese": "地方",
+            "meaning": "place",
+            "pinyin": "dì fang"
+          }
+        ],
+        "target": "方"
+      },
+      "to19": {
+        "context": "tone change",
+        "explanation": "不 is normally bù, but before another fourth tone it changes to bú. So 不是 is said bú shì.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "bù is the usual tone, but it changes before another fourth tone",
+            "text": "bù (fourth tone)"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "A light tone is used in words like 对不对, not here",
+            "text": "bu (neutral tone)"
+          },
+          "c": {
+            "isCorrect": true,
+            "reason": "不 changes to the second tone before a fourth tone",
+            "text": "bú (second tone)"
+          }
+        },
+        "prompt": "不是",
+        "save": [
+          {
+            "chinese": "不是",
+            "meaning": "is not",
+            "pinyin": "bú shì"
+          }
+        ],
+        "target": "不"
+      },
       "to2": {
         "context": "neutral tone",
         "explanation": "In 觉得 (to feel or think), 得 is said lightly as de.",
@@ -2139,6 +3471,36 @@
           }
         ],
         "target": "得"
+      },
+      "to20": {
+        "context": "tone change",
+        "explanation": "一 is normally yī, but before a fourth tone it changes to yí. So 一样 is said yí yàng.",
+        "options": {
+          "a": {
+            "isCorrect": false,
+            "reason": "yī is the usual tone, but it changes before a fourth tone",
+            "text": "yī (first tone)"
+          },
+          "b": {
+            "isCorrect": false,
+            "reason": "yì is used before the first, second and third tones, not before a fourth tone",
+            "text": "yì (fourth tone)"
+          },
+          "c": {
+            "isCorrect": true,
+            "reason": "一 changes to the second tone before a fourth tone",
+            "text": "yí (second tone)"
+          }
+        },
+        "prompt": "一样",
+        "save": [
+          {
+            "chinese": "一样",
+            "meaning": "the same",
+            "pinyin": "yí yàng"
+          }
+        ],
+        "target": "一"
       },
       "to3": {
         "context": "neutral tone",
@@ -2350,6 +3712,168 @@
         ],
         "target": "亮"
       }
+    },
+  "image": {
+    "everyday-objects": {
+      "eo1": {
+        "chinese": "椅子",
+        "meaning": "chair",
+        "pinyin": "yǐzi",
+        "image": "chair.jpg"
+      },
+      "eo2": {
+        "chinese": "桌子",
+        "meaning": "table",
+        "pinyin": "zhuōzi",
+        "image": "table.jpg"
+      },
+      "eo3": {
+        "chinese": "书本",
+        "meaning": "book",
+        "pinyin": "shūběn",
+        "image": "book.jpg"
+      },
+      "eo4": {
+        "chinese": "手机",
+        "meaning": "cell phone",
+        "pinyin": "shǒujī",
+        "image": "cellphone.jpg"
+      },
+      "eo5": {
+        "chinese": "电脑",
+        "meaning": "computer",
+        "pinyin": "diànnǎo",
+        "image": "computer.jpg"
+      }
+    },
+    "food": {
+      "f1": {
+        "chinese": "苹果",
+        "meaning": "apple",
+        "pinyin": "píngguǒ",
+        "image": "apple.jpg"
+      },
+      "f2": {
+        "chinese": "香蕉",
+        "meaning": "banana",
+        "pinyin": "xiāngjiāo",
+        "image": "banana.jpg"
+      },
+      "f3": {
+        "chinese": "米饭",
+        "meaning": "rice",
+        "pinyin": "mǐfàn",
+        "image": "rice.jpg"
+      },
+      "f4": {
+        "chinese": "鸡蛋",
+        "meaning": "egg",
+        "pinyin": "jīdàn",
+        "image": "egg.jpg"
+      },
+      "f5": {
+        "chinese": "面包",
+        "meaning": "bread",
+        "pinyin": "miànbāo",
+        "image": "bread.jpg"
+      }
+    },
+    "animals": {
+      "a1": {
+        "chinese": "猫",
+        "meaning": "cat",
+        "pinyin": "māo",
+        "image": "cat.jpg"
+      },
+      "a2": {
+        "chinese": "狗",
+        "meaning": "dog",
+        "pinyin": "gǒu",
+        "image": "dog.jpg"
+      },
+      "a3": {
+        "chinese": "鸟",
+        "meaning": "bird",
+        "pinyin": "niǎo",
+        "image": "bird.jpg"
+      },
+      "a4": {
+        "chinese": "鱼",
+        "meaning": "fish",
+        "pinyin": "yú",
+        "image": "fish.jpg"
+      },
+      "a5": {
+        "chinese": "兔子",
+        "meaning": "rabbit",
+        "pinyin": "tùzi",
+        "image": "rabbit.jpg"
+      }
+    },
+    "places": {
+      "p1": {
+        "chinese": "学校",
+        "meaning": "school",
+        "pinyin": "xuéxiào",
+        "image": "school.jpg"
+      },
+      "p2": {
+        "chinese": "医院",
+        "meaning": "hospital",
+        "pinyin": "yīyuàn",
+        "image": "hospital.jpg"
+      },
+      "p3": {
+        "chinese": "超市",
+        "meaning": "supermarket",
+        "pinyin": "chāoshì",
+        "image": "supermarket.jpg"
+      },
+      "p4": {
+        "chinese": "公园",
+        "meaning": "park",
+        "pinyin": "gōngyuán",
+        "image": "park.jpg"
+      },
+      "p5": {
+        "chinese": "图书馆",
+        "meaning": "library",
+        "pinyin": "túshūguǎn",
+        "image": "library.jpg"
+      }
+    },
+    "countries": {
+      "c1": {
+        "chinese": "新加坡",
+        "meaning": "Singapore",
+        "pinyin": "Xīnjiāpō",
+        "image": "singapore.jpg"
+      },
+      "c2": {
+        "chinese": "中国",
+        "meaning": "China",
+        "pinyin": "Zhōngguó",
+        "image": "china.jpg"
+      },
+      "c3": {
+        "chinese": "日本",
+        "meaning": "Japan",
+        "pinyin": "Rìběn",
+        "image": "japan.jpg"
+      },
+      "c4": {
+        "chinese": "韩国",
+        "meaning": "South Korea",
+        "pinyin": "Hánguó",
+        "image": "south-korea.jpg"
+      },
+      "c5": {
+        "chinese": "马来西亚",
+        "meaning": "Malaysia",
+        "pinyin": "Mǎláixīyà",
+        "image": "malaysia.jpg"
+        }
+      }
     }
   },
   "users": {
@@ -2357,6 +3881,9 @@
       "badges": {
         "daily3": {
           "earnedAt": 1791960297440
+        },
+        "first_phrase": {
+          "earnedAt": 1792382057376
         },
         "mastery_pronunciation": {
           "earnedAt": 1792048668702
@@ -2366,38 +3893,46 @@
         }
       },
       "dailyQuiz": {
-        "date": "2026-10-14",
-        "score": 4,
+        "date": "2026-10-18",
+        "score": 2,
         "total": 5
       },
       "dailyStreak": {
         "contextGuess": {
           "best": 4,
-          "current": 4,
-          "lastCountedDay": "2026-10-15",
-          "todayCount": 7,
-          "todayDate": "2026-10-15"
+          "current": 1,
+          "lastCountedDay": "2026-10-18",
+          "todayCount": 12,
+          "todayDate": "2026-10-18"
         }
       },
       "highScores": {
-        "idiomFlashcards": 30,
+        "proverbFlashcards": 30,
         "quiz_naturalGuess": 9,
         "quiz_sound": 7,
         "quiz_tone": 1,
         "vocabViaImages": 12
       },
+      "login": {
+        "days": 1,
+        "lastDay": "2026-10-19"
+      },
       "mastery": {
         "context": {
-          "answered": 16,
-          "score": 11
+          "answered": 21,
+          "score": 14
         },
         "grammar": {
-          "answered": 5,
+          "answered": 7,
           "score": 3
         },
+        "phrasing": {
+          "answered": 3,
+          "score": 1
+        },
         "pronunciation": {
-          "answered": 35,
-          "score": 20
+          "answered": 37,
+          "score": 22
         }
       },
       "masteryLevel": 2,
@@ -2407,18 +3942,36 @@
           "createdAt": 1792048686126,
           "meaning": "He really likes listening to music.",
           "pinyin": "tā hěn xǐ huan tīng yīn yuè"
+        },
+        "-P4EBUHJGHw_9LlCkTgK": {
+          "chinese": "发烧",
+          "createdAt": 1792330038447,
+          "meaning": "to have a fever",
+          "pinyin": "fā shāo"
+        },
+        "-P4EFhhSebrltDHohKb3": {
+          "chinese": "她唱得真好听。",
+          "createdAt": 1792331146087,
+          "meaning": "She sings really beautifully.",
+          "pinyin": "tā chàng de zhēn hǎo tīng"
+        },
+        "-P4HHv5zpSCraHyhM10y": {
+          "chinese": "事实胜于雄辩。",
+          "createdAt": 1792382057339,
+          "meaning": "Facts beat eloquence.",
+          "pinyin": "Shì shí shèng yú xióng biàn"
         }
       },
       "streak": {
         "best": 8,
-        "current": 0
+        "current": 1
       },
-      "totalScore": 380,
+      "totalScore": 490,
       "userName": "Alice Tan"
     },
     "nHjBTzSDwtZ7idGirJU8uGDTgLs12": {
       "highScores": {
-        "idiomFlashcards": 50,
+        "proverbFlashcards": 50,
         "vocabViaImages": 8
       },
       "masteryLevel": 4,
