@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import Navbar from "../../components/Navbar/Navbar"
 import { useUid } from "../../../lib/useuid"
@@ -9,10 +9,29 @@ import { toPinyin } from "../../../lib/pinyin"
 import { BADGE_NAMES } from "../../../lib/progress"
 import styles from "./page.module.css"
 
-// Puts each syllable of the pinyin directly under its Chinese character.
-// Punctuation gets no pinyin. If the pinyin does not line up with the characters
-// (for example a custom phrase typed without spaces), it falls back to one line under the phrase.
+const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect
+
+const FIT_STEPS = [1, 0.9, 0.8, 0.7, 0.6, 0.52, 0.45]
+
 function PinyinText({ chinese, pinyin }){
+  const box = useRef(null)
+
+  useIsoLayoutEffect(() => {
+    const el = box.current
+    if (!el) return
+    const fit = () => {
+      for (const s of FIT_STEPS) {
+        el.style.setProperty("--s", s)
+        if (el.scrollHeight <= el.clientHeight + 1) break
+      }
+    }
+    fit()
+    if (typeof ResizeObserver === "undefined") return
+    const watch = new ResizeObserver(fit) 
+    watch.observe(el)
+    return () => watch.disconnect()
+  }, [chinese, pinyin])
+
   const syllables = (pinyin || "").trim().split(/\s+/).filter(Boolean)
   const chars = Array.from(chinese || "")
   const isHan = (c) => /\p{Script=Han}/u.test(c)
@@ -20,7 +39,7 @@ function PinyinText({ chinese, pinyin }){
 
   if (!syllables.length || syllables.length !== hanCount) {
     return (
-      <div className={styles.words}>
+      <div ref={box} className={styles.phrase}>
         <h3 className={styles.han}>{chinese}</h3>
         {pinyin && <span className={styles.pinyinLine}>{pinyin}</span>}
       </div>
@@ -29,14 +48,16 @@ function PinyinText({ chinese, pinyin }){
 
   let i = 0
   return (
-    <h3 className={styles.ruby} aria-label={chinese + " (" + pinyin + ")"}>
-      {chars.map((c, k) => (
-        <span key={k} className={styles.pair} aria-hidden="true">
-          <span className={styles.han}>{c}</span>
-          <span className={styles.py}>{isHan(c) ? syllables[i++] : "\u00a0"}</span>
-        </span>
-      ))}
-    </h3>
+    <div ref={box} className={styles.phrase}>
+      <h3 className={styles.ruby} aria-label={chinese + " (" + pinyin + ")"}>
+        {chars.map((c, k) => (
+          <span key={k} className={styles.pair} aria-hidden="true">
+            <span className={styles.han}>{c}</span>
+            <span className={styles.py}>{isHan(c) ? syllables[i++] : "\u00a0"}</span>
+          </span>
+        ))}
+      </h3>
+    </div>
   )
 }
 
@@ -193,7 +214,7 @@ function Phrases(){
             </button>
 
             <PinyinText chinese={p.chinese} pinyin={p.pinyin} />
-            <p className={styles.meaning}>{p.meaning}</p>
+            <p className={styles.meaning} title={p.meaning}>{p.meaning}</p>
 
             <div className={styles.foot}>
               {confirmId === p.id ? (

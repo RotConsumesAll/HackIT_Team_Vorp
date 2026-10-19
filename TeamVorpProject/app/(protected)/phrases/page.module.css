@@ -1,3 +1,5 @@
+/* Self-contained: colours are defined on .shell, nothing here depends on globals.css. */
+
 .shell {
   --paper: #E9E6DE;
   --surface: #FBFAF6;
@@ -19,6 +21,8 @@
   background: var(--paper);
   color: var(--ink);
 }
+
+.shell, .shell *, .shell *::before, .shell *::after { box-sizing: border-box; }
 
 .page { max-width: 56rem; margin: 0 auto; padding: 3rem 1.25rem 4.5rem; }
 .note { color: var(--ink-soft); padding: 1.5rem 0; text-align: center; }
@@ -120,6 +124,7 @@
   background: linear-gradient(135deg, #4B75FF, #954AFF);
 }
 
+/* Phrase cards, two across. Chinese (blue) with the pinyin under each character, then the meaning, then where it came from and the actions */
 .list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .item {
   position: relative;
@@ -134,15 +139,16 @@
 }
 .item:hover { transform: translateY(-2px); border-color: var(--blue); box-shadow: 0 16px 28px -22px rgba(53, 82, 201, .65); }
 
-.words { display: grid; gap: .1rem; min-width: 0; }
-.han { margin: 0; font-family: var(--hanzi); font-size: 1.85rem; font-weight: 700; line-height: 1.2; color: var(--blue); }
-.pinyinLine { font-size: .92rem; font-weight: 600; color: var(--ink-soft); }
+/* The phrase box is a fixed height. PinyinText shrinks the text (--s) until it fits, so every card stays the same size. */
+.phrase { --s: 1; height: 5.9rem; overflow: hidden; padding-right: 2.2rem; min-width: 0; }
+.han { margin: 0; font-family: var(--hanzi); font-size: calc(1.85rem * var(--s)); font-weight: 700; line-height: 1.2; color: var(--blue); overflow-wrap: anywhere; }
+.pinyinLine { font-size: calc(.92rem * var(--s)); font-weight: 600; color: var(--ink-soft); }
 
 /* Pinyin under each character */
-.ruby { padding-right: 2.2rem; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 0 .15rem; margin: 0; min-width: 0; }
-.pair { display: inline-flex; flex-direction: column; align-items: center; min-width: 1.85rem; }
-.py { margin-top: .1rem; font-size: .78rem; font-weight: 600; line-height: 1.2; color: var(--ink-soft); white-space: nowrap; }
-.meaning { margin: 0 0 .5rem; font-size: 1rem; line-height: 1.45; color: var(--ink); overflow-wrap: anywhere; }
+.ruby { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 0 calc(.15rem * var(--s)); margin: 0; min-width: 0; }
+.pair { display: inline-flex; flex-direction: column; align-items: center; min-width: calc(1.85rem * var(--s)); }
+.py { margin-top: .1rem; font-size: calc(.78rem * var(--s)); font-weight: 600; line-height: 1.2; color: var(--ink-soft); white-space: nowrap; }
+.meaning { margin: 0 0 .5rem; min-height: 2.9em; font-size: 1rem; line-height: 1.45; color: var(--ink); overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
 .foot { margin-top: auto; display: flex; align-items: center; justify-content: flex-end; gap: .75rem; padding-top: .75rem; border-top: 1px solid var(--line); }
 .actions { display: flex; align-items: center; gap: .4rem; }
@@ -186,6 +192,7 @@
 .trash:hover { color: var(--bad); background: var(--bad-tint); }
 .trash:focus-visible { outline: 3px solid var(--blue); outline-offset: 1px; }
 
+/* Delete confirmation replaces the share button */
 .confirm { display: flex; align-items: center; gap: .5rem; font-size: .9rem; font-weight: 600; color: var(--bad); }
 .yes, .no { padding: .5rem .8rem; font: inherit; font-size: .88rem; font-weight: 700; border-radius: 10px; cursor: pointer; }
 .yes { color: #fff; background: #B42A30; border: 1.5px solid #B42A30; }
