@@ -3,9 +3,10 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import Navbar from "../../components/Navbar/Navbar"
-import { useUid } from "../../../lib/useUid"
+import { useUid } from "../../../lib/useuid"
 import { getSavedPhrases, addSavedPhrase, deleteSavedPhrase } from "../../../lib/phrases"
 import { toPinyin } from "../../../lib/pinyin"
+import { BADGE_NAMES } from "../../../lib/progress"
 
 function Phrases(){
   const router = useRouter()
@@ -36,11 +37,15 @@ function Phrases(){
       return
     }
     try {
-      await addSavedPhrase(uid, { chinese: chinese.trim(), pinyin: pinyin.trim() || toPinyin(chinese.trim()), meaning: meaning.trim() })
+      const result = await addSavedPhrase(uid, { chinese: chinese.trim(), pinyin: pinyin.trim() || toPinyin(chinese.trim()), meaning: meaning.trim() })
+      if (result.duplicate) {
+        setMessage("You have already saved " + chinese.trim() + ".")
+        return
+      }
       setChinese("")
       setPinyin("")
       setMeaning("")
-      setMessage("Saved!")
+      setMessage("Saved!" + (result.newBadges.length ? " New badge: " + result.newBadges.map((b) => BADGE_NAMES[b] || b).join(", ") : ""))
       load()
     } catch (err) {
       setMessage("Could not save the phrase.")
@@ -56,7 +61,6 @@ function Phrases(){
     }
   }
 
-  // Opens the Community page with this phrase in the share form. Nothing is posted until the user presses Post there.
   function handleShare(p){
     const params = new URLSearchParams({
       chinese: p.chinese || "",

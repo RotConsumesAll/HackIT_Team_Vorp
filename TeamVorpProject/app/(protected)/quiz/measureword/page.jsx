@@ -6,8 +6,9 @@ import Navbar from "../../../components/Navbar/Navbar"
 import ShareButton from "../../../components/ShareButton/ShareButton"
 import SavePhrase from "../../../components/SavePhrase/SavePhrase"
 import { phraseChoices } from "../../../../lib/phraseChoices"
-import { getQuestions } from "../../../../lib/questions"
-import { recordAnswer, recordDaily, recordHighScore, currentUid, BADGE_NAMES } from "../../../../lib/progress"
+import { getQuestions, QUIZ_LENGTH } from "../../../../lib/questions"
+import { recordAnswer, recordDaily, recordHighScore, currentUid, BADGE_NAMES, recordQuizFinished } from "../../../../lib/progress"
+import { useUid } from "../../../../lib/useuid"
 
 function shuffle(list){
   const a = [...list]
@@ -31,12 +32,13 @@ function MeasureWord(){
   const [streak, setStreak] = useState(0)
   const [daily, setDaily] = useState(null)
   const [badgeMsg, setBadgeMsg] = useState("")
-
+  const [endBadgeMsg, setEndBadgeMsg] = useState("")
+  useUid() 
   useEffect(() => {
     async function load(){
       try {
         const list = await getQuestions("measure")
-        setQuestions(shuffle(list))
+        setQuestions(shuffle(list).slice(0, QUIZ_LENGTH))
       } catch (e) {
         setError("Could not load questions. Check your connection and the database rules.")
         setQuestions([])
@@ -46,9 +48,15 @@ function MeasureWord(){
   }, [])
 
   useEffect(() => {
-    if (questions && questions.length > 0 && index >= questions.length) {
-      recordHighScore(currentUid(), "quiz_measure", score)
+    async function finish(){
+      const uid = currentUid()
+      await recordHighScore(uid, "quiz_measure", score)
+      const finished = await recordQuizFinished(uid, score, questions.length)
+      if (finished.newBadges.length > 0) {
+        setEndBadgeMsg("New badge: " + finished.newBadges.map((b) => BADGE_NAMES[b] || b).join(", "))
+      }
     }
+    if (questions && questions.length > 0 && index >= questions.length) finish()
   }, [index])
 
   if (questions === null) return <p>Loading...</p>
@@ -67,6 +75,7 @@ function MeasureWord(){
       <>
         <h1>Nice one!</h1>
         <p>{score} / {questions.length} right on the first try</p>
+        {endBadgeMsg && <p><strong>{endBadgeMsg}</strong></p>}
         <ShareButton text={"I got " + score + " / " + questions.length + " on " + "Measure Word" + " in the Mother Tongue app!"} />
         <button onClick={() => window.location.reload()}>Play again</button>
         <p><Link href="/contextguess">Pick another quiz</Link></p>

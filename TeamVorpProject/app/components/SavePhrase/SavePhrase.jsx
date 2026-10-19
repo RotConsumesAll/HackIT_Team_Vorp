@@ -2,9 +2,9 @@
 
 import { useState } from "react"
 import { useUid } from "../../../lib/useuid"
-import { addSavedPhrase } from "../../../lib/phrases"
+import { addSavedPhrase, getSavedPhrases, normalizePhrase } from "../../../lib/phrases"
+import { BADGE_NAMES } from "../../../lib/progress"
 import { toPinyin } from "../../../lib/pinyin"
-
 
 function SavePhrase({ choices }){
   const { uid } = useUid()
@@ -13,8 +13,24 @@ function SavePhrase({ choices }){
   const [custom, setCustom] = useState("")
   const [customMeaning, setCustomMeaning] = useState("")
   const [message, setMessage] = useState("")
+  const [savedKeys, setSavedKeys] = useState([]) // phrases the user already has
 
   if (!uid || choices.length === 0) return null
+
+  async function handleOpen(){
+    const next = !open
+    setOpen(next)
+    if (next) {
+      try {
+        const saved = await getSavedPhrases(uid)
+        setSavedKeys(saved.map((p) => normalizePhrase(p.chinese)))
+      } catch (e) {
+        setSavedKeys([])
+      }
+    }
+  }
+
+  const isSaved = (chinese) => savedKeys.includes(normalizePhrase(chinese))
 
   function toggle(index){
     setSelected((s) => (s.includes(index) ? s.filter((i) => i !== index) : [...s, index]))
@@ -28,6 +44,7 @@ function SavePhrase({ choices }){
         setMessage("Please add the meaning of your own phrase.")
         return
       }
+      // Pinyin is worked out automatically for a phrase the user typed
       toSave.push({
         chinese: custom.trim(),
         pinyin: toPinyin(custom.trim()),
@@ -41,10 +58,24 @@ function SavePhrase({ choices }){
     }
 
     try {
+      const earned = []
+      const savedNow = []
+      const already = []
       for (const phrase of toSave) {
-        await addSavedPhrase(uid, phrase)
+        const result = await addSavedPhrase(uid, phrase)
+        if (result.duplicate) {
+          already.push(phrase.chinese)
+        } else {
+          savedNow.push(phrase.chinese)
+          earned.push(...result.newBadges)
+        }
       }
-      setMessage("Saved to My Phrases!")
+      const parts = []
+      if (savedNow.length) parts.push("Saved to My Phrases!")
+      if (already.length) parts.push("Already saved: " + already.join(", "))
+      if (earned.length) parts.push("New badge: " + earned.map((b) => BADGE_NAMES[b] || b).join(", "))
+      setMessage(parts.join(" "))
+      setSavedKeys((k) => [...k, ...toSave.map((p) => normalizePhrase(p.chinese))])
       setSelected([])
       setCustom("")
       setCustomMeaning("")
@@ -55,7 +86,7 @@ function SavePhrase({ choices }){
 
   return (
     <div>
-      <button onClick={() => setOpen(!open)}>{open ? "Close" : "Save a phrase"}</button>
+      <button onClick={handleOpen}>{open ? "Close" : "Save a phrase"}</button>
 
       {open && (
         <div>
@@ -63,12 +94,21 @@ function SavePhrase({ choices }){
           <ul>
             {choices.map((c, i) => (
               <li key={i}>
-                <label>
-                  <input type="checkbox" checked={selected.includes(i)} onChange={() => toggle(i)} />
-                  {" "}<strong>{c.chinese}</strong>
-                  {c.pinyin ? " (" + c.pinyin + ")" : ""}
-                  {c.meaning ? " - " + c.meaning : ""}
-                </label>
+                {isSaved(c.chinese) ? (
+                  <span>
+                    <strong>{c.chinese}</strong>
+                    {c.pinyin ? " (" + c.pinyin + ")" : ""}
+                    {c.meaning ? " - " + c.meaning : ""}
+                    {" - "}<strong>Phrase already saved</strong>
+                  </span>
+                ) : (
+                  <label>
+                    <input type="checkbox" checked={selected.includes(i)} onChange={() => toggle(i)} />
+                    {" "}<strong>{c.chinese}</strong>
+                    {c.pinyin ? " (" + c.pinyin + ")" : ""}
+                    {c.meaning ? " - " + c.meaning : ""}
+                  </label>
+                )}
               </li>
             ))}
           </ul>

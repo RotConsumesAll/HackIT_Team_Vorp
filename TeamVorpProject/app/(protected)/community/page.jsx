@@ -3,12 +3,17 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import Navbar from "../../components/Navbar/Navbar"
-import { useUid } from "../../../lib/useUid"
+import { useUid } from "../../../lib/useuid"
 import {
   getPosts, createPost, deletePost, toggleLike,
   getReplies, addReply,
 } from "../../../lib/community"
 import { addSavedPhrase } from "../../../lib/phrases"
+import { BADGE_NAMES } from "../../../lib/progress"
+
+function badgeText(ids){
+  return ids && ids.length ? " New badge: " + ids.map((b) => BADGE_NAMES[b] || b).join(", ") : ""
+}
 
 function PostCard({ post, uid, onChanged }){
   const [showReplies, setShowReplies] = useState(false)
@@ -43,8 +48,8 @@ function PostCard({ post, uid, onChanged }){
 
   function handleSave(){
     run(async () => {
-      await addSavedPhrase(uid, { chinese: post.chinese, pinyin: post.pinyin, meaning: post.meaning })
-      setMessage("Saved to your phrases!")
+      const result = await addSavedPhrase(uid, { chinese: post.chinese, pinyin: post.pinyin, meaning: post.meaning })
+      setMessage(result.duplicate ? "You have already saved this phrase." : "Saved to your phrases!" + badgeText(result.newBadges))
     })
   }
 
@@ -142,15 +147,15 @@ function Community(){
       return
     }
     try {
-      await createPost(uid, {
+      const earned = await createPost(uid, {
         type: "phrase",
         text: draft.note.trim(),
         chinese: draft.chinese.trim(),
         pinyin: draft.pinyin.trim(),
         meaning: draft.meaning.trim(),
       })
-      setMessage("Your phrase was shared!")
       closeDraft()
+      setMessage("Your phrase was shared!" + badgeText(earned))
       load()
     } catch (err) {
       setMessage("Could not share your phrase. Please try again.")
@@ -174,9 +179,9 @@ function Community(){
     e.preventDefault()
     if (!question.trim()) return
     try {
-      await createPost(uid, { type: "question", text: question.trim() })
+      const earned = await createPost(uid, { type: "question", text: question.trim() })
       setQuestion("")
-      setMessage("")
+      setMessage(badgeText(earned))
       load()
     } catch (err) {
       setMessage("Could not post your question.")
