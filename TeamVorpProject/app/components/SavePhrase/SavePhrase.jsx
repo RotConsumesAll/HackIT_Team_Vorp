@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useUid } from "../../../lib/useuid"
 import { addSavedPhrase } from "../../../lib/phrases"
+import { BADGE_NAMES } from "../../../lib/progress"
 import { toPinyin } from "../../../lib/pinyin"
 
 
@@ -41,10 +42,11 @@ function SavePhrase({ choices }){
     }
 
     try {
+      const earned = []
       for (const phrase of toSave) {
-        await addSavedPhrase(uid, phrase)
+        earned.push(...(await addSavedPhrase(uid, phrase)))
       }
-      setMessage("Saved to My Phrases!")
+      setMessage("Saved to My Phrases!" + (earned.length ? " New badge: " + earned.map((b) => BADGE_NAMES[b] || b).join(", ") : ""))
       setSelected([])
       setCustom("")
       setCustomMeaning("")

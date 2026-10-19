@@ -1,6 +1,6 @@
 import { ref, get, set, push, remove } from "firebase/database";
 import { db } from "./firebase";
-
+import { awardBadge } from "./progress";
 
 export async function getSavedPhrases(uid) {
   const snap = await get(ref(db, `users/${uid}/savedPhrases`));
@@ -17,6 +17,7 @@ export async function addSavedPhrase(uid, phrase) {
     meaning: phrase.meaning || "",
     createdAt: Date.now(),
   });
+  return awardBadge(uid, "first_phrase");
 }
 
 export async function deleteSavedPhrase(uid, id) {

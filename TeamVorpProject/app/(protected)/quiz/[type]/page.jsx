@@ -8,7 +8,8 @@ import ShareButton from "../../../components/ShareButton/ShareButton"
 import SavePhrase from "../../../components/SavePhrase/SavePhrase"
 import { phraseChoices } from "../../../../lib/phraseChoices"
 import { getQuestions, getMixedQuestions, QUIZ_LENGTH } from "../../../../lib/questions"
-import { recordAnswer, recordDaily, recordHighScore, recordDailyQuiz, getDailyQuizResult, todayString, DAILY_QUIZ_COUNT, currentUid, BADGE_NAMES } from "../../../../lib/progress"
+import { recordAnswer, recordDaily, recordHighScore, recordDailyQuiz, getDailyQuizResult, todayString, DAILY_QUIZ_COUNT, currentUid, BADGE_NAMES, recordQuizFinished } from "../../../../lib/progress"
+import { useUid } from "../../../../lib/useuid"
 
 const ALL_TYPES = ["naturalPhrase", "naturalGuess", "sound", "character", "tone", "measure"]
 
@@ -51,6 +52,7 @@ function hashString(str){
   return h
 }
 
+// Picks today's questions. Sorting first means the order doesn't depend on the database.
 function pickDaily(all){
   const sorted = [...all].sort((a, b) => (a.quizType + a.id).localeCompare(b.quizType + b.id))
   const rand = seededRandom(hashString(todayString()))
@@ -78,6 +80,8 @@ function Quiz(){
   const [daily, setDaily] = useState(null)
   const [playedToday, setPlayedToday] = useState(null)
   const [badgeMsg, setBadgeMsg] = useState("")
+  const [endBadgeMsg, setEndBadgeMsg] = useState("")
+  useUid()
 
   useEffect(() => {
     async function load(){
@@ -106,13 +110,22 @@ function Quiz(){
   }, [type])
 
   useEffect(() => {
-    if (questions && questions.length > 0 && index >= questions.length) {
+    async function finish(){
+      const uid = currentUid()
+      const earned = []
       if (type === "daily") {
-        recordDailyQuiz(currentUid(), score, questions.length)
+        const saved = await recordDailyQuiz(uid, score, questions.length)
+        if (saved && saved.newBadges) earned.push(...saved.newBadges)
       } else {
-        recordHighScore(currentUid(), "quiz_" + type, score)
+        await recordHighScore(uid, "quiz_" + type, score)
+      }
+      const finished = await recordQuizFinished(uid, score, questions.length)
+      earned.push(...finished.newBadges)
+      if (earned.length > 0) {
+        setEndBadgeMsg("New badge: " + earned.map((b) => BADGE_NAMES[b] || b).join(", "))
       }
     }
+    if (questions && questions.length > 0 && index >= questions.length) finish()
   }, [index])
 
   if (questions === null) return <p>Loading...</p>
@@ -141,6 +154,7 @@ function Quiz(){
       <>
         <h1>Nice one!</h1>
         <p>{score} / {questions.length} right on the first try</p>
+        {endBadgeMsg && <p><strong>{endBadgeMsg}</strong></p>}
         <ShareButton text={"I got " + score + " / " + questions.length + " on " + (TITLES[type] || "a quiz") + " in the Mother Tongue app!"} />
         <button onClick={() => window.location.reload()}>Play again</button>
         <p><Link href="/contextguess">Pick another quiz</Link></p>
