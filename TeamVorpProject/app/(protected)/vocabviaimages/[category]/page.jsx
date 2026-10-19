@@ -11,6 +11,9 @@ import styles from "../imageLearner.module.css"
 // e.g. files in public/images/vocab/chair.jpg  ->  "/images/vocab/"
 const IMAGE_BASE_PATH = "/images/vocab/"
 
+// Only Chinese (Han) characters allowed: no pinyin, English, numbers or punctuation
+const CHINESE_ONLY = /^\p{Script=Han}+$/u
+
 // "everyday-objects" -> "Everyday Objects"
 function formatCategory(slug = "") {
     return decodeURIComponent(slug)
@@ -78,6 +81,7 @@ function Main({ categoryName, slug }){
     const [guess, setGuess] = useState("")
     const [result, setResult] = useState(null)      // null | "correct" | "wrong"
     const [revealed, setRevealed] = useState(false)
+    const [error, setError] = useState("")          // input validation message
 
     if (status === "loading") {
         return <Shell categoryName={categoryName}><p className={styles.message}>Loading…</p></Shell>
@@ -96,11 +100,28 @@ function Main({ categoryName, slug }){
     }
 
     const item = items[index]
+    // Reveal Answer unlocks once the user has submitted at least once for this word
+    const hasSubmitted = result !== null
 
     function handleSubmit(e) {
         e.preventDefault()
-        if (!guess.trim()) return
-        setResult(guess.trim() === item.chinese ? "correct" : "wrong")
+        const answer = guess.trim()
+
+        // Validation: invalid input shows a message and does NOT count as an attempt
+        if (!answer) {
+            setError("Please type an answer")
+            return
+        }
+        if (!CHINESE_ONLY.test(answer)) {
+            setError("Type only in Chinese")
+            return
+        }
+        setError("")
+
+        const isCorrect = answer === item.chinese
+        setResult(isCorrect ? "correct" : "wrong")
+        // Right answer: go straight to the answer screen (same as Reveal Answer)
+        if (isCorrect) setRevealed(true)
     }
 
     function handleNext() {
@@ -108,6 +129,7 @@ function Main({ categoryName, slug }){
         setGuess("")
         setResult(null)
         setRevealed(false)
+        setError("")
     }
 
     return(
@@ -120,30 +142,60 @@ function Main({ categoryName, slug }){
             <p className={styles.english}>{item.meaning}</p>
 
             {!revealed ? (
+                <>
                 <div className={styles.answerArea}>
                     <form className={styles.inputRow} onSubmit={handleSubmit}>
                         <input
                             className={styles.input}
                             type="text"
                             value={guess}
-                            onChange={(e) => setGuess(e.target.value)}
+                            onChange={(e) => {
+                                setGuess(e.target.value)
+                                if (error) setError("")   // clear the message once they start editing
+                            }}
+                            onKeyDown={(e) => {
+                                // Enter while composing with a Chinese keyboard (IME) only confirms the
+                                // characters, so don't let it submit the form
+                                if (e.key === "Enter" && (e.nativeEvent.isComposing || e.keyCode === 229)) {
+                                    e.preventDefault()
+                                }
+                            }}
                             aria-label="Your answer in Chinese"
                         />
                         <button type="submit" className={styles.submitButton}>Submit</button>
                     </form>
 
-                    {result && (
+                    {error && (
+                        <p className={`${styles.feedback} ${styles.wrong}`} role="alert">{error}</p>
+                    )}
+
+                    {!error && result && (
                         <p className={`${styles.feedback} ${result === "correct" ? styles.correct : styles.wrong}`}>
                             {result === "correct" ? "Correct!" : "Not quite. Try again or reveal the answer."}
                         </p>
                     )}
-
-                    <button className={styles.button} onClick={() => setRevealed(true)}>
-                        Reveal Answer
-                    </button>
                 </div>
+                <div className={styles.revealDock}>
+                        <button
+                            className={styles.button}
+                            onClick={() => setRevealed(true)}
+                            disabled={!hasSubmitted}
+                            title={hasSubmitted ? "" : "Submit an answer first"}
+                        >
+                            Reveal Answer
+                        </button>
+                        {!hasSubmitted && (
+                            <p className={styles.hint}>Submit an answer to unlock Reveal Answer.</p>
+                        )}
+                </div>
+                </>
             ) : (
                 <div className={styles.revealWrap}>
+                    {result === "correct" && (
+                        <p className={styles.correctBanner}>
+                            <span aria-hidden="true">✓</span> Correct!
+                        </p>
+                    )}
                     <p className={styles.chinese}>{item.chinese}</p>
                     <p className={styles.pinyin}>{item.pinyin}</p>
                     <div className={styles.nextWrap}>

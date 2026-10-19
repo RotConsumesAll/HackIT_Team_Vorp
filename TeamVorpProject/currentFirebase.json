@@ -3713,165 +3713,315 @@
         "target": "亮"
       }
     },
-  "image": {
-    "everyday-objects": {
-      "eo1": {
-        "chinese": "椅子",
-        "meaning": "chair",
-        "pinyin": "yǐzi",
-        "image": "chair.jpg"
+    "image": {
+      "everyday-objects": {
+        "eo1": {
+          "chinese": "椅子",
+          "meaning": "chair",
+          "pinyin": "yǐ zi",
+          "image": "chair.jpg"
+        },
+        "eo2": {
+          "chinese": "桌子",
+          "meaning": "table",
+          "pinyin": "zhuō zi",
+          "image": "table.jpg"
+        },
+        "eo3": {
+          "chinese": "书本",
+          "meaning": "book",
+          "pinyin": "shū běn",
+          "image": "book.jpg"
+        },
+        "eo4": {
+          "chinese": "手机",
+          "meaning": "cell phone",
+          "pinyin": "shǒu jī",
+          "image": "cellphone.jpg"
+        },
+        "eo5": {
+          "chinese": "电脑",
+          "meaning": "computer",
+          "pinyin": "diàn nǎo",
+          "image": "computer.jpg"
+        },
+        "eo6": {
+          "chinese": "雨伞",
+          "meaning": "umbrella",
+          "pinyin": "yǔ sǎn",
+          "image": "umbrella.jpg"
+        },
+        "eo7": {
+          "chinese": "牙刷",
+          "meaning": "toothbrush",
+          "pinyin": "yá shuā",
+          "image": "toothbrush.jpg"
+        },
+        "eo8": {
+          "chinese": "剪刀",
+          "meaning": "scissors",
+          "pinyin": "jiǎn dāo",
+          "image": "scissors.jpg"
+        },
+        "eo9": {
+          "chinese": "手电筒",
+          "meaning": "flashlight",
+          "pinyin": "shǒu diàn tǒng",
+          "image": "flashlight.jpg"
+        },
+        "eo10": {
+          "chinese": "行李箱",
+          "meaning": "luggage",
+          "pinyin": "xíng lǐ xiāng",
+          "image": "luggage.jpg"
+        }
       },
-      "eo2": {
-        "chinese": "桌子",
-        "meaning": "table",
-        "pinyin": "zhuōzi",
-        "image": "table.jpg"
+      "food": {
+        "f1": {
+          "chinese": "苹果",
+          "meaning": "apple",
+          "pinyin": "píng guǒ",
+          "image": "apple.jpg"
+        },
+        "f2": {
+          "chinese": "香蕉",
+          "meaning": "banana",
+          "pinyin": "xiāng jiāo",
+          "image": "banana.jpg"
+        },
+        "f3": {
+          "chinese": "米饭",
+          "meaning": "cooked rice",
+          "pinyin": "mǐ fàn",
+          "image": "rice.jpg"
+        },
+        "f4": {
+          "chinese": "鸡蛋",
+          "meaning": "egg",
+          "pinyin": "jī dàn",
+          "image": "egg.jpg"
+        },
+        "f5": {
+          "chinese": "面包",
+          "meaning": "bread",
+          "pinyin": "miàn bāo",
+          "image": "bread.jpg"
+        },
+        "f6": {
+          "chinese": "西兰花",
+          "meaning": "broccoli",
+          "pinyin": "xī lán huā",
+          "image": "broccoli.jpg"
+        },
+        "f7": {
+          "chinese": "茄子",
+          "meaning": "eggplant",
+          "pinyin": "qié zi",
+          "image": "eggplant.jpg"
+        },
+        "f8": {
+          "chinese": "菠萝",
+          "meaning": "pineapple",
+          "pinyin": "bō luó",
+          "image": "pineapple.jpg"
+        },
+        "f9": {
+          "chinese": "饺子",
+          "meaning": "dumplings",
+          "pinyin": "jiǎo zi",
+          "image": "dumplings.jpg"
+        },
+        "f10": {
+          "chinese": "玉米",
+          "meaning": "corn",
+          "pinyin": "yù mǐ",
+          "image": "corn.jpg"
+        }
       },
-      "eo3": {
-        "chinese": "书本",
-        "meaning": "book",
-        "pinyin": "shūběn",
-        "image": "book.jpg"
+      "animals": {
+        "a1": {
+          "chinese": "猫",
+          "meaning": "cat",
+          "pinyin": "māo",
+          "image": "cat.jpg"
+        },
+        "a2": {
+          "chinese": "狗",
+          "meaning": "dog",
+          "pinyin": "gǒu",
+          "image": "dog.jpg"
+        },
+        "a3": {
+          "chinese": "鸟",
+          "meaning": "bird",
+          "pinyin": "niǎo",
+          "image": "bird.jpg"
+        },
+        "a4": {
+          "chinese": "鱼",
+          "meaning": "fish",
+          "pinyin": "yú",
+          "image": "fish.jpg"
+        },
+        "a5": {
+          "chinese": "兔子",
+          "meaning": "rabbit",
+          "pinyin": "tù zi",
+          "image": "rabbit.jpg"
+        },
+        "a6": {
+          "chinese": "长颈鹿",
+          "meaning": "giraffe",
+          "pinyin": "cháng jǐng lù",
+          "image": "giraffe.jpg"
+        },
+        "a7": {
+          "chinese": "乌龟",
+          "meaning": "turtle",
+          "pinyin": "wū guī",
+          "image": "turtle.jpg"
+        },
+        "a8": {
+          "chinese": "蝴蝶",
+          "meaning": "butterfly",
+          "pinyin": "hú dié",
+          "image": "butterfly.jpg"
+        },
+        "a9": {
+          "chinese": "松鼠",
+          "meaning": "squirrel",
+          "pinyin": "sōng shǔ",
+          "image": "squirrel.jpg"
+        },
+        "a10": {
+          "chinese": "章鱼",
+          "meaning": "octopus",
+          "pinyin": "zhāng yú",
+          "image": "octopus.jpg"
+        }
       },
-      "eo4": {
-        "chinese": "手机",
-        "meaning": "cell phone",
-        "pinyin": "shǒujī",
-        "image": "cellphone.jpg"
+      "places": {
+        "p1": {
+          "chinese": "学校",
+          "meaning": "school",
+          "pinyin": "xué xiào",
+          "image": "school.jpg"
+        },
+        "p2": {
+          "chinese": "医院",
+          "meaning": "hospital",
+          "pinyin": "yī yuàn",
+          "image": "hospital.jpg"
+        },
+        "p3": {
+          "chinese": "超市",
+          "meaning": "supermarket",
+          "pinyin": "chāo shì",
+          "image": "supermarket.jpg"
+        },
+        "p4": {
+          "chinese": "公园",
+          "meaning": "park",
+          "pinyin": "gōng yuán",
+          "image": "park.jpg"
+        },
+        "p5": {
+          "chinese": "图书馆",
+          "meaning": "library",
+          "pinyin": "tú shū guǎn",
+          "image": "library.jpg"
+        },
+        "p6": {
+          "chinese": "消防局",
+          "meaning": "fire station",
+          "pinyin": "xiāo fáng jú",
+          "image": "fire-station.jpg"
+        },
+        "p7": {
+          "chinese": "火车站",
+          "meaning": "train station",
+          "pinyin": "huǒ chē zhàn",
+          "image": "train-station.jpg"
+        },
+        "p8": {
+          "chinese": "邮局",
+          "meaning": "post office",
+          "pinyin": "yóu jú",
+          "image": "post-office.jpg"
+        },
+        "p9": {
+          "chinese": "加油站",
+          "meaning": "petrol station",
+          "pinyin": "jiā yóu zhàn",
+          "image": "petrol-station.jpg"
+        },
+        "p10": {
+          "chinese": "停车场",
+          "meaning": "car park",
+          "pinyin": "tíng chē chǎng",
+          "image": "car-park.jpg"
+        }
       },
-      "eo5": {
-        "chinese": "电脑",
-        "meaning": "computer",
-        "pinyin": "diànnǎo",
-        "image": "computer.jpg"
-      }
-    },
-    "food": {
-      "f1": {
-        "chinese": "苹果",
-        "meaning": "apple",
-        "pinyin": "píngguǒ",
-        "image": "apple.jpg"
-      },
-      "f2": {
-        "chinese": "香蕉",
-        "meaning": "banana",
-        "pinyin": "xiāngjiāo",
-        "image": "banana.jpg"
-      },
-      "f3": {
-        "chinese": "米饭",
-        "meaning": "rice",
-        "pinyin": "mǐfàn",
-        "image": "rice.jpg"
-      },
-      "f4": {
-        "chinese": "鸡蛋",
-        "meaning": "egg",
-        "pinyin": "jīdàn",
-        "image": "egg.jpg"
-      },
-      "f5": {
-        "chinese": "面包",
-        "meaning": "bread",
-        "pinyin": "miànbāo",
-        "image": "bread.jpg"
-      }
-    },
-    "animals": {
-      "a1": {
-        "chinese": "猫",
-        "meaning": "cat",
-        "pinyin": "māo",
-        "image": "cat.jpg"
-      },
-      "a2": {
-        "chinese": "狗",
-        "meaning": "dog",
-        "pinyin": "gǒu",
-        "image": "dog.jpg"
-      },
-      "a3": {
-        "chinese": "鸟",
-        "meaning": "bird",
-        "pinyin": "niǎo",
-        "image": "bird.jpg"
-      },
-      "a4": {
-        "chinese": "鱼",
-        "meaning": "fish",
-        "pinyin": "yú",
-        "image": "fish.jpg"
-      },
-      "a5": {
-        "chinese": "兔子",
-        "meaning": "rabbit",
-        "pinyin": "tùzi",
-        "image": "rabbit.jpg"
-      }
-    },
-    "places": {
-      "p1": {
-        "chinese": "学校",
-        "meaning": "school",
-        "pinyin": "xuéxiào",
-        "image": "school.jpg"
-      },
-      "p2": {
-        "chinese": "医院",
-        "meaning": "hospital",
-        "pinyin": "yīyuàn",
-        "image": "hospital.jpg"
-      },
-      "p3": {
-        "chinese": "超市",
-        "meaning": "supermarket",
-        "pinyin": "chāoshì",
-        "image": "supermarket.jpg"
-      },
-      "p4": {
-        "chinese": "公园",
-        "meaning": "park",
-        "pinyin": "gōngyuán",
-        "image": "park.jpg"
-      },
-      "p5": {
-        "chinese": "图书馆",
-        "meaning": "library",
-        "pinyin": "túshūguǎn",
-        "image": "library.jpg"
-      }
-    },
-    "countries": {
-      "c1": {
-        "chinese": "新加坡",
-        "meaning": "Singapore",
-        "pinyin": "Xīnjiāpō",
-        "image": "singapore.jpg"
-      },
-      "c2": {
-        "chinese": "中国",
-        "meaning": "China",
-        "pinyin": "Zhōngguó",
-        "image": "china.jpg"
-      },
-      "c3": {
-        "chinese": "日本",
-        "meaning": "Japan",
-        "pinyin": "Rìběn",
-        "image": "japan.jpg"
-      },
-      "c4": {
-        "chinese": "韩国",
-        "meaning": "South Korea",
-        "pinyin": "Hánguó",
-        "image": "south-korea.jpg"
-      },
-      "c5": {
-        "chinese": "马来西亚",
-        "meaning": "Malaysia",
-        "pinyin": "Mǎláixīyà",
-        "image": "malaysia.jpg"
+      "countries": {
+        "c1": {
+          "chinese": "新加坡",
+          "meaning": "Singapore",
+          "pinyin": "Xīn jiā pō",
+          "image": "singapore.jpg"
+        },
+        "c2": {
+          "chinese": "中国",
+          "meaning": "China",
+          "pinyin": "Zhōng guó",
+          "image": "china.jpg"
+        },
+        "c3": {
+          "chinese": "日本",
+          "meaning": "Japan",
+          "pinyin": "Rì běn",
+          "image": "japan.jpg"
+        },
+        "c4": {
+          "chinese": "韩国",
+          "meaning": "South Korea",
+          "pinyin": "Hán guó",
+          "image": "south-korea.jpg"
+        },
+        "c5": {
+          "chinese": "马来西亚",
+          "meaning": "Malaysia",
+          "pinyin": "Mǎ lái xī yà",
+          "image": "malaysia.jpg"
+        },
+        "c6": {
+          "chinese": "泰国",
+          "meaning": "Thailand",
+          "pinyin": "Tài guó",
+          "image": "thailand.jpg"
+        },
+        "c7": {
+          "chinese": "印度",
+          "meaning": "India",
+          "pinyin": "Yìn dù",
+          "image": "india.jpg"
+        },
+        "c8": {
+          "chinese": "澳大利亚",
+          "meaning": "Australia",
+          "pinyin": "Ào dà lì yà",
+          "image": "australia.jpg"
+        },
+        "c9": {
+          "chinese": "印度尼西亚",
+          "meaning": "Indonesia",
+          "pinyin": "Yìn dù ní xī yà",
+          "image": "indonesia.jpg"
+        },
+        "c10": {
+          "chinese": "越南",
+          "meaning": "Vietnam",
+          "pinyin": "Yuè nán",
+          "image": "vietnam.jpg"
         }
       }
     }

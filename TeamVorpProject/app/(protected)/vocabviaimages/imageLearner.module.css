@@ -136,8 +136,31 @@
     cursor: pointer;
 }
 
-.button:hover {
+.button:hover:not(:disabled) {
     background: #5063d9;
+}
+
+.button:disabled {
+    background: #b9c1f5;
+    cursor: not-allowed;
+}
+
+.revealDock {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.hint {
+    margin: 0;
+    text-align: center;
+    font-size: 0.7rem;
+    color: #777;
 }
 
 .feedback {
@@ -146,6 +169,13 @@
 }
 
 .correct { color: #1e8e3e; }
+
+.correctBanner {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1e8e3e;
+}
 .wrong { color: #c5221f; }
 
 .revealWrap {
