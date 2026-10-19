@@ -48,8 +48,8 @@ function PostCard({ post, uid, onChanged }){
 
   function handleSave(){
     run(async () => {
-      await addSavedPhrase(uid, { chinese: post.chinese, pinyin: post.pinyin, meaning: post.meaning })
-      setMessage("Saved to your phrases!")
+      const result = await addSavedPhrase(uid, { chinese: post.chinese, pinyin: post.pinyin, meaning: post.meaning })
+      setMessage(result.duplicate ? "You have already saved this phrase." : "Saved to your phrases!" + badgeText(result.newBadges))
     })
   }
 
