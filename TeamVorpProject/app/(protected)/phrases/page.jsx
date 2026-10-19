@@ -1,15 +1,14 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
 import Navbar from "../../components/Navbar/Navbar"
 import { useUid } from "../../../lib/useuid"
 import { getSavedPhrases, addSavedPhrase, deleteSavedPhrase } from "../../../lib/phrases"
 import { toPinyin } from "../../../lib/pinyin"
+import { BADGE_NAMES } from "../../../lib/progress"
 
 function Phrases(){
-  const router = useRouter()
-  const { uid, ready } = useUid()
+  const { uid, ready } = useUid() 
   const [phrases, setPhrases] = useState(null)
   const [chinese, setChinese] = useState("")
   const [pinyin, setPinyin] = useState("")
@@ -36,11 +35,11 @@ function Phrases(){
       return
     }
     try {
-      await addSavedPhrase(uid, { chinese: chinese.trim(), pinyin: pinyin.trim() || toPinyin(chinese.trim()), meaning: meaning.trim() })
+      const earned = await addSavedPhrase(uid, { chinese: chinese.trim(), pinyin: pinyin.trim() || toPinyin(chinese.trim()), meaning: meaning.trim() })
       setChinese("")
       setPinyin("")
       setMeaning("")
-      setMessage("Saved!")
+      setMessage("Saved!" + (earned.length ? " New badge: " + earned.map((b) => BADGE_NAMES[b] || b).join(", ") : ""))
       load()
     } catch (err) {
       setMessage("Could not save the phrase.")
@@ -54,16 +53,6 @@ function Phrases(){
     } catch (err) {
       setMessage("Could not delete the phrase.")
     }
-  }
-
-  // Opens the Community page with this phrase in the share form. Nothing is posted until the user presses Post there.
-  function handleShare(p){
-    const params = new URLSearchParams({
-      chinese: p.chinese || "",
-      pinyin: p.pinyin || "",
-      meaning: p.meaning || "",
-    })
-    router.push("/community?" + params.toString())
   }
 
   if (!ready) return <p>Loading...</p>
@@ -91,7 +80,6 @@ function Phrases(){
           <li key={p.id}>
             <strong>{p.chinese}</strong> {p.pinyin && "(" + p.pinyin + ")"} - {p.meaning}
             {" "}
-            <button onClick={() => handleShare(p)}>Share to community</button>
             <button onClick={() => handleDelete(p.id)}>Delete</button>
           </li>
         ))}
