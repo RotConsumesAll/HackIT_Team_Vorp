@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Suspense, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Navbar from "../../../components/Navbar/Navbar";
+import SavePhrase from "../../../components/SavePhrase/SavePhrase";
 import { useProverbs, chunk, shuffle } from "../../../../lib/useProverbs";
 
 const btn =
@@ -30,6 +31,7 @@ function QuizView() {
                 .map((p) => p.translation);
             return {
                 proverb: card.proverb,
+                pinyin: card.pinyin,
                 answer: card.translation,
                 options: shuffle([card.translation, ...wrong]),
             };
@@ -125,6 +127,13 @@ function QuizView() {
                         </button>
                     ))}
                 </div>
+
+                {correct && (
+                    <SavePhrase
+                        key={q.proverb}
+                        choices={[{ chinese: q.proverb, pinyin: q.pinyin, meaning: q.answer }]}
+                    />
+                )}
 
                 <div className="flex justify-end">
                     <button onClick={next} disabled={!correct} className={btn}>
