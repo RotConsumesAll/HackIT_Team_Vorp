@@ -7,8 +7,24 @@ import CheckSentence from "../../../../lib/checkSentence";
 import CheckVocab from "../../../../lib/checkVocab";
 import CheckResult from "../../../components/CheckResult/CheckResult";
 import { PROMPTS } from "../../../../lib/prompts";
+import SavePhrase from "../../../components/SavePhrase/SavePhrase";
+import { toPinyin } from "../../../../lib/pinyin";
 
 const IDLE = { status: "idle", items: [] };
+
+// Verdicts that CheckResult treats as "not ok". Keep in sync with FLAGGED in CheckResult.jsx.
+const FLAGGED = ["different_meaning", "incorrect"];
+
+// True when CheckResult would show the "Looks good!" banner, so the learner has figured the sentence out.
+// Only then can they save it.
+function sentenceIsCorrect(result, vocab){
+    if (!result || !result.ok) return false;
+    const status = vocab ? vocab.status : "idle";
+    const hasUnrecognised = result.unrecognised && result.unrecognised.length > 0;
+    if (hasUnrecognised && status !== "done") return false; // still checking the wording, or it could not be checked
+    if (status === "done" && vocab.items.some((v) => FLAGGED.includes(v.verdict))) return false;
+    return true;
+}
 
 function EnglishInput({exerciseSent}){
     return(
@@ -23,7 +39,7 @@ function EnglishInput({exerciseSent}){
     )
 }
 
-function ChineseInput({exerciseId}){
+function ChineseInput({exerciseId, english}){
     const [sentence, setSentance] = useState("");
     const [result, setResult] = useState(null);
     const [vocab, setVocab] = useState(IDLE);
@@ -91,6 +107,13 @@ function ChineseInput({exerciseId}){
             <div className={styles["sentence-display-container"]}>
             {result && <CheckResult result={result} vocab={vocab}/>}                
             </div>
+            {/* Saving is only offered once the sentence is right. The English prompt is saved as the meaning. */}
+            {sentenceIsCorrect(result, vocab) && (
+                <SavePhrase
+                    key={exerciseId + (result.text || sentence)}
+                    choices={[{ chinese: result.text || sentence, pinyin: toPinyin(result.text || sentence), meaning: english }]}
+                />
+            )}
             {error && <p>{error}</p>}
             <form className = {styles.form} onSubmit={handleSubmit}>
                 <input type = "text"  value={sentence} onChange={(e)=>setSentance(e.target.value)} placeholder="Chinese sentence here..."></input>
@@ -116,7 +139,7 @@ function App(){
                     <div>
                         <p>Placeholder seperator here</p>
                     </div>
-                    <ChineseInput key={prompt.id} exerciseId={prompt.id}/>
+                    <ChineseInput key={prompt.id} exerciseId={prompt.id} english={prompt.english}/>
                 </section>
                 <section>
                     <div>
