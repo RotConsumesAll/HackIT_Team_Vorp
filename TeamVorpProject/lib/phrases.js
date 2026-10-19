@@ -14,6 +14,19 @@ export function normalizePhrase(text) {
   return (text || "").replace(/[\p{P}\p{S}\s]/gu, "");
 }
 
+const QUIZ_LABELS = {
+  naturalGuess: "Natural Guess",
+  naturalPhrase: "Natural Phrase",
+  sound: "Sound Guess",
+  character: "Character Guess",
+  tone: "Tone Guess",
+  measureword: "Measure Word",
+};
+export function contextSource(quizType) {
+  const label = QUIZ_LABELS[quizType];
+  return label ? `Context Guess · ${label}` : "Context Guess";
+}
+
 export async function addSavedPhrase(uid, phrase) {
   const key = normalizePhrase(phrase.chinese);
   const existing = await getSavedPhrases(uid);
@@ -25,6 +38,7 @@ export async function addSavedPhrase(uid, phrase) {
     chinese: phrase.chinese,
     pinyin: phrase.pinyin || "",
     meaning: phrase.meaning || "",
+    source: phrase.source || "",
     createdAt: Date.now(),
   });
   const newBadges = await awardBadge(uid, "first_phrase");
