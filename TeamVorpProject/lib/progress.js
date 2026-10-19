@@ -13,7 +13,7 @@ export function levelFromScore(totalScore) {
 export const DAILY_QUIZ_COUNT = 5;
 export const DAILY_QUIZ_BONUS = 30;
 
-export const LEVEL_NAMES = ["Bronze", "Silver", "Gold", "Diamond"];
+export const LEVEL_NAMES = ["Level 1", "Level 2", "Level 3", "Level 4"];
 
 export const TIERED_BADGES = {
   mastery_phrasing: { name: "Phrasing master", levels: [10, 30, 60, 100], unit: "points" },
