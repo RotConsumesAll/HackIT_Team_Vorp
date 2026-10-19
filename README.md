@@ -21,7 +21,7 @@
 # HackIT Team Vorp
 NameOfApp is our one stop learning platform to help young adults integrate mother tongue into their daily lives by tackling the hesitation of practicing an unfamiliar language from multiple angles. We have decided to focus on aspects that range from general vocabulary and grammar to appropriate usage of localized slang:
 - Naming objects to maintain vocabulary,
-- Idioms gamified into flashcards to not only retain understanding but also mastery of Chinese,
+- Proverbs gamified into flashcards to not only retain understanding but also mastery of Chinese,
 - Understanding the nuances of how words and sentences morph based on context,
 - Pronounciation and reading aloud to reinforce real time organization of thoughts,
 - Spoken interactions in local environments involves the use of localized slang/Singlish.
@@ -78,6 +78,9 @@ Tl;dr: Firebase checks, app reacts(!!!) to result.
 
 ## Sentence builder feature (Bao Shen)
 
+### How to run
+Create a venv based on `requirements.txt` and run "python -m uvicorn main:app --reload --port 8000" in terminal for grammar check logic.
+
 ### Overview
 A learner types a Chinese sentence and wants to know what they got right, what is wrong and feedback on why its wrong. Simple string comparison is invalid since:<br>
 - Chinese has many ways to say the same things (synonyms, word order),
@@ -86,7 +89,15 @@ A learner types a Chinese sentence and wants to know what they got right, what i
 
 A sequence alignment engine is needed to try to line up the learner's text against the model answer and report gaps/mismatches. Said engine also needs to have localized words in its context.
 
-### Rule engine
+### Flow
+1. Learner selects an English sentence to translate.
+2. Learner types in their attempt and clicks "Check sentence" button.
+3. (Request 1, grammar check) The browser calls /api/check, which calls Python /check. The route strips each expected list from unrecognised and returns the result.
+4. (Show grammar result immediately)The grammar result renders. If unrecognised is non-empty, those dotted words show a small spinner, and the banner says “Checking your words…” instead of “Looks good!”.
+5. (Request 2, vocabulary check) The browser calls /api/vocab with { exerciseId, text }. The route calls Python /check again to get unrecognised with the accepted forms, looks up the glossary, calls DeepSeek, validates the reply, and returns only { verdicts }.
+6. (Merge results) The browser stores the verdicts by token index. Each dotted word’s tooltip now shows the reason and suggestion, and ok is recalculated: grammar OK, and no different_meaning or incorrect verdict.
+
+### Rule engine for grammar
 #### Setup<br>
 At startup, each predefined answer is flattened into 1 segment list and every segment gets a `level` (required, expected or optional). The segment's own `optional` flag overrides exercise's `roles` map. Otherwise, the level comes from roles.<br>
 
@@ -158,7 +169,6 @@ Full response: `errors`, `matches`, `unmatched`, `unrecognised`, `closestAnswer`
 `ok` is true when no entry has severity `error`, so warnings don't fail a sentence. 
 
 <br>
-
 #### Summary
 
 The engine compares the learner's sentence with every accepted answer, then reports problems against the closest one. An answer is an ordered list of segments: a role (its job in the sentence), accepted forms (wordings), and a level (required, expected, or optional).
@@ -180,6 +190,40 @@ The engine compares the learner's sentence with every accepted answer, then repo
 
 6. Respond<br>
 &nbsp;Map spans to tokens and return errors, matches, unexplained tokens, unrecognised words, the closest answer, ok, and the cleaned text.
+
+## Proverb Flashcards (Jovan Soo)
+
+### Overview
+A learner would want to understand and implement more advanced phrases in their life to increase their chinese vocabulary and by: <br>
+- Implementing `Proveb Flashcards` with the proverbs pinyin and meanings behind so that learners can test themselves without seeing the answer instantly,
+- `Respective quizzes` that test the learners ability to check their understanding of proverb,
+- `Mix and Match` to make learning interative and tests their knowledge on the proverbs.
+
+With the Proverb Flashcards we can allow for more interative learning which will push learners understanding and makes learning proverbs engaging
+
+### Setup<br>
+At startup, the project will load `chinese-proverb-api` into different chunks of 20 proverbs each set. The api includes the proverb, the pinyin and the english translation. <br>
+
+The batches of proverbs are added into the homepage for the learner to choose from which will include the same 20 proverbs each time. <br>
+
+### Flashcard Page:<br>
+When the learner chooses a proverb set, they will be brought to the flashcard page which will show the Proverb. Pressing on the flashcard will show the pinyin and the english translation. <br>
+
+The learner can also access the quizzes and mix and match pages with the respective buttons here.<br>
+
+### Quizzes Page:<br>
+Upon entering the quiz page, the learner is given the proverb and they can choose between 4 options for what the meaning of the quiz is. <br>
+
+If the learner chooses the wrong option, the page will inform the learner that it is incorrect and will ask them to try again.<br>
+
+Upon choosing the correct option or passing the question if the user decides to ,skip answering the question, the learner will be asked if they would like to add the proverb into their saved phrases list where the learner can use to revise in the future. They can also continue to the next question in the 20 proverb batch<br>
+
+### Mix and Match Page:<br>
+When the learner chooses to do the Mix and Match, the meaning of the proverb will be given and the user has to attempt to order the words given into the correct proverb. <br>
+
+Similarly to the quizzes page, the Learner can retry the question if they answer incorrectly and dd the proverb into their saved phrases list or continue if they answer the question correctly ot pass the question.<br>
+### Vocabulary check with Deepseek LLM
+text
 
 ### Local context
 

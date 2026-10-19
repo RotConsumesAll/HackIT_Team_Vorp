@@ -6,10 +6,12 @@ import Link from "next/link"
 import Navbar from "../../../components/Navbar/Navbar"
 import ShareButton from "../../../components/ShareButton/ShareButton"
 import SavePhrase from "../../../components/SavePhrase/SavePhrase"
+import { contextSource } from "../../../../lib/phrases"
 import { phraseChoices } from "../../../../lib/phraseChoices"
 import { getQuestions, getMixedQuestions, QUIZ_LENGTH } from "../../../../lib/questions"
 import { recordAnswer, recordDaily, recordHighScore, recordDailyQuiz, getDailyQuizResult, todayString, DAILY_QUIZ_COUNT, currentUid, BADGE_NAMES, recordQuizFinished } from "../../../../lib/progress"
 import { useUid } from "../../../../lib/useuid"
+import styles from "./page.module.css"
 
 const ALL_TYPES = ["naturalPhrase", "naturalGuess", "sound", "character", "tone", "measure"]
 
@@ -52,7 +54,6 @@ function hashString(str){
   return h
 }
 
-// Picks today's questions. Sorting first means the order doesn't depend on the database.
 function pickDaily(all){
   const sorted = [...all].sort((a, b) => (a.quizType + a.id).localeCompare(b.quizType + b.id))
   const rand = seededRandom(hashString(todayString()))
@@ -81,8 +82,7 @@ function Quiz(){
   const [playedToday, setPlayedToday] = useState(null)
   const [badgeMsg, setBadgeMsg] = useState("")
   const [endBadgeMsg, setEndBadgeMsg] = useState("")
-  useUid()
-
+  useUid() 
   useEffect(() => {
     async function load(){
       try {
@@ -128,37 +128,46 @@ function Quiz(){
     if (questions && questions.length > 0 && index >= questions.length) finish()
   }, [index])
 
-  if (questions === null) return <p>Loading...</p>
-  if (error) return <p>{error}</p>
+  if (questions === null) return <p className={styles.note}>Loading...</p>
+  if (error) return <p className={styles.note}>{error}</p>
   if (playedToday) {
     return (
-      <>
-        <h1>Quiz of the Day</h1>
-        <p>You already played today. You got {playedToday.score} / {playedToday.total}.</p>
-        <p>Come back tomorrow for a new set of questions!</p>
-        <Link href="/leaderboard">See today's ranking</Link>
-      </>
+      <section className={styles.result}>
+        <p className={styles.eyebrow}>Quiz of the Day</p>
+        <h1 className={styles.title}>You already played today</h1>
+        <p className={styles.score}><span>{playedToday.score}</span> / {playedToday.total}</p>
+        <p className={styles.small}>Come back tomorrow for a new set of questions!</p>
+        <div className={styles.actions}>
+          <Link href="/leaderboard" className={styles.primaryLink}>See today's ranking</Link>
+        </div>
+        <Link href="/contextguess" className={styles.back}>Back to Context Guess</Link>
+      </section>
     )
   }
   if (questions.length === 0) {
     return (
-      <>
-        <p>No questions found for this quiz yet.</p>
-        <Link href="/contextguess">Back</Link>
-      </>
+      <section className={styles.result}>
+        <h1 className={styles.title}>No questions yet</h1>
+        <p className={styles.small}>No questions found for this quiz yet.</p>
+        <Link href="/contextguess" className={styles.back}>Back to Context Guess</Link>
+      </section>
     )
   }
 
   if (index >= questions.length) {
     return (
-      <>
-        <h1>Nice one!</h1>
-        <p>{score} / {questions.length} right on the first try</p>
-        {endBadgeMsg && <p><strong>{endBadgeMsg}</strong></p>}
-        <ShareButton text={"I got " + score + " / " + questions.length + " on " + (TITLES[type] || "a quiz") + " in the Mother Tongue app!"} />
-        <button onClick={() => window.location.reload()}>Play again</button>
-        <p><Link href="/contextguess">Pick another quiz</Link></p>
-      </>
+      <section className={styles.result}>
+        <p className={styles.eyebrow}>Round complete</p>
+        <h1 className={styles.title}>Nice one!</h1>
+        <p className={styles.score}><span>{score}</span> / {questions.length}</p>
+        <p className={styles.small}>right on the first try</p>
+        {endBadgeMsg && <p className={styles.badge}>{endBadgeMsg}</p>}
+        <div className={styles.actions}>
+          <button className={styles.primary} onClick={() => window.location.reload()}>Play again</button>
+          <ShareButton text={"I got " + score + " / " + questions.length + " on " + (TITLES[type] || "a quiz") + " in the Mother Tongue app!"} />
+        </div>
+        <Link href="/contextguess" className={styles.back}>Pick another quiz</Link>
+      </section>
     )
   }
 
@@ -231,55 +240,84 @@ function Quiz(){
     setFirstTry(true)
   }
 
+  const percent = Math.round((index / questions.length) * 100)
+
   return (
     <>
-      <p><Link href="/contextguess">Back</Link></p>
-      <p>{TITLES[type] || "Quiz"} · {index + 1} / {questions.length}</p>
-      <p>Streak: {streak}</p>
-      {daily && <p>Daily streak: {daily.current} day(s) · Today: {Math.min(daily.todayCount, daily.goal)} / {daily.goal}</p>}
+      <Link href="/contextguess" className={styles.back}>← Back</Link>
 
-      {q.target && <p>How do you say <strong>{q.target}</strong> here?</p>}
-      <h2>{typed ? "一 ___ " + q.prompt : q.prompt}</h2>
-      {typed && q.gloss && <p>({q.gloss})</p>}
-      {!typed && q.context && <p>({q.context})</p>}
+      <header className={styles.header}>
+        <h1 className={styles.title}>{TITLES[type] || "Quiz"}</h1>
+        <p className={styles.count}>Question {index + 1} of {questions.length}</p>
+        <div className={styles.progress} role="progressbar" aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100} aria-label="Quiz progress">
+          <div className={styles.fill} style={{ width: percent + "%" }} />
+        </div>
+        <div className={styles.chips}>
+          <span className={styles.chip}>Streak {streak}</span>
+          {daily && <span className={styles.chip}>Daily streak {daily.current} · Today {Math.min(daily.todayCount, daily.goal)} / {daily.goal}</span>}
+        </div>
+      </header>
+
+      <section className={styles.prompt}>
+        <p className={styles.label}>{typed ? "Fill in the blank" : "Question"}</p>
+        {q.target && <p className={styles.target}>How do you say <strong>{q.target}</strong> here?</p>}
+        <h2 className={styles.question}>{typed ? "一 ___ " + q.prompt : q.prompt}</h2>
+        {typed && q.gloss && <p className={styles.context}>({q.gloss})</p>}
+        {!typed && q.context && <p className={styles.context}>({q.context})</p>}
+      </section>
 
       {typed && (
-        <form onSubmit={checkTyped}>
+        <form className={styles.typedForm} onSubmit={checkTyped}>
           <input
+            className={styles.input}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type the measure word"
             disabled={answered}
+            aria-label="Measure word"
           />
-          <button type="submit" disabled={answered}>Check</button>
-          <button type="button" onClick={skipTyped} disabled={answered}>Skip</button>
+          <button className={styles.primary} type="submit" disabled={answered}>Check</button>
+          <button className={styles.secondary} type="button" onClick={skipTyped} disabled={answered}>Skip</button>
         </form>
       )}
-      {typed && message && <p>{message}</p>}
+      {typed && message && <p className={styles.bad} role="status">{message}</p>}
 
-      <ul>
-        {q.options.map((o) => (
-          <li key={o.key}>
-            <button onClick={() => choose(o)} disabled={answered || wrongKeys.includes(o.key)}>
-              {o.text}
-            </button>
-          </li>
-        ))}
-      </ul>
+      {!typed && (
+        <ul className={styles.options}>
+          {q.options.map((o, i) => {
+            const state = wrongKeys.includes(o.key) ? "wrong" : correctKey === o.key ? "correct" : "idle"
+            return (
+              <li key={o.key}>
+                <button
+                  className={styles.option}
+                  data-state={state}
+                  onClick={() => choose(o)}
+                  disabled={answered || wrongKeys.includes(o.key)}
+                >
+                  <span className={styles.letter} aria-hidden="true">{"ABCD"[i] || i + 1}</span>
+                  <span className={styles.optionText}>{o.text}</span>
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+      )}
 
-      {lastWrong && <p><strong>Not quite.</strong> {lastWrong.reason} Try another one.</p>}
+      {lastWrong && !answered && <p className={styles.bad} role="status"><strong>Not quite.</strong> {lastWrong.reason} Try another one.</p>}
 
-      {answered && !skipped && <p><strong>Correct!</strong> {correctOption ? correctOption.reason + ". " : ""}{q.explanation}</p>}
-      {answered && skipped && <p>The answer is <strong>{q.answerText}</strong>: 一{q.answerText}{q.prompt}. {q.explanation}</p>}
+      {answered && !skipped && <p className={styles.ok} role="status"><strong>Correct!</strong> {correctOption ? correctOption.reason + ". " : ""}{q.explanation}</p>}
+      {answered && skipped && <p className={styles.bad} role="status">The answer is <strong>{q.answerText}</strong>: 一{q.answerText}{q.prompt}. {q.explanation}</p>}
 
-      {badgeMsg && <p><strong>{badgeMsg}</strong></p>}
+      {badgeMsg && <p className={styles.badge}>{badgeMsg}</p>}
 
-      {answered && <SavePhrase key={q.quizType + q.id} choices={phraseChoices(q)} />}
+      {answered && <SavePhrase key={q.quizType + q.id} choices={phraseChoices(q)} source={contextSource(q.quizType)} />}
 
       {answered && (
-        <button onClick={next}>
-          {index + 1 === questions.length ? "See results" : "Next"}
-        </button>
+        <div className={styles.nextRow}>
+          <button className={styles.primary} onClick={next}>
+            {index + 1 === questions.length ? "See results" : "Next"}
+          </button>
+        </div>
       )}
     </>
   )
@@ -287,10 +325,12 @@ function Quiz(){
 
 function QuizPage(){
   return (
-    <>
+    <div className={styles.shell}>
       <Navbar/>
-      <Quiz/>
-    </>
+      <main className={styles.page}>
+        <Quiz/>
+      </main>
+    </div>
   )
 }
 

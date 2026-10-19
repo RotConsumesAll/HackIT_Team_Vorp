@@ -8,7 +8,9 @@
       "sampleSentence": "我要去巴刹买菜。",
       "standardEquivalent": "市场",
       "term": "巴刹",
-      "tone": "casual, spoken"
+      "tone": "casual, spoken",
+      "posTag": "noun",
+      "pronunciation":"bā shā"
     },
     "TERM_02": {
       "definition": "Takeaway",
@@ -18,17 +20,23 @@
       "sampleSentence": "今天没时间煮饭，现在出去打包食物。",
       "standardEquivalent": "带走",
       "term": "打包",
-      "tone": "casual, spoken"
+      "tone": "casual, spoken",
+      "posTag": "verb",
+      "pronunciation":"dǎ bāo"
     },
     "TERM_03": {
-      "definition": "Coffeeshop. Locally, it strictly refers to a neighbourhood eatery selling local coffee and tea alongside meals.",
+      "definition": "Coffeeshop",
+      "sampleSentence": "爷爷每天去附近的咖啡店喝咖啡。",
       "originNote": "Shared origins from Hokkien and Malay.",
       "posTag": "noun",
       "pronounciation": "kā fēi diàn",
       "sampleSentence": "爷爷每天去附近的咖啡店喝咖啡。",
       "standardEquivalent": "咖啡店",
       "term": "咖啡店",
-      "tone": "casual, spoken"
+      "tone": "casual, spoken",
+      "posTag": "noun",
+      "pronounciation":"kā fēi diàn",
+      "notes": "Locally, it strictly refers to a neighbourhood eatery selling local coffee and tea alongside meals."
     },
     "TERM_04": {
       "definition": "A rich paste, spread on toast.",

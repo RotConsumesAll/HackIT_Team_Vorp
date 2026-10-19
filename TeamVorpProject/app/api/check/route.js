@@ -15,7 +15,6 @@ export async function POST(req) {
     if (!res.ok) {
       return Response.json({ error: "Check failed" }, { status: res.status === 404 ? 404 : 502 });
     }
-
     const data = await res.json();      // { tokens: [...] }
     return Response.json(data);
     }
