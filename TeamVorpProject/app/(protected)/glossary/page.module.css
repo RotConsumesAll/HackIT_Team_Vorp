@@ -1,0 +1,16 @@
+.main {
+  background-color: #faf9f6;
+  color: #1c1c1e;
+  /* 80px is roughly the navbar height in the design. Adjust if your navbar is taller or shorter. */
+  min-height: calc(100vh - 80px);
+  padding: 0 24px 48px;
+}
+
+.title {
+  margin: 0;
+  padding: 40px 0 24px;
+  text-align: center;
+  color: #0a7cff;
+  font-size: 2.25rem;
+  font-weight: 700;
+}

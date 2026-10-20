@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 
 const MENU_LINKS = [
     { label: "Home", href: "/", icon: null },
+    { label: "Slang Lookup", href: "/glossary", icon: null },    
     { label: "Sentence Builder", href: "/sentencebuilder/builder", icon: null },
     { label: "Proverb Flashcards", href: "/proverbflashcards", icon: null },
     { label: "Image Learner", href: "/imagelearner", icon: null },
