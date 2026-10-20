@@ -105,8 +105,22 @@ function list(levels){
   return levels.slice(0, -1).join(", ") + " and " + levels[levels.length - 1]
 }
 
+const SCORE_NAMES = {
+  quiz_naturalPhrase: "Natural Phrase",
+  quiz_naturalGuess: "Natural Guess",
+  quiz_sound: "Sound Guess",
+  quiz_character: "Character Guess",
+  quiz_tone: "Tone Guess",
+  quiz_measure: "Measure Word",
+  quiz_mix: "Mix it up",
+  quiz_daily: "Quiz of the Day",
+  proverb_quiz: "Proverb Quiz",
+  proverb_mix: "Proverb Mix and Match",
+}
+
 function prettyName(key){
-  const spaced = key.replace(/([a-z])([A-Z])/g, "$1 $2")
+  if (SCORE_NAMES[key]) return SCORE_NAMES[key]
+  const spaced = key.replace(/[_-]/g, " ").replace(/([a-z])([A-Z])/g, "$1 $2")
   return spaced.charAt(0).toUpperCase() + spaced.slice(1)
 }
 
