@@ -13,7 +13,7 @@ import styles from "../imageLearner.module.css"
 // Where your image files live. Firebase only stores the file name (e.g. "chair.jpg"),
 // so the full URL is IMAGE_BASE_PATH + file name.
 // e.g. files in public/images/vocab/chair.jpg  ->  "/images/vocab/"
-const IMAGE_BASE_PATH = "/images/vocab/"
+const IMAGE_BASE_PATH = "/imageLearner/"
 
 // Only Chinese (Han) characters allowed: no pinyin, English, numbers or punctuation
 const CHINESE_ONLY = /^\p{Script=Han}+$/u

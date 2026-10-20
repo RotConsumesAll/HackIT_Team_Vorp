@@ -30,6 +30,7 @@
 .page {
   flex: 1;
   min-height: 0;
+  overflow-y: auto;   /* safety net: only scrolls if the content is ever taller than the screen */
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -38,6 +39,9 @@
   margin: 0 auto;
   padding: 1.5rem 1.25rem 7.5rem;   /* extra bottom room for the Reveal Answer dock */
 }
+
+/* Answer screen has no Reveal Answer dock, so it doesn't need the extra bottom room */
+.pageTight { padding-bottom: 1.5rem; }
 
 .header { text-align: center; margin-bottom: 1.25rem; }
 .title { margin: 0; font-size: clamp(1.9rem, 4vw, 2.4rem); font-weight: 700; line-height: 1.15; color: var(--blue); }
@@ -94,8 +98,7 @@
 
 /* ---------- Naming page ---------- */
 .panel {
-  flex: 1;
-  min-height: 0;
+  flex: 1 0 auto;   /* fills the free space, but grows if the content is taller */
   width: min(100%, 36rem);
   margin: 0 auto;
   display: flex;
@@ -108,7 +111,8 @@
 
 .imageBox {
   width: min(100%, 30rem);
-  height: min(22rem, max(10rem, calc(100dvh - 32rem)));   /* as big as fits; shrinks on short screens */
+  height: min(22rem, max(9rem, calc(100dvh - 36rem)));   /* as big as fits; shrinks on short screens */
+  flex: none;   /* never shrink, so the picture is the same size on every screen of the page */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -116,7 +120,6 @@
   font-size: .85rem;
   color: var(--ink-soft);
   background: var(--paper);
-  border: 1px solid var(--line);
   border-radius: 8px;
 }
 .imageBox img { max-width: 100%; max-height: 100%; object-fit: contain; }
@@ -216,7 +219,7 @@
 .revealWrap { margin-top: 1rem; width: 100%; display: flex; flex-direction: column; align-items: center; }
 .chinese { margin: 1rem 0 0; font-family: var(--hanzi); font-size: clamp(2.4rem, 8vw, 3rem); font-weight: 700; line-height: 1.1; color: var(--ink); }
 .pinyin { margin: .4rem 0 0; font-size: 1rem; color: var(--ink-soft); }
-.nextWrap { margin-top: 1.75rem; }
+.nextWrap { margin-top: 1.75rem; padding-bottom: 2.5rem; }   /* always keep space under Next */
 
 .categoryLabel {
   position: absolute;
@@ -249,7 +252,7 @@
 
 /* Small screens: the content can be taller than the screen, so allow scrolling again
    (otherwise the bottom of the page would be unreachable) */
-@media (max-width: 760px), (max-height: 600px) {
+@media (max-width: 760px), (max-height: 660px) {
   .shell {
     height: auto;
     min-height: 100vh;
@@ -260,4 +263,5 @@
   :global(body):has(.shell) {
     overflow: auto;
   }
+  .page { overflow-y: visible; }
 }
