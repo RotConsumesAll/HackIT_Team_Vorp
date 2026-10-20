@@ -49,8 +49,8 @@
   cursor: pointer;
   transition: transform .15s, box-shadow .15s, border-color .15s, opacity .15s;
 }
-.btn { color: #fff; background: linear-gradient(120deg, #3B61E0 0%, #7A2FE0 100%); border: 0; }
-.btn:hover:not(:disabled) { color: #fff; transform: translateY(-1px); box-shadow: 0 10px 18px -12px rgba(59, 97, 224, .9); }
+.btn { color: #fff; background: var(--blue); border: 0; }
+.btn:hover:not(:disabled) { color: #fff; background: var(--blue-deep); transform: translateY(-1px); box-shadow: 0 10px 18px -12px rgba(53, 82, 201, .9); }
 .ghost { color: var(--blue-deep); background: var(--blue-tint); border: 1.5px solid transparent; }
 .ghost:hover:not(:disabled) { color: var(--blue-deep); border-color: var(--blue); }
 .more { color: var(--blue-deep); background: var(--card); border: 1.5px solid var(--line); }
@@ -119,24 +119,39 @@
 .cardMeaning { margin: 0; font-size: 1.15rem; line-height: 1.45; color: var(--ink); }
 .hint { margin: 0; font-size: .8rem; color: var(--ink-soft); }
 
-.arrows { display: flex; justify-content: center; gap: .75rem; margin: 1.1rem 0; }
+.cardRow { display: flex; align-items: center; gap: .75rem; margin-bottom: 1.1rem; }
+.cardRow .flashcard { flex: 1; width: auto; min-width: 0; }
+.cardRow .arrow { flex: none; }
+
+@media (max-width: 560px) {
+  .cardRow { gap: .4rem; }
+  .cardRow .arrow { width: 2.2rem; height: 2.2rem; }
+}
+
 .arrow {
-  width: 2.6rem;
-  height: 2.6rem;
+  width: 3rem;
+  height: 3rem;
   display: grid;
   place-items: center;
   padding: 0;
-  font: inherit;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--blue-deep);
-  background: var(--blue-tint);
-  border: 1.5px solid transparent;
+  color: var(--blue);
+  background: var(--card);
+  border: 1.5px solid var(--line);
   border-radius: 50%;
+  box-shadow: 0 6px 14px -10px rgba(28, 27, 51, .5);
   cursor: pointer;
+  transition: color .15s, background-color .15s, border-color .15s, transform .15s;
 }
-.arrow:hover { border-color: var(--blue); }
+.arrow svg { width: 1.3rem; height: 1.3rem; }
+.arrow:hover { color: #fff; background: var(--blue); border-color: var(--blue); transform: translateY(-1px); }
+.arrow:active { transform: scale(.95); }
 .arrow:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+
+@media (max-width: 560px) {
+  .cardRow { gap: .4rem; }
+  .cardRow .arrow { width: 2.4rem; height: 2.4rem; }
+  .cardRow .arrow svg { width: 1.1rem; height: 1.1rem; }
+}
 
 .bottomRow { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 .counter { margin: 0; font-weight: 700; color: var(--ink-soft); }
@@ -155,7 +170,7 @@
 }
 .metaRow { display: flex; justify-content: space-between; gap: 1rem; font-size: .85rem; font-weight: 700; color: var(--blue-deep); }
 .bar { height: .5rem; background: var(--paper); border-radius: 999px; overflow: hidden; }
-.barFill { height: 100%; background: linear-gradient(90deg, #4B75FF, #954AFF); border-radius: 999px; transition: width .25s; }
+.barFill { height: 100%; background: var(--blue); border-radius: 999px; transition: width .25s; }
 .barText { margin: -.4rem 0 0; font-size: .78rem; color: var(--ink-soft); }
 .question { margin: 0; font-size: 1.2rem; font-weight: 800; line-height: 1.4; color: var(--ink); }
 .hanInline { font-family: var(--hanzi); color: var(--blue); }
@@ -210,7 +225,7 @@
 .tile:hover:not(:disabled) { border-color: var(--blue); transform: translateY(-1px); }
 .tile:disabled { cursor: default; }
 .tile:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
-.tileOn { color: #fff; background: linear-gradient(135deg, #4B75FF, #954AFF); }
+.tileOn { color: #fff; background: var(--blue); }
 .tileCorrect { color: var(--ok); background: var(--ok-tint); border-color: var(--ok-line); }
 .tileWrong { color: var(--bad); background: var(--bad-tint); border-color: var(--bad-line); }
 .tileNum { height: .9rem; font-family: inherit; font-size: .7rem; font-weight: 700; }

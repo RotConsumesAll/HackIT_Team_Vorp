@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Suspense, useState } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Navbar from "../../../components/Navbar/Navbar";
 import ProverbFrame from "../ProverbFrame";
@@ -19,6 +19,15 @@ function FlashcardView() {
     const cards = chunk(proverbs)[setNumber] ?? [];
     const card = cards[cardIndex];
 
+    useEffect(() => {
+        function onKey(e) {
+            if (e.key === "ArrowLeft") go(-1);
+            if (e.key === "ArrowRight") go(1);
+        }
+        window.addEventListener("keydown", onKey);
+        return () => window.removeEventListener("keydown", onKey);
+    });
+
     function go(step) {
         setCardIndex((cardIndex + step + cards.length) % cards.length);
         setFlipped(false);
@@ -32,24 +41,33 @@ function FlashcardView() {
 
             {card && (
                 <>
-                    <button type="button" className={styles.flashcard} onClick={() => setFlipped(!flipped)}>
-                        {flipped ? (
-                            <>
-                                <p className={styles.cardHan}>{card.proverb}</p>
-                                <p className={styles.cardPinyin}>{card.pinyin}</p>
-                                <p className={styles.cardMeaning}>{card.translation}</p>
-                            </>
-                        ) : (
-                            <>
-                                <p className={styles.cardHan}>{card.proverb}</p>
-                                <p className={styles.hint}>Tap to flip</p>
-                            </>
-                        )}
-                    </button>
+                    <div className={styles.cardRow}>
+                        <button type="button" className={styles.arrow} onClick={() => go(-1)} aria-label="Previous card">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                <path d="M15 18l-6-6 6-6" />
+                            </svg>
+                        </button>
 
-                    <div className={styles.arrows}>
-                        <button type="button" className={styles.arrow} onClick={() => go(-1)} aria-label="Previous card">&lt;</button>
-                        <button type="button" className={styles.arrow} onClick={() => go(1)} aria-label="Next card">&gt;</button>
+                        <button type="button" className={styles.flashcard} onClick={() => setFlipped(!flipped)}>
+                            {flipped ? (
+                                <>
+                                    <p className={styles.cardHan}>{card.proverb}</p>
+                                    <p className={styles.cardPinyin}>{card.pinyin}</p>
+                                    <p className={styles.cardMeaning}>{card.translation}</p>
+                                </>
+                            ) : (
+                                <>
+                                    <p className={styles.cardHan}>{card.proverb}</p>
+                                    <p className={styles.hint}>Tap to flip</p>
+                                </>
+                            )}
+                        </button>
+
+                        <button type="button" className={styles.arrow} onClick={() => go(1)} aria-label="Next card">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                <path d="M9 6l6 6-6 6" />
+                            </svg>
+                        </button>
                     </div>
 
                     <div className={styles.bottomRow}>
