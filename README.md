@@ -35,6 +35,15 @@ From these perspectives, we have created solutions that aim to tackle these prob
 7. `AuthProvider` listening via `onAuthStateChanged`. Receives user obj, sets `loading` to false and updates state.
 8. Navbar swaps "Login" for "Logout". `RequireAuth` sees state of user obj and `loading`, lets protected pages render instead of redirect.
 
+### Sign up
+1. Input username, email and password
+2. Form's submit handler checks both fields are not empty, calls signup helper.
+3. Form will send all info to be added into the Firebase
+4. Checks if data already exist in the database, if so tells user information already exist
+5. `AuthProvider` listening via `onAuthStateChanged`. Receives user obj, sets `loading` to false and updates state.
+6. Navbar swaps "Login" for "Logout". `RequireAuth` sees state of user obj and `loading`, lets protected pages render instead of redirect.
+
+
 Tl;dr: Firebase checks, app reacts(!!!) to result.
 
 ## Sentence builder feature (Bao Shen)

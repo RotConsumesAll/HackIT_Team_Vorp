@@ -1,6 +1,6 @@
 .shell {
   --blue: #3B61E0; --blue-dark: #2f50c4; --ink: #1f2430; --soft: #6b7385; --line: #e3e6ee;
-  --bg: #f4f6fb; --green: #1f9d55; --red: #d64545; --purple: #7c4dff;
+  --bg: #FAF9F6; --green: #1f9d55; --red: #d64545; --purple: #7c4dff;
   min-height: 100vh; background: var(--bg); color: var(--ink);
 }
 .shell, .shell * { box-sizing: border-box; }

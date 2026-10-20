@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Link from "next/link"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { ref, get } from "firebase/database"
 import Navbar from "../../components/Navbar/Navbar"
@@ -11,12 +12,12 @@ import styles from "./page.module.css"
 
 const TOP = 10
 
-function Row({ rank, name, isMe, level, value, sub }){
+function Row({ uid, rank, name, isMe, level, value, sub }){
   return (
     <li className={styles.row + (isMe ? " " + styles.me : "")} aria-current={isMe ? "true" : undefined}>
       <span className={styles.rank} data-top={rank <= 3 ? rank : undefined}>{rank}</span>
       <span className={styles.name}>
-        {name}
+        {uid ? <Link href={"/profile/" + uid} className={styles.nameLink}>{name}</Link> : name}
         {isMe && <span className={styles.you}>You</span>}
       </span>
       {level && <span className={styles.level}>Level {level}</span>}
@@ -33,6 +34,7 @@ function Leaderboard(){
   const [todayRows, setTodayRows] = useState([])
   const [myUid, setMyUid] = useState(null)
   const [error, setError] = useState("")
+  const [hiddenMe, setHiddenMe] = useState(false)
 
   useEffect(() => {
     const stop = onAuthStateChanged(getAuth(), async (authUser) => {
@@ -48,10 +50,14 @@ function Leaderboard(){
           uid,
           name: u.userName || "Player",
           score: u.totalScore || 0,
+          visible: !(u.settings && u.settings.showOnLeaderboard === false),
+          showLevel: !(u.settings && u.settings.showLevel === false),
         }))
         list.sort((a, b) => b.score - a.score)
-        setRows(list)
+        setHiddenMe(list.some((r) => r.uid === authUser.uid && !r.visible))
+        setRows(list.filter((r) => r.visible))
 
+        // Today's Quiz of the Day, best score first
         const today = todayString()
         const todayList = Object.entries(users)
           .filter(([, u]) => u.dailyQuiz && u.dailyQuiz.date === today)
@@ -79,6 +85,7 @@ function Leaderboard(){
   const myIndex = rows.findIndex((r) => r.uid === myUid)
   const me = myIndex >= 0 ? rows[myIndex] : null
 
+  // Motivation: how far to the next level, and who is just ahead
   const myLevel = me ? levelFromScore(me.score) : 1
   const intoLevel = me ? me.score % POINTS_PER_LEVEL : 0
   const toNextLevel = POINTS_PER_LEVEL - intoLevel
@@ -101,6 +108,18 @@ function Leaderboard(){
         <h1 className={styles.title}>Leaderboard</h1>
         <p className={styles.subtitle}>Earn points from every quiz question. Climb the ranks.</p>
       </header>
+
+      {hiddenMe && (
+        <section className={styles.hero} aria-label="Leaderboard visibility">
+          <div className={styles.heroBody}>
+            <p className={styles.heroLine}><strong>You are hidden from the leaderboard.</strong></p>
+            <p className={styles.heroSmall}>Other learners can't see you. You can turn this back on in your profile.</p>
+          </div>
+          <div className={styles.heroShare}>
+            <Link href="/profile" className={styles.profileLink}>Open profile settings</Link>
+          </div>
+        </section>
+      )}
 
       {me && (
         <section className={styles.hero} aria-label="Your rank">
@@ -132,14 +151,14 @@ function Leaderboard(){
           {rows.length === 0 && <p className={styles.empty}>No players yet.</p>}
           <ol className={styles.list}>
             {top.map((r, i) => (
-              <Row key={r.uid} rank={i + 1} name={r.name} isMe={r.uid === myUid} level={levelFromScore(r.score)} value={r.score} sub=" pts" />
+              <Row key={r.uid} uid={r.uid} rank={i + 1} name={r.name} isMe={r.uid === myUid} level={r.showLevel || r.uid === myUid ? levelFromScore(r.score) : null} value={r.score} sub=" pts" />
             ))}
           </ol>
           {showMeBelow && (
             <>
               <p className={styles.gap} aria-hidden="true">· · ·</p>
               <ol className={styles.list} start={myIndex + 1}>
-                <Row rank={myIndex + 1} name={me.name} isMe level={myLevel} value={me.score} sub=" pts" />
+                <Row uid={me.uid} rank={myIndex + 1} name={me.name} isMe level={myLevel} value={me.score} sub=" pts" />
               </ol>
             </>
           )}
@@ -150,7 +169,7 @@ function Leaderboard(){
           {todayRows.length === 0 && <p className={styles.empty}>Nobody has played today's quiz yet. Be the first!</p>}
           <ol className={styles.list}>
             {todayRows.slice(0, TOP).map((r, i) => (
-              <Row key={r.uid} rank={i + 1} name={r.name} isMe={r.uid === myUid} value={r.score + " / " + r.total} />
+              <Row key={r.uid} uid={r.uid} rank={i + 1} name={r.name} isMe={r.uid === myUid} value={r.score + " / " + r.total} />
             ))}
           </ol>
           {myToday === -1 && todayRows.length > 0 && <p className={styles.empty}>You haven't played yet today.</p>}

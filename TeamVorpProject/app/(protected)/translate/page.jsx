@@ -1,15 +1,12 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import Navbar from "../components/Navbar/Navbar"; 
+import Navbar from "../../components/Navbar/Navbar";
 import "./translate.css";
 import { useRouter } from "next/navigation";
 
 const MODES = [
   { id: "text", label: "Text" },
   { id: "voice", label: "Voice" },
-  { id: "audio", label: "Audio" },
-  { id: "video", label: "Video" },
-  { id: "website", label: "Website" },
 ];
 const MAX_CHARS = 2000;
 
@@ -103,22 +100,14 @@ export default function TranslatePage() {
   const [mode, setMode] = useState("text");
   const [menuOpen, setMenuOpen] = useState(false);
   const [text, setText] = useState("");
-  const [url, setUrl] = useState("");
-  const [audioFile, setAudioFile] = useState(null);
-  const [videoFile, setVideoFile] = useState(null);
-  const [recording, setRecording] = useState(false);
-  const [recordedUrl, setRecordedUrl] = useState("");
-  const [hasRecording, setHasRecording] = useState(false);
+  const [listening, setListening] = useState(false);
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(SHOW_DEMO ? DEMO_RESULT : null);
   const [english, setEnglish] = useState(SHOW_DEMO ? DEMO_ENGLISH : "");
   const [activeNote, setActiveNote] = useState(null);
 
-  const recorderRef = useRef(null);
-  const chunksRef = useRef([]);
-  const audioInputRef = useRef(null);
-  const videoInputRef = useRef(null);
+  const recognitionRef = useRef(null);
   const menuRef = useRef(null);
 
   // close mode menu on outside click
@@ -131,79 +120,64 @@ export default function TranslatePage() {
     return () => document.removeEventListener("mousedown", onClick);
   }, []);
 
-  // cleanup recording URL + mic on unmount
+  // stop mic on unmount
   useEffect(() => {
-    return () => {
-      if (recordedUrl) URL.revokeObjectURL(recordedUrl);
-      if (recorderRef.current && recorderRef.current.state !== "inactive") {
-        recorderRef.current.stop();
-      }
-    };
-  }, [recordedUrl]);
+    return () => recognitionRef.current?.stop();
+  }, []);
 
   function chooseMode(id) {
+    if (listening) stopListening();
     setMode(id);
     setMenuOpen(false);
     setStatus("");
   }
 
-  async function startRecording() {
-    setStatus("");
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const rec = new MediaRecorder(stream);
-      chunksRef.current = [];
-      rec.ondataavailable = (e) => {
-        if (e.data.size > 0) chunksRef.current.push(e.data);
-      };
-      rec.onstop = () => {
-        const blob = new Blob(chunksRef.current, {
-          type: rec.mimeType || "audio/webm",
-        });
-        setRecordedUrl(URL.createObjectURL(blob));
-        setHasRecording(true);
-        stream.getTracks().forEach((t) => t.stop());
-      };
-      recorderRef.current = rec;
-      rec.start();
-      setRecording(true);
-    } catch (err) {
-      setStatus("Could not access the microphone. Check browser permissions.");
+  function startListening() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) {
+      return setStatus(
+        "Speech recognition is not supported in this browser. Use Chrome or Edge.",
+      );
     }
+
+    setText("");
+
+    const rec = new SR();
+    rec.lang = "en-US"; // source language; change if needed
+    rec.continuous = true;
+    rec.interimResults = true;
+
+    rec.onstart = () => {
+      setListening(true);
+      setStatus("");
+    };
+    rec.onresult = (e) => {
+      let t = "";
+      for (let i = 0; i < e.results.length; i++) {
+        t += e.results[i][0].transcript;
+      }
+      setText(t.slice(0, MAX_CHARS));
+    };
+    rec.onerror = (e) => {
+      setStatus(`Microphone error: ${e.error}`);
+      setListening(false);
+    };
+    rec.onend = () => setListening(false);
+
+    recognitionRef.current = rec;
+    rec.start();
   }
 
-  function stopRecording() {
-    if (recorderRef.current && recorderRef.current.state !== "inactive") {
-      recorderRef.current.stop();
-    }
-    setRecording(false);
+  function stopListening() {
+    recognitionRef.current?.stop();
+    setListening(false);
   }
 
   function clearInput() {
-    if (mode === "text") setText("");
-    if (mode === "website") setUrl("");
-    if (mode === "audio") {
-      setAudioFile(null);
-      if (audioInputRef.current) audioInputRef.current.value = "";
-    }
-    if (mode === "video") {
-      setVideoFile(null);
-      if (videoInputRef.current) videoInputRef.current.value = "";
-    }
-    if (mode === "voice") {
-      setRecordedUrl("");
-      setHasRecording(false);
-    }
+    recognitionRef.current?.stop();
+    setListening(false);
+    setText("");
     setStatus("");
-  }
-
-  function isValidUrl(value) {
-    try {
-      const u = new URL(value);
-      return u.protocol === "http:" || u.protocol === "https:";
-    } catch {
-      return false;
-    }
   }
 
   async function runTranslate(payload) {
@@ -231,37 +205,12 @@ export default function TranslatePage() {
   async function handleSubmit() {
     if (loading) return;
     setStatus("");
-    if (mode === "text") {
-      if (!text.trim()) return setStatus("Enter some text first.");
-      return runTranslate({ type: "text", content: text.trim() });
-    }
-    if (mode === "website") {
-      if (!url.trim()) return setStatus("Enter a website link first.");
-      if (!isValidUrl(url.trim()))
-        return setStatus(
-          "Enter a valid link starting with http:// or https://",
-        );
-      return runTranslate({ type: "website", content: url.trim() });
-    }
-    if (mode === "audio") {
-      if (!audioFile) return setStatus("Choose an audio file first.");
+    if (listening) return setStatus("Stop recording first.");
+    if (!text.trim())
       return setStatus(
-        "Audio is ready, but transcription is not implemented yet.",
+        mode === "voice" ? "Record something first." : "Enter some text first.",
       );
-    }
-    if (mode === "video") {
-      if (!videoFile) return setStatus("Choose a video file first.");
-      return setStatus(
-        "Video is ready, but transcription is not implemented yet.",
-      );
-    }
-    if (mode === "voice") {
-      if (recording) return setStatus("Stop recording first.");
-      if (!hasRecording) return setStatus("Record something first.");
-      return setStatus(
-        "Recording is ready, but transcription is not implemented yet.",
-      );
-    }
+    return runTranslate({ type: "text", content: text.trim() });
   }
 
   function handleNext() {
@@ -289,12 +238,7 @@ export default function TranslatePage() {
     window.speechSynthesis.speak(u);
   }
 
-  const hasValue =
-    (mode === "text" && text) ||
-    (mode === "website" && url) ||
-    (mode === "audio" && audioFile) ||
-    (mode === "video" && videoFile) ||
-    (mode === "voice" && hasRecording);
+  const hasValue = !!text;
 
   return (
     <div className="tr-page">
@@ -303,7 +247,7 @@ export default function TranslatePage() {
       <main className="tr-main">
         <header className="tr-head">
           <h1 className="tr-title">Chinese Adapter</h1>
-          <p className="tr-sub">Upload a content to translate it to Chinese</p>
+          <p className="tr-sub">Type or speak to translate it to Chinese</p>
         </header>
 
         <div className="tr-body">
@@ -360,14 +304,10 @@ export default function TranslatePage() {
 
           <div className="tr-input-area">
             <div className="tr-label-row">
-              <span className="tr-label">
-                File text or link are all accepted
+              <span className="tr-label">Type or speak to translate</span>
+              <span className="tr-count">
+                {text.length}/{MAX_CHARS}
               </span>
-              {mode === "text" && (
-                <span className="tr-count">
-                  {text.length}/{MAX_CHARS}
-                </span>
-              )}
             </div>
 
             <div className="tr-bar">
@@ -412,81 +352,29 @@ export default function TranslatePage() {
                   />
                 )}
 
-                {mode === "website" && (
-                  <input
-                    className="tr-input"
-                    type="url"
-                    value={url}
-                    onChange={(e) => setUrl(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-                    placeholder="https://example.com/article"
-                  />
-                )}
-
-                {mode === "audio" && (
-                  <>
-                    <input
-                      ref={audioInputRef}
-                      type="file"
-                      accept="audio/*"
-                      hidden
-                      onChange={(e) =>
-                        setAudioFile(e.target.files?.[0] || null)
-                      }
-                    />
-                    <button
-                      type="button"
-                      className="tr-file-btn"
-                      onClick={() => audioInputRef.current?.click()}
-                    >
-                      {audioFile ? audioFile.name : "Choose audio file"}
-                    </button>
-                  </>
-                )}
-
-                {mode === "video" && (
-                  <>
-                    <input
-                      ref={videoInputRef}
-                      type="file"
-                      accept="video/*"
-                      hidden
-                      onChange={(e) =>
-                        setVideoFile(e.target.files?.[0] || null)
-                      }
-                    />
-                    <button
-                      type="button"
-                      className="tr-file-btn"
-                      onClick={() => videoInputRef.current?.click()}
-                    >
-                      {videoFile ? videoFile.name : "Choose video file"}
-                    </button>
-                  </>
-                )}
-
                 {mode === "voice" && (
                   <div className="tr-voice">
-                    {!recording ? (
-                      <button
-                        type="button"
-                        className="tr-file-btn"
-                        onClick={startRecording}
-                      >
-                        {hasRecording ? "Record again" : "Start recording"}
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        className="tr-file-btn is-rec"
-                        onClick={stopRecording}
-                      >
-                        ● Stop recording
-                      </button>
-                    )}
-                    {hasRecording && !recording && recordedUrl && (
-                      <audio className="tr-audio" controls src={recordedUrl} />
-                    )}
+                    <button
+                      type="button"
+                      className={`tr-file-btn ${listening ? "is-rec" : ""}`}
+                      onClick={listening ? stopListening : startListening}
+                    >
+                      {listening
+                        ? "● Stop"
+                        : text
+                          ? "Record again"
+                          : "Start recording"}
+                    </button>
+                    <input
+                      className="tr-input"
+                      type="text"
+                      value={text}
+                      maxLength={MAX_CHARS}
+                      onChange={(e) => setText(e.target.value)}
+                      placeholder={
+                        listening ? "Listening…" : "Your speech appears here"
+                      }
+                    />
                   </div>
                 )}
               </div>

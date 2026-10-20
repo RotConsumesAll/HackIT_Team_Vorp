@@ -1,12 +1,13 @@
 'use client'
 import { useEffect, useState } from "react"
+import Link from "next/link"
 import { useParams } from "next/navigation"
 import { ref, get } from "firebase/database"
 import { db } from "../../../../lib/firebase"   // adjust if your lib folder is elsewhere
 import Navbar from "../../../components/Navbar/Navbar"
+import SavePhrase from "../../../components/SavePhrase/SavePhrase"
 import { useUid } from "../../../../lib/useuid"
 import { recordAnswer, recordDaily, recordImageWord, BADGE_NAMES } from "../../../../lib/progress"
-import SavePhrase from "../../../components/SavePhrase/SavePhrase"
 import styles from "../imageLearner.module.css"
 
 // Where your image files live. Firebase only stores the file name (e.g. "chair.jpg"),
@@ -68,12 +69,24 @@ function useCategoryItems(slug) {
 }
 
 function Shell({ categoryName, children }){
+    // Note: .panel must not be `position: relative`, because the Reveal Answer dock
+    // inside it is positioned against .shell (bottom middle of the page)
     return (
-        <main className={styles.main}>
-            <h1 className={styles.title}>Image Learner</h1>
-            <p className={styles.subtitle}>Name the Object in Chinese</p>
-            {children}
-            <p className={styles.categoryLabel}>Category: {categoryName}</p>
+        <main className={styles.page}>
+            <header className={styles.header}>
+                <h1 className={styles.title}>Image Learner</h1>
+                <p className={styles.subtitle}>Name the Object in Chinese</p>
+            </header>
+            <section className={styles.panel}>
+                {children}
+            </section>
+            <Link
+                href="/imagelearner"
+                className={styles.categoryLabel}
+                aria-label={`Category: ${categoryName}. Back to category list`}
+            >
+                Category: {categoryName}
+            </Link>
         </main>
     )
 }
@@ -167,39 +180,40 @@ function Main({ categoryName, slug }){
 
             {!revealed ? (
                 <>
-                <div className={styles.answerArea}>
-                    <form className={styles.inputRow} onSubmit={handleSubmit}>
-                        <input
-                            className={styles.input}
-                            type="text"
-                            value={guess}
-                            onChange={(e) => {
-                                setGuess(e.target.value)
-                                if (error) setError("")   // clear the message once they start editing
-                            }}
-                            onKeyDown={(e) => {
-                                // Enter while composing with a Chinese keyboard (IME) only confirms the
-                                // characters, so don't let it submit the form
-                                if (e.key === "Enter" && (e.nativeEvent.isComposing || e.keyCode === 229)) {
-                                    e.preventDefault()
-                                }
-                            }}
-                            aria-label="Your answer in Chinese"
-                        />
-                        <button type="submit" className={styles.submitButton}>Submit</button>
-                    </form>
+                    <div className={styles.answerArea}>
+                        <form className={styles.inputRow} onSubmit={handleSubmit}>
+                            <input
+                                className={styles.input}
+                                type="text"
+                                value={guess}
+                                onChange={(e) => {
+                                    setGuess(e.target.value)
+                                    if (error) setError("")   // clear the message once they start editing
+                                }}
+                                onKeyDown={(e) => {
+                                    // Enter while composing with a Chinese keyboard (IME) only confirms the
+                                    // characters, so don't let it submit the form
+                                    if (e.key === "Enter" && (e.nativeEvent.isComposing || e.keyCode === 229)) {
+                                        e.preventDefault()
+                                    }
+                                }}
+                                aria-label="Your answer in Chinese"
+                            />
+                            <button type="submit" className={styles.submitButton}>Submit</button>
+                        </form>
 
-                    {error && (
-                        <p className={`${styles.feedback} ${styles.wrong}`} role="alert">{error}</p>
-                    )}
+                        {error && (
+                            <p className={`${styles.feedback} ${styles.wrong}`} role="alert">{error}</p>
+                        )}
 
-                    {!error && result && (
-                        <p className={`${styles.feedback} ${result === "correct" ? styles.correct : styles.wrong}`}>
-                            {result === "correct" ? "Correct!" : "Not quite. Try again or reveal the answer."}
-                        </p>
-                    )}
-                </div>
-                <div className={styles.revealDock}>
+                        {!error && result && (
+                            <p className={`${styles.feedback} ${result === "correct" ? styles.correct : styles.wrong}`}>
+                                {result === "correct" ? "Correct!" : "Not quite. Try again or reveal the answer."}
+                            </p>
+                        )}
+                    </div>
+
+                    <div className={styles.revealDock}>
                         <button
                             className={styles.revealButton}
                             onClick={() => setRevealed(true)}
@@ -211,7 +225,7 @@ function Main({ categoryName, slug }){
                         {!hasSubmitted && (
                             <p className={styles.hint}>Submit an answer to unlock Reveal Answer.</p>
                         )}
-                </div>
+                    </div>
                 </>
             ) : (
                 <div className={styles.revealWrap}>
@@ -244,10 +258,10 @@ function App(){
     const params = useParams()
     const slug = params.category   // must match your folder name: [category] -> params.category
     return(
-        <>
+        <div className={styles.shell}>
             <Navbar />
             <Main categoryName={formatCategory(slug)} slug={slug} />
-        </>
+        </div>
     )
 }
 
