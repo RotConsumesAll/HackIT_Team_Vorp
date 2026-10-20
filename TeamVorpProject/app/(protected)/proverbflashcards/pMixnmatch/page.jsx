@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Suspense, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Navbar from "../../../components/Navbar/Navbar";
+import SavePhrase from "../../../components/SavePhrase/SavePhrase";
 import ProverbFrame from "../ProverbFrame";
 import { useProverbs, chunk, shuffle } from "../../../../lib/useProverbs";
 import styles from "../proverbs.module.css";
@@ -117,6 +118,14 @@ function MixView() {
                         <p className={styles.cardHan}>{card.proverb}</p>
                         <p className={styles.cardPinyin}>{card.pinyin}</p>
                     </div>
+                )}
+
+                {(status === "correct" || status === "passed") && (
+                    <SavePhrase
+                        key={card.proverb}
+                        choices={[{ chinese: card.proverb, pinyin: card.pinyin, meaning: card.translation }]}
+                        source="Proverb Flashcards"
+                    />
                 )}
 
                 <div className={styles.footRow}>

@@ -4,8 +4,9 @@ import Link from "next/link";
 import { Suspense, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Navbar from "../../../components/Navbar/Navbar";
+import SavePhrase from "../../../components/SavePhrase/SavePhrase";
 import ProverbFrame from "../ProverbFrame";
-import { useProverbs, chunk, shuffle } from "../../../lib/useProverbs";
+import { useProverbs, chunk, shuffle } from "../../../../lib/useProverbs";
 import styles from "../proverbs.module.css";
 
 const LETTERS = ["A", "B", "C", "D"];
@@ -29,6 +30,7 @@ function QuizView() {
                 .map((p) => p.translation);
             return {
                 proverb: card.proverb,
+                pinyin: card.pinyin,
                 answer: card.translation,
                 options: shuffle([card.translation, ...wrong]),
             };
@@ -122,6 +124,14 @@ function QuizView() {
                         );
                     })}
                 </div>
+
+                {correct && (
+                    <SavePhrase
+                        key={q.proverb}
+                        choices={[{ chinese: q.proverb, pinyin: q.pinyin, meaning: q.answer }]}
+                        source="Proverb Flashcards"
+                    />
+                )}
 
                 <div className={styles.footRow}>
                     <button type="button" className={styles.btn} onClick={next} disabled={!correct}>
