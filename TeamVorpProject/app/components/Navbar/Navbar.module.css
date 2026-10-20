@@ -1,9 +1,13 @@
 /* ---------- Top bar ---------- */
 .bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;                      /* above page content, below the backdrop (1000) and panels (1001) */
     display: flex;
     align-items: center;
     padding: 0.5rem 1rem;
-    background-color: #FAF9F6;
+    background-color: #FAF9F6;         /* must be solid, or page content shows through while scrolling */
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);  /* optional thin line so the bar separates from content */
 }
 
 .burger {
@@ -28,6 +32,25 @@
 .burger:focus-visible {
     outline: 3px solid #4b75ff;
     outline-offset: 2px;
+}
+
+.accountBtn {
+  border: none;
+  padding: 0;
+  background: transparent;   /* not "none" for background-color */
+  appearance: none;          /* drops the native button look */
+  cursor: pointer;
+  line-height: 0;            /* removes the small gap under the image */
+}
+
+.accountBtn:hover,
+.accountBtn:active {
+  background: transparent;   /* in case a global button:hover rule sets a colour */
+}
+
+.accountBtn:focus-visible {
+  outline: 2px solid #0a7cff; /* keeps a visible focus ring for keyboard users */
+  outline-offset: 2px;
 }
 
 /* ---------- Dark layer behind the panel ---------- */

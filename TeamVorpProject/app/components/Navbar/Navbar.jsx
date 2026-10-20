@@ -8,15 +8,14 @@ import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 
 const MENU_LINKS = [
-    { label: "Home", href: "/", icon: null },
-    { label: "Slang Lookup", href: "/glossary", icon: null },    
-    { label: "Sentence Builder", href: "/sentencebuilder/builder", icon: null },
-    { label: "Proverb Flashcards", href: "/proverbflashcards", icon: null },
-    { label: "Image Learner", href: "/imagelearner", icon: null },
+    { label: "Home", href: "/", icon: <img src="/icons/house.png" width="30" height="30"></img> },
+    { label: "Slang Lookup", href: "/glossary", icon: <img src="/icons/dictionary.png" width="30" height="30"></img>  },    
+    { label: "Sentence Builder", href: "/sentencebuilder/builder", icon: <img src="/icons/tools.png" width="30" height="30"></img>  },
+    { label: "Proverb Flashcards", href: "/proverbflashcards", icon:  <img src="/icons/cards.png" width="30" height="30"></img> },
+    { label: "Image Learner", href: "/imagelearner", icon: <img src="/icons/image.png" alt="" width="24" height="24" /> },
     { label: "Context Guess", href: "/contextguess", icon: <img src="/icons/ContextG.png" alt="" width="24" height="24" /> },
-    { label: "Ask Community", href: "/community", icon: null },
-    { label: "Leaderboards", href: "/leaderboard", icon: null },
-    // { label: "Glossary", href: "/glossary", icon: null },
+    { label: "Ask Community", href: "/community", icon: <img src="/icons/people.png" width="30" height="30"></img> },
+    { label: "Leaderboards", href: "/leaderboard", icon: <img src="/icons/trophy.png" width="24" height="24"></img> },
 ];
 
 const ACCOUNT_LINKS = [
@@ -112,8 +111,9 @@ export default function Navbar() {
                 aria-expanded={openAccSidebar}
                 aria-controls="account-menu"
                 onClick={() => setOpenAccSidebar(true)}
+                className={styles.accountBtn}
               >
-                <p>Account icon here</p>
+              <img className={styles.accountIcon} src="/icons/account.png" alt="" width="30" height="30" />
               </button>
               </>
             )}
