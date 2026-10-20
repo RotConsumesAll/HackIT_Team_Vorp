@@ -3743,9 +3743,9 @@
         },
         "eo4": {
           "chinese": "手机",
-          "meaning": "cell phone",
+          "meaning": "hand phone",
           "pinyin": "shǒu jī",
-          "image": "cellphone.jpg"
+          "image": "handphone.jpg"
         },
         "eo5": {
           "chinese": "电脑",
@@ -3772,9 +3772,9 @@
           "image": "scissors.jpg"
         },
         "eo9": {
-          "chinese": "手电筒",
+          "chinese": "电筒",
           "meaning": "flashlight",
-          "pinyin": "shǒu diàn tǒng",
+          "pinyin": "diàn tǒng",
           "image": "flashlight.jpg"
         },
         "eo10": {
@@ -3946,9 +3946,9 @@
           "image": "fire-station.jpg"
         },
         "p7": {
-          "chinese": "火车站",
+          "chinese": "车站",
           "meaning": "train station",
-          "pinyin": "huǒ chē zhàn",
+          "pinyin": "chē zhàn",
           "image": "train-station.jpg"
         },
         "p8": {
