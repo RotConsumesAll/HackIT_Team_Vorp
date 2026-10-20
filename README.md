@@ -160,6 +160,52 @@ text
 
 <br>
 
+# AI Conversation Practice Feature (Yong Jia)
+
+### Overview
+
+Learners want to practise communicating in Chinese rather than simply memorising vocabulary or translating sentences. However, they may struggle to form responses naturally, use appropriate vocabulary, and identify mistakes in their Chinese.
+
+The AI Conversation Practice feature allows learners to engage in interactive conversations based on their translated text. It provides realistic scenarios, responds to their messages, and highlights mistakes with explanations and suggested improvements.
+
+### Flow
+
+1. **Start conversation practice.** The learner selects the Next button after translating their chosen text to begin practising Chinese.
+
+2. **Generate a conversation scenario.** An AI generates a realistic scenario based on the translated text and the learner's Chinese proficiency level.
+
+3. **Begin the conversation.** The learner is presented with the scenario and an opening message from the AI, which takes on a relevant conversational role.
+
+4. **Submit a response.** The learner replies in Chinese to continue the conversation.
+
+5. **Receive an AI response.** The AI responds naturally to the learner's message while maintaining the context of the conversation.
+
+6. **Identify language errors.** The AI analyses the learner's response and identifies mistakes in grammar, vocabulary, or phrasing, where applicable.
+
+7. **Display personalised feedback.** The learner can view highlighted mistakes, explanations of why they are incorrect or unnatural, and suggested corrections.
+
+8. **Continue practising.** The learner applies the feedback to subsequent responses and continues the conversation to improve their Chinese communication skills.
+
+### Summary
+
+The AI Conversation Practice feature helps learners apply their Chinese knowledge through realistic, interactive conversations.
+
+1. Generate a scenario based on the learner's translated text.
+2. Engage in a conversation with the AI.
+3. Receive contextual responses that encourage further communication.
+4. Identify mistakes and understand why corrections are needed.
+5. Apply personalised feedback to improve grammar, vocabulary, and natural expression.
+
+The feature promotes active learning by allowing learners to practise producing Chinese independently while receiving immediate, contextual feedback on how to improve.
+
+### How it works
+
+The feature uses the translated Chinese text to generate a relevant conversation scenario based on the learner's proficiency level. The learner interacts with an AI through a chat interface, submitting Chinese responses and receiving contextual replies to continue the conversation.
+
+After each response, the AI identifies potential grammar, vocabulary, and phrasing errors, providing explanations and suggested corrections. This allows learners to understand their mistakes immediately and apply the feedback throughout the conversation.
+
+The feature combines interactive dialogue with personalised feedback to help learners improve their Chinese communication skills through practical usage.
+
 ## Proverb Flashcards (Jovan Soo)
 
 ### Overview
