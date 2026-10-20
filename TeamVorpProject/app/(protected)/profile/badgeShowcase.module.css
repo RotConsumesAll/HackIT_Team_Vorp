@@ -1,0 +1,9 @@
+.list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; }
+.item { display: flex; flex-direction: column; gap: .2rem; padding: .85rem .9rem; border: 1px solid #D8D3C6; border-radius: 10px; background: #FCFBF8; min-width: 0; }
+.label { font-size: .9rem; font-weight: 700; color: #1C1B33; }
+.value { font-size: 1.3rem; font-weight: 800; color: #1C1B33; }
+.value small { font-size: .8rem; font-weight: 600; color: #5C5974; }
+.stars { letter-spacing: .1em; font-size: 1rem; }
+.on { color: #3552C9; }
+.off { color: #CFCABB; }
+@media (max-width: 520px) { .list { grid-template-columns: 1fr; } }

@@ -1,5 +1,6 @@
 .shell {
-  --paper: #E9E6DE;
+  --paper: #FAF9F6;
+  --track: #E9E6DE;
   --card: #FFFFFF;
   --line: #D8D3C6;
   --ink: #1C1B33;
@@ -81,14 +82,14 @@
 .unit { font-size: .95rem; font-weight: 600; color: var(--ink-soft); }
 .small { margin: 0; font-size: .85rem; color: var(--ink-soft); }
 
-.bar { height: .5rem; background: var(--paper); border-radius: 999px; overflow: hidden; }
+.bar { height: .5rem; background: var(--track); border-radius: 999px; overflow: hidden; }
 .barFill { height: 100%; background: linear-gradient(90deg, #4B75FF, #954AFF); border-radius: 999px; }
 
 .stars { letter-spacing: .08em; }
 .starOff { opacity: .28; }
 .levelOn, .levelOff { padding: .1rem .55rem; border-radius: 999px; font-size: .75rem; font-weight: 700; white-space: nowrap; }
 .levelOn { background: var(--purple-tint); color: var(--purple-deep); }
-.levelOff { background: var(--paper); color: var(--ink-soft); }
+.levelOff { background: var(--track); color: var(--ink-soft); }
 
 .badgeRow { display: flex; align-items: center; gap: .85rem; }
 .tile, .tileOff {
