@@ -293,11 +293,11 @@ Proverb Quiz and Proverb Mix and Match also count towards the same progress, so 
 - The Progress page shows the level, skills, streaks and badges. The Leaderboard ranks learners by total points and by Quiz of the Day score.
 
 ### How it helps
-- Choosing between realistic options trains learners to judge what sounds natural, not only what is correct.
+- Choosing between realistic options trains learners to judge what not only what is correct but also sounds natural.
 - Counting only the first try rewards real recall instead of guessing until something works.
 - Letting learners pass a question keeps them moving, and the saved phrase lets them revise it later.
 - Streaks, levels, badges and the leaderboard give learners a reason to come back every day.
-<br>
+
 ## Saved Phrases (Matthew Tay)
  
 ### Overview
@@ -320,7 +320,7 @@ Learners meet new phrases all the time, in quizzes, sentence practice, proverbs,
 - Learners build a revision list from what they actually struggled with.
 - The source tag reminds them where they learnt the phrase, which helps recall.
 - Sharing straight from the list connects personal revision with the community.
-<br>
+
 ## Community (Matthew Tay)
  
 ### Overview
@@ -345,7 +345,6 @@ Learning is easier with other people. The Community page is a shared feed where 
 - Seeing the characters and pinyin together after each word helps learners connect how a word looks with how it sounds.
 - Short categories of everyday objects keep each practice quick, so learners can fit it into a busy day.
 
-<br>
 
 # Users
 | Email                                 | Password            |
