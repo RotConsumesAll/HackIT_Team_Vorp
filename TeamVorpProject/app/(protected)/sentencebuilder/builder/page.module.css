@@ -1,60 +1,241 @@
+/* ---------- Page layout ---------- */
+
+/* Colours sampled from the Figma design. Change them here and the whole page follows. */
 .main {
-  display: flex;
-  flex-direction: row;
+  --bg: #faf9f6;
+  --blue: #0a7cff;
+  --blue-dark: #0063d1;
+  --blue-soft: #e8f1ff;
+  --blue-border: #7796fd;
+  --text: #1c1c1e;
+  --grey-border: #cfcfcf;
+  --grey-fill: #f5f4f1;
+  --error: #c62828;
+
+  /* Three columns: empty | builder (centred, max 590px) | slang search.
+     The builder stays centred like the Figma, and the search sits on the right. */
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 590px) 1fr;
+  column-gap: 24px;
+  align-items: start;
+
+  background-color: var(--bg);
+  color: var(--text);
+  /* 80px is roughly the navbar height in the design. Adjust if your navbar is taller or shorter. */
+  min-height: calc(100vh - 80px);
+  padding: 0 24px 48px;
+}
+
+.builder {
+  grid-column: 2;
+}
+
+.side {
+  grid-column: 3;
+  justify-self: end;
+  padding-top: 48px;
+}
+
+.title {
+  text-align: center;
+  color: var(--blue);
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin: 40px 0 24px;
+}
+
+/* On narrower screens, stack everything in one column. */
+@media (max-width: 1200px) {
+  .main {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .builder,
+  .side {
+    grid-column: 1;
+  }
+  .builder {
+    width: 100%;
+    max-width: 590px;
+    justify-self: center;
+  }
+  .side {
+    justify-self: stretch;
+    padding-top: 24px;
+  }
 }
 
 
-/* Source: https://www.w3schools.com/css/css_forms.asp */
-.form {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 10px 20px;
-}
+/* ---------- English and Chinese sections ---------- */
 
-.form label {
-  display: block;
-}
-
-.form input[type=text] {
-  width: 100%;
-  padding: 12px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box; 
-}
-
-.eng-cont{
+.eng-cont,
+.chi-cont {
   display: flex;
   flex-direction: column;
-  row-gap: 8px;
+  row-gap: 12px;
 }
 
-.chi-cont{
+.tag-row {
   display: flex;
-  flex-direction: column;
-  row-gap: 8px;
+  align-items: center;
+  gap: 12px;
 }
+
+/* TAG: a filled blue label. It is not clickable, so no pointer cursor and no hover effect. */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 22px;
+  border: 1.5px solid var(--blue);
+  border-radius: 6px;
+  background-color: var(--blue);
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  cursor: default;
+  user-select: none;
+}
+
+/* SHUFFLE: an outlined button with an icon, so it looks clickable and different from the tag.
+   Same border width, padding and font size as .tag so both sit at the same height. */
+.shuffle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 18px;
+  border: 1.5px solid var(--blue);
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: var(--blue);
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.shuffle-btn:hover {
+  background-color: var(--blue-soft);
+}
+
+.shuffle-btn:active {
+  background-color: #d4e5ff;
+}
+
+.shuffle-btn:focus-visible,
+.submit-btn:focus-visible {
+  outline: 3px solid rgba(10, 124, 255, 0.45);
+  outline-offset: 2px;
+}
+
+.shuffle-icon {
+  flex-shrink: 0;
+}
+
+
+/* ---------- Display boxes (English prompt and Chinese result) ---------- */
 
 .sentence-display-container {
-  border-color: #000000;
-  border-radius: 5px;
-  border: 2px solid #D9D9D9;
-  width:100%;
-  min-width: 12px;
+  width: 100%;
   min-height: 55px;
-  padding: 0 12px;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 14px 16px;
   box-sizing: border-box;
+  background-color: #ffffff;
+  border: 1px solid var(--blue-border);
+  border-radius: 4px;
 }
 
 .sentence-display-text {
-  color: #000000;
+  margin: 0;
+  color: var(--text);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.5;
 }
 
+
+/* ---------- Arrows between the two sections ---------- */
+
+.divider {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0;
+  color: var(--blue);
+}
+
+
+/* ---------- Chinese input and submit ---------- */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+}
+
+.chinese-input {
+  display: block;
+  width: 100%;
+  min-height: 120px;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  background-color: var(--grey-fill);
+  border: 1px solid var(--grey-border);
+  border-radius: 4px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.chinese-input::placeholder {
+  color: #8a8a8a;
+}
+
+.chinese-input:focus {
+  outline: none;
+  border-color: var(--blue-border);
+  box-shadow: 0 0 0 3px rgba(10, 124, 255, 0.2);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* SUBMIT: the main action, so it is the only large solid button on the page. */
+.submit-btn {
+  min-width: 120px;
+  padding: 10px 28px;
+  border: none;
+  border-radius: 6px;
+  background-color: var(--blue);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background-color: var(--blue-dark);
+}
+
+.submit-btn:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.error-text {
+  margin: 0;
+  color: var(--error);
+  font-size: 0.9rem;
+}
+
+
+/* ---------- Existing helper classes (kept in case they are used elsewhere) ---------- */
 
 .show-searchbar{
   display: block;
@@ -62,4 +243,11 @@
 
 .hide-searchbar{
   display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shuffle-btn,
+  .submit-btn {
+    transition: none;
+  }
 }

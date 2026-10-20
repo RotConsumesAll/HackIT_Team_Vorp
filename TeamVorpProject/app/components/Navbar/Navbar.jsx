@@ -180,7 +180,6 @@ export default function Navbar() {
             {ACCOUNT_LINKS.map((link) => {
               let itemClass = styles.item;
               return (
-                <>
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -190,8 +189,7 @@ export default function Navbar() {
                     <span className={styles.icon} aria-hidden="true">{link.icon}</span>
                     <span>{link.label}</span>
                   </Link>
-                </li>
-                </>           
+                </li>          
               );
             })}
           </ul>

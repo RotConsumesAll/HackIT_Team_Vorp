@@ -1,6 +1,6 @@
 "use client";
-import Navbar from "../../../components/Navbar/Navbar";
-import SlangGlossSearch from "../../../components/SlangGlossSearch/SlangGlossSearch";
+import Navbar from "../components/Navbar/Navbar";
+import SlangGlossSearch from "../components/SlangGlossSearch/SlangGlossSearch";
 
 function PlaceholderView(){
     return(

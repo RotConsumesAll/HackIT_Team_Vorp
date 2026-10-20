@@ -1,49 +1,6 @@
-# Navigation
-- TeamVorpProject/app/page.tsx is our home page.
-
-- All pages for display e.g. credits, home need to be named as "page.jsx" or it will not render.
-
-- app/(protected)/filenamehere are our individual features
-
-- app/api/ is for API calls to LLM
-
-- globals.css is our global css, not sure if we are using tailwind css or vanilla css.
-
-- Naming for individual page css in your features has to end with ".module.css" e.g. page.module.css
-
-- app/layout.jsx is for anything that should persist across page navigations without re-rendering.
-
-- lib/ is for shared javascript
-
-- components/ is for shared UI
-
-
 # HackIT Team Vorp
-NameOfApp is our one stop learning platform to help young adults integrate mother tongue into their daily lives by tackling the hesitation of practicing an unfamiliar language from multiple angles. We have decided to focus on aspects that range from general vocabulary and grammar to appropriate usage of localized slang:
-- Naming objects to maintain vocabulary,
-- Proverbs gamified into flashcards to not only retain understanding but also mastery of Chinese,
-- Understanding the nuances of how words and sentences morph based on context,
-- Pronounciation and reading aloud to reinforce real time organization of thoughts,
-- Spoken interactions in local environments involves the use of localized slang/Singlish.
 
-From these perspectives, we have created solutions that aim to tackle these problems. 
-
-<br>
-
-# REMOVE LATER ↓↓↓
-
-# Firebase link
-[Firebase link](https://hackit-vorp-db-default-rtdb.asia-southeast1.firebasedatabase.app/)
-
-# Figma wireframing 
-[Wireframe link](https://www.figma.com/design/y6EjeLEndbZzAgAke1slRh/HackIT-wireframe?node-id=0-1&t=C3fNilFaBsavW9Tn-1)
-
-
-# Google Docs discussion
-https://docs.google.com/document/d/1bWnFUjsIkvIGe7DRwe2-Kcbe6fgvTSDnIYdTIaecSPA/edit
-
-
-# Members
+## Members
 
 | Name                                  | Github Username     |
 | ------------------------------------- | --------------------|
@@ -53,14 +10,18 @@ https://docs.google.com/document/d/1bWnFUjsIkvIGe7DRwe2-Kcbe6fgvTSDnIYdTIaecSPA/
 | Matthew Tay                           | Spadnana            |
 | Soh Yong Jia                          | yoooongjiaaaa39b-ux |
 
+## Background
+
+LearnLah! is our one stop learning platform to help young adults integrate mother tongue into their daily lives by tackling the hesitation of practicing an unfamiliar language from multiple angles. We have decided to focus on aspects that range from general vocabulary and grammar to appropriate usage of localized slang:
+- Naming objects to maintain vocabulary,
+- Proverbs gamified into flashcards to not only retain understanding but also mastery of Chinese,
+- Understanding the nuances of how words and sentences morph based on context,
+- Pronounciation and reading aloud to reinforce real time organization of thoughts,
+- Spoken interactions in local environments involves the use of localized slang/Singlish.
+
+From these perspectives, we have created solutions that aim to tackle these problems. 
+
 <br>
-
-# Users
-| Email                                 | Password            |
-| ------------------------------------- | --------------------|
-| Alice@example.com                     | Alice123            |
-| Ben@example.com                       | Ben321              |
-
 
 # Features and explanations
 ## General
@@ -169,6 +130,7 @@ Full response: `errors`, `matches`, `unmatched`, `unrecognised`, `closestAnswer`
 `ok` is true when no entry has severity `error`, so warnings don't fail a sentence. 
 
 <br>
+
 #### Summary
 
 The engine compares the learner's sentence with every accepted answer, then reports problems against the closest one. An answer is an ordered list of segments: a role (its job in the sentence), accepted forms (wordings), and a level (required, expected, or optional).
@@ -190,6 +152,13 @@ The engine compares the learner's sentence with every accepted answer, then repo
 
 6. Respond<br>
 &nbsp;Map spans to tokens and return errors, matches, unexplained tokens, unrecognised words, the closest answer, ok, and the cleaned text.
+
+### Vocabulary check with Gemini LLM
+text
+
+### Local context
+
+<br>
 
 ## Proverb Flashcards (Jovan Soo)
 
@@ -222,9 +191,11 @@ Upon choosing the correct option or passing the question if the user decides to 
 When the learner chooses to do the Mix and Match, the meaning of the proverb will be given and the user has to attempt to order the words given into the correct proverb. <br>
 
 Similarly to the quizzes page, the Learner can retry the question if they answer incorrectly and dd the proverb into their saved phrases list or continue if they answer the question correctly ot pass the question.<br>
-### Vocabulary check with Deepseek LLM
-text
 
-### Local context
+<br>
 
-# Glossary
+# Users
+| Email                                 | Password            |
+| ------------------------------------- | --------------------|
+| Alice@example.com                     | Alice123            |
+| Ben@example.com                       | Ben321              |
