@@ -37,6 +37,19 @@ export async function getPosts() {
   return toList(snap.val()).slice(0, 50);
 }
 
+export async function editPost(postId, data) {
+  const updates = {
+    [`community/posts/${postId}/text`]: data.text || "",
+    [`community/posts/${postId}/editedAt`]: Date.now(),
+  };
+  if (data.chinese !== undefined) {
+    updates[`community/posts/${postId}/chinese`] = data.chinese;
+    updates[`community/posts/${postId}/pinyin`] = data.pinyin || "";
+    updates[`community/posts/${postId}/meaning`] = data.meaning;
+  }
+  await update(ref(db), updates);
+}
+
 export async function deletePost(postId) {
   await remove(ref(db, `community/posts/${postId}`));
 }
@@ -47,7 +60,7 @@ export async function toggleLike(uid, postId, liked) {
 
 export async function getReplies(postId) {
   const snap = await get(ref(db, `community/replies/${postId}`));
-  return toList(snap.val()).reverse(); 
+  return toList(snap.val()).reverse();
 }
 
 export async function addReply(uid, postId, text) {
@@ -56,5 +69,12 @@ export async function addReply(uid, postId, text) {
     authorName: await getUserName(uid),
     text,
     createdAt: Date.now(),
+  });
+}
+
+export async function editReply(postId, replyId, text) {
+  await update(ref(db), {
+    [`community/replies/${postId}/${replyId}/text`]: text,
+    [`community/replies/${postId}/${replyId}/editedAt`]: Date.now(),
   });
 }
