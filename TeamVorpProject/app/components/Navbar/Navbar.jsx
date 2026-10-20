@@ -19,9 +19,9 @@ const MENU_LINKS = [
 ];
 
 const ACCOUNT_LINKS = [
+    { label: "Profile", href: "/profile", icon: null },
     { label: "Saved Phrases", href: "/phrases", icon: null },
     { label: "Progress", href: "/progress", icon: null },
-    { label: "Profile", href: "/profile", icon: null },
 ]
 
 export default function Navbar() {
