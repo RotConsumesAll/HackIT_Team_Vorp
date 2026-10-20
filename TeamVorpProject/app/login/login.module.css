@@ -58,13 +58,13 @@
   font: inherit;
   font-weight: 700;
   color: #fff;
-  background: linear-gradient(120deg, #3B61E0 0%, #7A2FE0 100%);
+  background: var(--blue);
   border: 0;
   border-radius: 12px;
   cursor: pointer;
   transition: transform .15s, box-shadow .15s, opacity .15s;
 }
-.submit:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 10px 18px -12px rgba(59, 97, 224, .9); }
+.submit:hover:not(:disabled) { background: var(--blue-deep); transform: translateY(-1px); box-shadow: 0 10px 18px -12px rgba(53, 82, 201, .9); }
 .submit:disabled { opacity: .45; cursor: not-allowed; }
 .submit:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 
