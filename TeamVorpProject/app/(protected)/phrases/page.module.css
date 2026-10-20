@@ -1,5 +1,8 @@
-  .shell {
-  --paper: #E9E6DE;
+/* Self-contained: colours are defined on .shell, nothing here depends on globals.css. */
+
+.shell {
+  --paper: #FAF9F6;
+  --track: #E9E6DE;
   --surface: #FBFAF6;
   --line: #D6D1C4;
   --line-strong: #B5AE9C;
@@ -77,6 +80,7 @@
 .good { background: var(--ok-tint); color: var(--ok); }
 .bad { background: var(--bad-tint); color: var(--bad); }
 
+/* List heading with search */
 .listHead { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
 .listTitle { display: flex; align-items: center; gap: .6rem; margin: 0; font-size: 1.3rem; font-weight: 800; color: var(--ink); }
 .count { padding: .1rem .65rem; border-radius: 999px; background: #EDE2FF; color: var(--purple-deep); font-size: .85rem; font-weight: 700; }
@@ -121,6 +125,7 @@
   background: linear-gradient(135deg, #4B75FF, #954AFF);
 }
 
+/* Phrase cards, two across. Chinese (blue) with the pinyin under each character, then the meaning, then where it came from and the actions */
 .list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .item {
   position: relative;
@@ -135,10 +140,12 @@
 }
 .item:hover { transform: translateY(-2px); border-color: var(--blue); box-shadow: 0 16px 28px -22px rgba(53, 82, 201, .65); }
 
-.phrase { --s: 1; height: 4.2rem; overflow: hidden; padding-right: 2.2rem; min-width: 0; }
+/* The phrase box is a fixed height. PinyinText shrinks the text (--s) until it fits, so every card stays the same size. */
+.phrase { --s: 1; height: 4.6rem; overflow: hidden; padding-right: 2.2rem; min-width: 0; }
 .han { margin: 0; font-family: var(--hanzi); font-size: calc(1.85rem * var(--s)); font-weight: 700; line-height: 1.2; color: var(--blue); overflow-wrap: anywhere; }
 .pinyinLine { font-size: calc(.92rem * var(--s)); font-weight: 600; color: var(--ink-soft); }
 
+/* Pinyin under each character */
 .ruby { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 0 calc(.15rem * var(--s)); margin: 0; min-width: 0; }
 .pair { display: inline-flex; flex-direction: column; align-items: center; min-width: calc(1.85rem * var(--s)); }
 .py { margin-top: .1rem; font-size: calc(.78rem * var(--s)); font-weight: 600; line-height: 1.2; color: var(--ink-soft); white-space: nowrap; }

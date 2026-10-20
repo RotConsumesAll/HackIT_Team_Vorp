@@ -1,6 +1,7 @@
 /* Self-contained, same look as the other redesigned pages. */
 .shell {
-  --paper: #E9E6DE;
+  --paper: #FAF9F6;
+  --track: #E9E6DE;
   --card: #FFFFFF;
   --line: #D8D3C6;
   --ink: #1C1B33;
