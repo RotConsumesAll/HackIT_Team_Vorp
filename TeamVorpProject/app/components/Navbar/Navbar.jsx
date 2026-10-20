@@ -16,6 +16,7 @@ const MENU_LINKS = [
     { label: "Context Guess", href: "/contextguess", icon: <img src="/icons/ContextG.png" alt="" width="24" height="24" /> },
     { label: "Ask Community", href: "/community", icon: <img src="/icons/people.png" width="30" height="30"></img> },
     { label: "Leaderboards", href: "/leaderboard", icon: <img src="/icons/trophy.png" width="24" height="24"></img> },
+    { label: "Chinese Adapter", href: "/translate", icon: <img src="/icons/communication.png" width="26" height="30"></img> },
 ];
 
 const ACCOUNT_LINKS = [
