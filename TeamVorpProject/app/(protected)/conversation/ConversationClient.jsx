@@ -3,7 +3,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import "./conversation.css";
-import { speakChinese, stopChineseSpeech } from "../../lib/speech";
+import { speakChinese, stopChineseSpeech } from "../../../lib/speech";
 
 export default function ConversationClient() {
   const [autoSpeak, setAutoSpeak] = useState(true);
