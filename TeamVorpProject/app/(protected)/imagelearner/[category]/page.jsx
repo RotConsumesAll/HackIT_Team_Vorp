@@ -4,6 +4,9 @@ import { useParams } from "next/navigation"
 import { ref, get } from "firebase/database"
 import { db } from "../../../../lib/firebase"   // adjust if your lib folder is elsewhere
 import Navbar from "../../../components/Navbar/Navbar"
+import { useUid } from "../../../../lib/useuid"
+import { recordAnswer, recordDaily, recordImageWord, BADGE_NAMES } from "../../../../lib/progress"
+import SavePhrase from "../../../components/SavePhrase/SavePhrase"
 import styles from "../imageLearner.module.css"
 
 // Where your image files live. Firebase only stores the file name (e.g. "chair.jpg"),
@@ -82,6 +85,9 @@ function Main({ categoryName, slug }){
     const [result, setResult] = useState(null)      // null | "correct" | "wrong"
     const [revealed, setRevealed] = useState(false)
     const [error, setError] = useState("")          // input validation message
+    const { uid } = useUid()
+    const [missed, setMissed] = useState(false)
+    const [badgeMsg, setBadgeMsg] = useState("")
 
     if (status === "loading") {
         return <Shell categoryName={categoryName}><p className={styles.message}>Loading…</p></Shell>
@@ -103,6 +109,17 @@ function Main({ categoryName, slug }){
     // Reveal Answer unlocks once the user has submitted at least once for this word
     const hasSubmitted = result !== null
 
+    async function track(firstTry) {
+        const a = await recordAnswer(uid, "image", firstTry)
+        const ids = [...((a && a.newBadges) || [])]
+        if (firstTry) {
+            const d = await recordDaily(uid, "contextGuess")
+            const w = await recordImageWord(uid, slug)
+            ids.push(...((d && d.newBadges) || []), ...w.newBadges)
+        }
+        if (ids.length) setBadgeMsg("New badge: " + ids.map((b) => BADGE_NAMES[b] || b).join(", "))
+    }
+
     function handleSubmit(e) {
         e.preventDefault()
         const answer = guess.trim()
@@ -120,6 +137,11 @@ function Main({ categoryName, slug }){
 
         const isCorrect = answer === item.chinese
         setResult(isCorrect ? "correct" : "wrong")
+        if (isCorrect) track(!missed)
+        else if (!missed) {
+            setMissed(true)
+            track(false)
+        }
         // Right answer: go straight to the answer screen (same as Reveal Answer)
         if (isCorrect) setRevealed(true)
     }
@@ -130,6 +152,8 @@ function Main({ categoryName, slug }){
         setResult(null)
         setRevealed(false)
         setError("")
+        setMissed(false)
+        setBadgeMsg("")
     }
 
     return(
@@ -198,6 +222,15 @@ function Main({ categoryName, slug }){
                     )}
                     <p className={styles.chinese}>{item.chinese}</p>
                     <p className={styles.pinyin}>{item.pinyin}</p>
+                    {badgeMsg && <p className={styles.correctBanner}>{badgeMsg}</p>}
+                    <div style={{ width: "100%" }}>
+                        <SavePhrase
+                            key={item.id}
+                            choices={[{ chinese: item.chinese, pinyin: item.pinyin, meaning: item.meaning }]}
+                            source="Image Learner"
+                            align="center"
+                        />
+                    </div>
                     <div className={styles.nextWrap}>
                         <button className={styles.button} onClick={handleNext}>Next</button>
                     </div>

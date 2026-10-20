@@ -7,7 +7,7 @@ import { BADGE_NAMES } from "../../../lib/progress"
 import { toPinyin } from "../../../lib/pinyin"
 import styles from "./SavePhrase.module.css"
 
-function SavePhrase({ choices, source = "" }){
+function SavePhrase({ choices, source = "", align = "left" }){
   const { uid } = useUid()
   const [open, setOpen] = useState(false)
   const [selected, setSelected] = useState([])
@@ -88,9 +88,11 @@ function SavePhrase({ choices, source = "" }){
 
   return (
     <div className={styles.wrap}>
-      <button type="button" className={styles.toggle} onClick={handleOpen} aria-expanded={open}>
-        {open ? "Close" : "+ Save a phrase"}
-      </button>
+      <div className={align === "center" ? styles.toggleCenter : undefined}>
+        <button type="button" className={styles.toggle} onClick={handleOpen} aria-expanded={open}>
+          {open ? "Close" : "+ Save a phrase"}
+        </button>
+      </div>
 
       {open && (
         <div className={styles.panel}>
