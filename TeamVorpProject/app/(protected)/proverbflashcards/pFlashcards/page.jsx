@@ -4,10 +4,9 @@ import Link from "next/link";
 import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Navbar from "../../../components/Navbar/Navbar";
+import ProverbFrame from "../ProverbFrame";
 import { useProverbs, chunk } from "../../../../lib/useProverbs";
-
-const btn =
-    "inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-700";
+import styles from "../proverbs.module.css";
 
 function FlashcardView() {
     const params = useSearchParams();
@@ -17,12 +16,7 @@ function FlashcardView() {
     const [cardIndex, setCardIndex] = useState(0);
     const [flipped, setFlipped] = useState(false);
 
-    if (loading) return <p>Loading flashcards...</p>;
-    if (error) return <p>Couldn't load flashcards: {error}</p>;
-
     const cards = chunk(proverbs)[setNumber] ?? [];
-    if (cards.length === 0) return <p>No proverbs in this set.</p>;
-
     const card = cards[cardIndex];
 
     function go(step) {
@@ -31,43 +25,47 @@ function FlashcardView() {
     }
 
     return (
-        <main className="mx-auto flex max-w-2xl flex-col items-center gap-6 p-8">
-            {/* The card */}
-            <div
-                onClick={() => setFlipped(!flipped)}
-                className="flex h-64 w-full cursor-pointer flex-col items-center justify-center gap-2 border p-6 text-center"
-            >
-                {flipped ? (
-                    <>
-                        <p className="text-4xl font-bold">{card.proverb}</p>
-                        <p className="text-sm">{card.pinyin}</p>
-                        <p>{card.translation}</p>
-                    </>
-                ) : (
-                    <p className="text-4xl font-bold">{card.proverb}</p>
-                )}
-            </div>
+        <ProverbFrame title="Proverb Flashcards" subtitle={`Set ${setNumber + 1}`} narrow>
+            {loading && <p className={styles.note}>Loading flashcards...</p>}
+            {error && <p className={styles.bad}>Couldn't load flashcards: {error}</p>}
+            {!loading && !error && !card && <p className={styles.note}>No proverbs in this set.</p>}
 
-            {/* Prev / next arrows */}
-            <div className="flex gap-6">
-                <button onClick={() => go(-1)}>&lt;</button>
-                <button onClick={() => go(1)}>&gt;</button>
-            </div>
+            {card && (
+                <>
+                    <button type="button" className={styles.flashcard} onClick={() => setFlipped(!flipped)}>
+                        {flipped ? (
+                            <>
+                                <p className={styles.cardHan}>{card.proverb}</p>
+                                <p className={styles.cardPinyin}>{card.pinyin}</p>
+                                <p className={styles.cardMeaning}>{card.translation}</p>
+                            </>
+                        ) : (
+                            <>
+                                <p className={styles.cardHan}>{card.proverb}</p>
+                                <p className={styles.hint}>Tap to flip</p>
+                            </>
+                        )}
+                    </button>
 
-            {/* Counter on the left, buttons on the right */}
-            <div className="flex w-full items-center justify-between">
-                <p>{cardIndex + 1}/{cards.length}</p>
+                    <div className={styles.arrows}>
+                        <button type="button" className={styles.arrow} onClick={() => go(-1)} aria-label="Previous card">&lt;</button>
+                        <button type="button" className={styles.arrow} onClick={() => go(1)} aria-label="Next card">&gt;</button>
+                    </div>
 
-                <div className="flex gap-10">
-                    <Link href={`/proverbflashcards/pMixnmatch?set=${setNumber}`} className={btn}>
-                        Mix and Match
-                    </Link>
-                    <Link href={`/proverbflashcards/pQuiz?set=${setNumber}`} className={btn}>
-                        Short Quiz
-                    </Link>
-                </div>
-            </div>
-        </main>
+                    <div className={styles.bottomRow}>
+                        <p className={styles.counter}>{cardIndex + 1}/{cards.length}</p>
+                        <div className={styles.actions}>
+                            <Link href={`/proverbflashcards/pMixnmatch?set=${setNumber}`} className={styles.ghost}>
+                                Mix and Match
+                            </Link>
+                            <Link href={`/proverbflashcards/pQuiz?set=${setNumber}`} className={styles.btn}>
+                                Short Quiz
+                            </Link>
+                        </div>
+                    </div>
+                </>
+            )}
+        </ProverbFrame>
     );
 }
 
@@ -75,7 +73,7 @@ export default function PFlashcards() {
     return (
         <>
             <Navbar />
-            <Suspense fallback={<p>Loading...</p>}>
+            <Suspense fallback={null}>
                 <FlashcardView />
             </Suspense>
         </>
