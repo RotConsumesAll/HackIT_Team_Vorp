@@ -102,10 +102,22 @@
 
 .coreGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    grid-template-columns: repeat(6, 1fr);
     gap: 20px;
 }
 
+.coreCard {
+    grid-column: span 2;
+}
+
+/* row 2: center the last two */
+.coreCard:nth-child(4) {
+    grid-column: 2 / span 2;
+}
+
+.coreCard:nth-child(5) {
+    grid-column: 4 / span 2;
+}
 .coreCard {
     display: flex;
     flex-direction: column;
