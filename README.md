@@ -12,7 +12,7 @@
 
 ## Background
 
-LearnLah! is our one stop learning platform to help young adults integrate mother tongue into their daily lives by tackling the hesitation of practicing an unfamiliar language from multiple angles. We have decided to focus on aspects that range from general vocabulary and grammar to appropriate usage of localized slang:
+Learnlah is our one stop learning platform to help young adults integrate mother tongue into their daily lives by tackling the hesitation of practicing an unfamiliar language from multiple angles. We have decided to focus on aspects that range from general vocabulary and grammar to appropriate usage of localized slang:
 - Naming objects to maintain vocabulary,
 - Proverbs gamified into flashcards to not only retain understanding but also mastery of Chinese,
 - Understanding the nuances of how words and sentences morph based on context,
