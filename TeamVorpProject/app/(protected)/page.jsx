@@ -7,7 +7,7 @@ const CORE_FEATURES = [
     {
         title: "Sentence Builder",
         description: "Put words in the right order and build natural sentences.",
-        href: "/sentencebuilder",
+        href: "/sentencebuilder/builder",
         icon: "sentence",
     },
     {
