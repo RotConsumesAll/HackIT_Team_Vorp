@@ -21,6 +21,7 @@ export const TIERED_BADGES = {
   mastery_pronunciation: { name: "Pronunciation master", levels: [10, 30, 60, 100], unit: "points" },
   mastery_grammar: { name: "Grammar master", levels: [10, 30, 60, 100], unit: "points" },
   mastery_proverbs: { name: "Proverb master", levels: [10, 30, 60, 100], unit: "points" },
+  mastery_vocab: { name: "Vocab master", levels: [10, 30, 60, 100], unit: "points" },
   streak: { name: "Streak star", levels: [5, 10, 20, 30], unit: "in a row (best streak)" },
   login: { name: "Regular visitor", levels: [3, 7, 14, 30], unit: "days logged in" },
 };
@@ -32,6 +33,8 @@ const ONE_OFF_BADGES = {
   first_phrase: "First saved phrase",
   first_proverb: "First proverb set",
   proverb_perfect: "Proverb perfectionist",
+  first_image: "First image word",
+  image_explorer: "Image explorer",
   first_post: "First community post",
   daily3: "3 days in a row",
   daily7: "7 days in a row",
@@ -48,6 +51,7 @@ export const SKILL_BY_QUIZ = {
   measure: "grammar",
   proverbQuiz: "proverbs",
   proverbMix: "proverbs",
+  image: "vocab",
 };
 
 export const BADGE_NAMES = { ...ONE_OFF_BADGES };
@@ -304,6 +308,30 @@ export async function recordProverbSet(uid, score, total) {
     return { newBadges };
   } catch (e) {
     console.warn("Could not save proverb badges:", e.message);
+    return { newBadges: [] };
+  }
+}
+
+export const IMAGE_CATEGORIES = ["food", "animals", "places", "countries", "everyday-objects"];
+
+export async function recordImageWord(uid, category) {
+  if (!uid) return { newBadges: [] };
+  try {
+    const snap = await get(ref(db, `users/${uid}`));
+    const user = snap.val() || {};
+    const done = { ...(user.imageCategories || {}), [category]: true };
+    const owned = user.badges || {};
+    const newBadges = [];
+    if (!owned.first_image) newBadges.push("first_image");
+    if (!owned.image_explorer && IMAGE_CATEGORIES.every((c) => done[c])) newBadges.push("image_explorer");
+    const updates = { [`users/${uid}/imageCategories/${category}`]: true };
+    newBadges.forEach((id) => {
+      updates[`users/${uid}/badges/${id}`] = { earnedAt: Date.now() };
+    });
+    await update(ref(db), updates);
+    return { newBadges };
+  } catch (e) {
+    console.warn("Could not save image badges:", e.message);
     return { newBadges: [] };
   }
 }
