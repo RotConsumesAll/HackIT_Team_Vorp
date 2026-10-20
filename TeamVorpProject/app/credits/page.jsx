@@ -84,7 +84,27 @@ export default function App(){
                     <li className="list-group-item">
                         <a href="https://react-bootstrap.netlify.app/docs/components/overlays#tooltips">React Bootstrap tooltips</a>
                     </li>
-                </ul>                                                        
+                </ul>
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        <a href="https://claude.ai/share/9434e8d9-c9b8-4e88-a0b0-a695cfee5993">Claude chat 1</a>
+                    </li>
+                </ul>                
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        <a href="https://claude.ai/share/2444726d-79f0-47ca-aea0-18efa30afb28">Claude chat 2</a>
+                    </li>
+                </ul>                 
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        <a href="https://claude.ai/share/4b4063c7-6c6a-46f3-b920-2708df74f937">Claude chat 3</a>
+                    </li>
+                </ul>
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        <a href="https://chat.deepseek.com/share/2g9vhcpjkugxbi6glu">DeepSeek chat</a>
+                    </li>
+                </ul>                                                                                          
             </section>
 
             <section>
