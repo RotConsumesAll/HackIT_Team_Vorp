@@ -77,7 +77,7 @@ export default function LoginInterface(){
 return(
         <div className={styles.shell}>
             <div className={styles.card}>
-                <p className={styles.title}>Login page</p>
+                <p className={styles.title}>Login</p>
 
                 <form className = {styles.form} onSubmit={handleLogin} noValidate={true}>
                     <input className={styles.input} type = "email" value={email} onChange={changeEmailField} placeholder="Email"></input>
