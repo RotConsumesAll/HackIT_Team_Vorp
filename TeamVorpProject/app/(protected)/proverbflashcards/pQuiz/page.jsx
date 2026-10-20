@@ -5,24 +5,27 @@ import { Suspense, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Navbar from "../../../components/Navbar/Navbar";
 import SavePhrase from "../../../components/SavePhrase/SavePhrase";
+import ProverbFrame from "../ProverbFrame";
 import { useProverbs, chunk, shuffle } from "../../../../lib/useProverbs";
+import { useUid } from "../../../../lib/useuid";
+import { recordAnswer, recordDaily, recordHighScore, recordProverbSet, BADGE_NAMES } from "../../../../lib/progress";
+import styles from "../proverbs.module.css";
 
-const btn =
-    "inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-700 disabled:opacity-50";
 const LETTERS = ["A", "B", "C", "D"];
 
 function QuizView() {
     const params = useSearchParams();
     const setNumber = Number(params.get("set") ?? 0);
     const { proverbs, loading, error } = useProverbs();
+    const { uid } = useUid();
+    const [badgeMsg, setBadgeMsg] = useState("");
 
     const [current, setCurrent] = useState(0);
-    const [picked, setPicked] = useState(null);   // last option clicked
+    const [picked, setPicked] = useState(null);
     const [correct, setCorrect] = useState(false);
-    const [missed, setMissed] = useState(false);  // got this question wrong at least once
+    const [missed, setMissed] = useState(false);
     const [score, setScore] = useState(0);
 
-    // Build the questions once the data has loaded
     const questions = useMemo(() => {
         const cards = chunk(proverbs)[setNumber] ?? [];
         return cards.map((card) => {
@@ -38,38 +41,14 @@ function QuizView() {
         });
     }, [proverbs, setNumber]);
 
-    if (loading) return <p>Loading quiz...</p>;
-    if (error) return <p>Couldn't load quiz: {error}</p>;
-    if (questions.length === 0) return <p>No proverbs in this set.</p>;
-
-    // Finished screen
-    if (current >= questions.length) {
-        return (
-            <main className="mx-auto flex max-w-2xl flex-col items-center gap-4 p-8">
-                <h1 className="text-2xl font-bold">Quiz complete</h1>
-                <p>You scored {score} out of {questions.length} on the first try.</p>
-                <div className="flex gap-10">
-                    <Link href={`/proverbflashcards/pFlashcards?set=${setNumber}`} className={btn}>
-                        Back to flashcards
-                    </Link>
-                    <button
-                        className={btn}
-                        onClick={() => {
-                            setCurrent(0);
-                            setScore(0);
-                            setPicked(null);
-                            setCorrect(false);
-                            setMissed(false);
-                        }}
-                    >
-                        Try again
-                    </button>
-                </div>
-            </main>
-        );
-    }
-
     const q = questions[current];
+
+    async function track(firstTry) {
+        const a = await recordAnswer(uid, "proverbQuiz", firstTry);
+        const d = await recordDaily(uid, "contextGuess");
+        const ids = [...((a && a.newBadges) || []), ...((d && d.newBadges) || [])];
+        if (ids.length) setBadgeMsg("New badge: " + ids.map((b) => BADGE_NAMES[b] || b).join(", "));
+    }
 
     function choose(option) {
         if (correct) return;
@@ -77,71 +56,120 @@ function QuizView() {
         if (option === q.answer) {
             setCorrect(true);
             if (!missed) setScore(score + 1);
+            track(!missed);
         } else {
             setMissed(true);
         }
     }
 
+    async function finish() {
+        await recordHighScore(uid, "proverb_quiz", score);
+        const r = await recordProverbSet(uid, score, questions.length);
+        if (r.newBadges.length) setBadgeMsg("New badge: " + r.newBadges.map((b) => BADGE_NAMES[b] || b).join(", "));
+    }
+
     function next() {
+        if (current + 1 === questions.length) finish();
+        setBadgeMsg("");
         setCurrent(current + 1);
         setPicked(null);
         setCorrect(false);
         setMissed(false);
     }
 
-    return (
-        <main className="mx-auto flex max-w-2xl flex-col gap-4 p-8">
-            <div className="text-center">
-                <h1 className="text-2xl font-bold">Quiz</h1>
-                {correct && <p className="text-sm">Correct answer</p>}
-            </div>
+    function restart() {
+        setBadgeMsg("");
+        setCurrent(0);
+        setScore(0);
+        setPicked(null);
+        setCorrect(false);
+        setMissed(false);
+    }
 
-            <div className="flex flex-col gap-4 border p-6">
-                <div className="flex justify-between text-sm">
+    let body;
+    if (loading) {
+        body = <p className={styles.note}>Loading quiz...</p>;
+    } else if (error) {
+        body = <p className={styles.bad}>Couldn't load quiz: {error}</p>;
+    } else if (questions.length === 0) {
+        body = <p className={styles.note}>No proverbs in this set.</p>;
+    } else if (current >= questions.length) {
+        body = (
+            <div className={styles.done}>
+                <h2>Quiz complete</h2>
+                <p>You scored {score} out of {questions.length} on the first try.</p>
+                {badgeMsg && <p className={styles.info}>{badgeMsg}</p>}
+                <div className={styles.actions}>
+                    <Link href={`/proverbflashcards/pFlashcards?set=${setNumber}`} className={styles.ghost}>
+                        Back to flashcards
+                    </Link>
+                    <button type="button" className={styles.btn} onClick={restart}>Try again</button>
+                </div>
+            </div>
+        );
+    } else {
+        body = (
+            <div className={styles.panel}>
+                <div className={styles.metaRow}>
                     <span>Question {current + 1} of {questions.length}</span>
                     <span>Proverbs</span>
                 </div>
-
-                <progress value={current} max={questions.length} className="w-full" />
-                <p className="text-xs">{current} of {questions.length} complete</p>
-
-                <h2 className="text-lg font-bold">What is the meaning of {q.proverb}?</h2>
-
-                <div className="flex flex-col gap-2">
-                    {q.options.map((option, i) => (
-                        <button
-                            key={option}
-                            onClick={() => choose(option)}
-                            disabled={correct}
-                            className="flex flex-col items-start rounded-md border p-3 text-left"
-                        >
-                            <span className="flex items-center gap-3">
-                                <span className="flex h-6 w-6 items-center justify-center rounded-full border text-xs">
-                                    {LETTERS[i]}
-                                </span>
-                                {option}
-                            </span>
-                            {picked === option && (
-                                <span className="text-sm">{correct ? "Correct answer" : "Try Again"}</span>
-                            )}
-                        </button>
-                    ))}
+                <div className={styles.bar}>
+                    <div className={styles.barFill} style={{ width: `${(current / questions.length) * 100}%` }} />
                 </div>
+                <p className={styles.barText}>{current} of {questions.length} complete</p>
+
+                <h2 className={styles.question}>
+                    What is the meaning of <span className={styles.hanInline}>{q.proverb}</span>?
+                </h2>
+
+                <div className={styles.options}>
+                    {q.options.map((option, i) => {
+                        const isPicked = picked === option;
+                        const stateClass = isPicked ? (correct ? styles.optionCorrect : styles.optionWrong) : "";
+                        return (
+                            <button
+                                key={option}
+                                type="button"
+                                onClick={() => choose(option)}
+                                disabled={correct}
+                                className={`${styles.option} ${stateClass}`}
+                            >
+                                <span className={styles.optionRow}>
+                                    <span className={styles.letter}>{LETTERS[i]}</span>
+                                    {option}
+                                </span>
+                                {isPicked && (
+                                    <span className={styles.optionNote}>{correct ? "Correct answer" : "Try Again"}</span>
+                                )}
+                            </button>
+                        );
+                    })}
+                </div>
+
+                {badgeMsg && <p className={styles.info}>{badgeMsg}</p>}
 
                 {correct && (
                     <SavePhrase
                         key={q.proverb}
                         choices={[{ chinese: q.proverb, pinyin: q.pinyin, meaning: q.answer }]}
+                        source="Proverb Flashcards"
                     />
                 )}
 
-                <div className="flex justify-end">
-                    <button onClick={next} disabled={!correct} className={btn}>
+                <div className={styles.footRow}>
+                    <button type="button" className={styles.btn} onClick={next} disabled={!correct}>
                         {current + 1 === questions.length ? "Finish" : "Next"}
                     </button>
                 </div>
             </div>
-        </main>
+        );
+    }
+
+    return (
+        <ProverbFrame title="Quiz" subtitle={`Set ${setNumber + 1}`} narrow>
+            {body}
+        </ProverbFrame>
     );
 }
 
@@ -149,7 +177,7 @@ export default function PQuiz() {
     return (
         <>
             <Navbar />
-            <Suspense fallback={<p>Loading...</p>}>
+            <Suspense fallback={null}>
                 <QuizView />
             </Suspense>
         </>

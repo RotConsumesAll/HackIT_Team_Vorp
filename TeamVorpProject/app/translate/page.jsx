@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import Navbar from "../components/Navbar/Navbar"; // <-- adjust path if different
+import Navbar from "../components/Navbar/Navbar"; 
 import "./translate.css";
 import { useRouter } from "next/navigation";
 

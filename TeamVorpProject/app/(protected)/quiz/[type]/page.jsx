@@ -35,6 +35,7 @@ function shuffle(list){
   return a
 }
 
+// Same random numbers for the same seed, so everyone gets the same daily questions
 function seededRandom(seed){
   let a = seed
   return function(){
@@ -54,6 +55,7 @@ function hashString(str){
   return h
 }
 
+// Picks today's questions. Sorting first means the order doesn't depend on the database.
 function pickDaily(all){
   const sorted = [...all].sort((a, b) => (a.quizType + a.id).localeCompare(b.quizType + b.id))
   const rand = seededRandom(hashString(todayString()))
@@ -82,7 +84,8 @@ function Quiz(){
   const [playedToday, setPlayedToday] = useState(null)
   const [badgeMsg, setBadgeMsg] = useState("")
   const [endBadgeMsg, setEndBadgeMsg] = useState("")
-  useUid() 
+  useUid() // also counts today as a login day
+
   useEffect(() => {
     async function load(){
       try {
@@ -109,6 +112,7 @@ function Quiz(){
     load()
   }, [type])
 
+  // When the quiz ends: save the score, and give any badges for finishing
   useEffect(() => {
     async function finish(){
       const uid = currentUid()
@@ -175,7 +179,6 @@ function Quiz(){
   const answered = correctKey !== null
   const typed = q.options.length === 0
   const correctOption = q.options.find((o) => o.isCorrect)
-
   async function track(correct){
     const uid = currentUid()
     const result = await recordAnswer(uid, q.quizType, correct)
@@ -220,10 +223,12 @@ function Quiz(){
     }
   }
 
-  function skipTyped(){
+  function pass(){
+    if (answered) return
     if (firstTry) track(false)
     setSkipped(true)
-    setCorrectKey("typed")
+    setCorrectKey(typed ? "typed" : correctOption.key)
+    setLastWrong(null)
     setFirstTry(false)
     setMessage("")
   }
@@ -262,8 +267,6 @@ function Quiz(){
         <p className={styles.label}>{typed ? "Fill in the blank" : "Question"}</p>
         {q.target && <p className={styles.target}>How do you say <strong>{q.target}</strong> here?</p>}
         <h2 className={styles.question}>{typed ? "一 ___ " + q.prompt : q.prompt}</h2>
-        {typed && q.gloss && <p className={styles.context}>({q.gloss})</p>}
-        {!typed && q.context && <p className={styles.context}>({q.context})</p>}
       </section>
 
       {typed && (
@@ -277,7 +280,7 @@ function Quiz(){
             aria-label="Measure word"
           />
           <button className={styles.primary} type="submit" disabled={answered}>Check</button>
-          <button className={styles.secondary} type="button" onClick={skipTyped} disabled={answered}>Skip</button>
+          <button className={styles.secondary} type="button" onClick={pass} disabled={answered}>Pass question</button>
         </form>
       )}
       {typed && message && <p className={styles.bad} role="status">{message}</p>}
@@ -303,10 +306,16 @@ function Quiz(){
         </ul>
       )}
 
+      {!typed && !answered && (
+        <div className={styles.passRow}>
+          <button type="button" className={styles.secondary} onClick={pass}>Pass question</button>
+        </div>
+      )}
+
       {lastWrong && !answered && <p className={styles.bad} role="status"><strong>Not quite.</strong> {lastWrong.reason} Try another one.</p>}
 
       {answered && !skipped && <p className={styles.ok} role="status"><strong>Correct!</strong> {correctOption ? correctOption.reason + ". " : ""}{q.explanation}</p>}
-      {answered && skipped && <p className={styles.bad} role="status">The answer is <strong>{q.answerText}</strong>: 一{q.answerText}{q.prompt}. {q.explanation}</p>}
+      {answered && skipped && <p className={styles.bad} role="status"><strong>Passed.</strong> {typed ? <>The answer is <strong>{q.answerText}</strong>: 一{q.answerText}{q.prompt}. </> : <>The answer is <strong>{correctOption ? correctOption.text : ""}</strong>. </>}{q.explanation}</p>}
 
       {badgeMsg && <p className={styles.badge}>{badgeMsg}</p>}
 

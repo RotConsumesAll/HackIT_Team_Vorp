@@ -34,7 +34,8 @@ function MeasureWord(){
   const [daily, setDaily] = useState(null)
   const [badgeMsg, setBadgeMsg] = useState("")
   const [endBadgeMsg, setEndBadgeMsg] = useState("")
-  useUid()
+  useUid() // also counts today as a login day
+
   useEffect(() => {
     async function load(){
       try {
@@ -48,6 +49,7 @@ function MeasureWord(){
     load()
   }, [])
 
+  // When the quiz ends: save the score, and give any badges for finishing
   useEffect(() => {
     async function finish(){
       const uid = currentUid()
@@ -114,6 +116,7 @@ function MeasureWord(){
     } else {
       if (firstTry) track(false)
       setFirstTry(false)
+      // Optional: a specific message for common wrong answers, e.g. wrongAnswers: { "个": "..." }
       const specific = q.wrongAnswers && q.wrongAnswers[answer]
       setMessage(specific || "Not quite. Think about what kind of thing it is and try again.")
       setInput("")
@@ -159,7 +162,6 @@ function MeasureWord(){
       <section className={styles.prompt}>
         <p className={styles.label}>Fill in the blank</p>
         <h2 className={styles.question}>一 ___ {q.prompt}</h2>
-        {q.gloss && <p className={styles.context}>({q.gloss})</p>}
       </section>
 
       <form className={styles.typedForm} onSubmit={check}>
@@ -172,13 +174,13 @@ function MeasureWord(){
           aria-label="Measure word"
         />
         <button className={styles.primary} type="submit" disabled={done}>Check</button>
-        <button className={styles.secondary} type="button" onClick={skip} disabled={done}>Skip</button>
+        <button className={styles.secondary} type="button" onClick={skip} disabled={done}>Pass question</button>
       </form>
 
       {message && <p className={styles.bad} role="status">{message}</p>}
 
       {done && !skipped && <p className={styles.ok} role="status"><strong>Correct!</strong> 一{q.answerText}{q.prompt}. {q.explanation}</p>}
-      {done && skipped && <p className={styles.bad} role="status">The answer is <strong>{q.answerText}</strong>: 一{q.answerText}{q.prompt}. {q.explanation}</p>}
+      {done && skipped && <p className={styles.bad} role="status"><strong>Passed.</strong> The answer is <strong>{q.answerText}</strong>: 一{q.answerText}{q.prompt}. {q.explanation}</p>}
 
       {badgeMsg && <p className={styles.badge}>{badgeMsg}</p>}
 

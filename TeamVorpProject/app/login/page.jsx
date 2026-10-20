@@ -74,39 +74,42 @@ export default function LoginInterface(){
     }
 }
 
-    return(
-        <>
-        <p>Login page</p>
-        <form className = {styles.form} onSubmit={handleLogin} noValidate={true}>
-            <input type = "email" value={email} onChange={changeEmailField} placeholder="Email"></input>
-            <input type = "password" value={password} onChange={changePasswordField} placeholder="Password"></input>
-            <button type="submit" disabled={submitting}>Login</button>
-        </form>
+return(
+        <div className={styles.shell}>
+            <div className={styles.card}>
+                <p className={styles.title}>Login</p>
 
-        {/* Error message display */}
-        {err && (
-            <div>
-                <h2>{err}</h2>
+                <form className = {styles.form} onSubmit={handleLogin} noValidate={true}>
+                    <input className={styles.input} type = "email" value={email} onChange={changeEmailField} placeholder="Email"></input>
+                    <input className={styles.input} type = "password" value={password} onChange={changePasswordField} placeholder="Password"></input>
+                    <button className={styles.submit} type="submit" disabled={submitting}>Login</button>
+                </form>
+
+                <button
+                    type="button"
+                    className={styles.toggle}
+                    onClick={() => { setShowSignUp(!showSignUp); setErr(""); }}
+                >
+                    {showSignUp ? "Cancel" : "Create an account"}
+                </button>
+
+                {showSignUp && (
+                    <form className={styles.form} onSubmit={handleSignUp} noValidate={true}>
+                        <input className={styles.input} type="text" value={suName} onChange={(e) => setSuName(e.target.value)} placeholder="Username"></input>
+                        <input className={styles.input} type="email" value={suEmail} onChange={(e) => setSuEmail(e.target.value)} placeholder="Email"></input>
+                        <input className={styles.input} type="password" value={suPassword} onChange={(e) => setSuPassword(e.target.value)} placeholder="Password"></input>
+                        <input className={styles.input} type="password" value={suConfirm} onChange={(e) => setSuConfirm(e.target.value)} placeholder="Confirm password"></input>
+                        <button className={styles.submit} type="submit" disabled={submitting}>Sign up</button>
+                    </form>
+                )}
+
+                {/* Error message display */}
+                {err && (
+                    <div className={styles.error}>
+                        <h2>{err}</h2>
+                    </div>
+                )}
             </div>
-        )}
-
-        <button
-            type="button"
-            onClick={() => { setShowSignUp(!showSignUp); setErr(""); }}
-        >
-            {showSignUp ? "Cancel" : "Create an account"}
-        </button>
-
-        {showSignUp && (
-            <form className={styles.form} onSubmit={handleSignUp} noValidate={true}>
-                <input type="text" value={suName} onChange={(e) => setSuName(e.target.value)} placeholder="Username"></input>
-                <input type="email" value={suEmail} onChange={(e) => setSuEmail(e.target.value)} placeholder="Email"></input>
-                <input type="password" value={suPassword} onChange={(e) => setSuPassword(e.target.value)} placeholder="Password"></input>
-                <input type="password" value={suConfirm} onChange={(e) => setSuConfirm(e.target.value)} placeholder="Confirm password"></input>
-                <button type="submit" disabled={submitting}>Sign up</button>
-            </form>
-        )}
-        </>
-        
+        </div>
     )
 }

@@ -12,7 +12,7 @@ const MENU_LINKS = [
     { label: "Sentence Builder", href: "/sentencebuilder/builder", icon: null },
     { label: "Proverb Flashcards", href: "/proverbflashcards", icon: null },
     { label: "Image Learner", href: "/imagelearner", icon: null },
-    { label: "Context Guess", href: "/contextguess", icon: null },
+    { label: "Context Guess", href: "/contextguess", icon: <img src="/icons/ContextG.png" alt="" width="24" height="24" /> },
     { label: "Ask Community", href: "/community", icon: null },
     { label: "Leaderboards", href: "/leaderboard", icon: null },
     // { label: "Glossary", href: "/glossary", icon: null },

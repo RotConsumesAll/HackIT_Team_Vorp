@@ -148,6 +148,7 @@ function ChineseInput({exerciseId, english}){
                 <SavePhrase
                     key={exerciseId + (result.text || sentence)}
                     choices={[{ chinese: result.text || sentence, pinyin: toPinyin(result.text || sentence), meaning: english }]}
+                    source="Sentence Builder"
                 />
             )}
             {error && <p className={styles["error-text"]} role="alert">{error}</p>}
