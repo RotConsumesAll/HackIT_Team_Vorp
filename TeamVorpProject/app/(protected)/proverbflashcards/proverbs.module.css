@@ -253,3 +253,30 @@
 @media (prefers-reduced-motion: reduce) {
   .setCard, .flashcard, .tile, .btn, .ghost, .barFill { transition: none; }
 }
+
+
+.viewport { height: 100vh; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
+.shell.fit { flex: 1; min-height: 0; display: flex; }
+.fit .page { flex: 1; display: flex; flex-direction: column; min-height: 0; width: 100%; padding-top: 1rem; padding-bottom: 1rem; }
+.fit .header { margin-bottom: .9rem; }
+
+.fit .grid { flex: 1; min-height: 0; grid-auto-rows: minmax(0, 1fr); gap: .75rem; }
+
+.fit .setCard { min-height: 0; padding: .6rem; gap: .35rem; overflow: hidden; }
+.fit .preview { flex: 1; height: auto; min-height: 0; padding: .5rem; font-size: 1.1rem; }
+.fit .setTitle { font-size: .85rem; }
+.fit .setMeta { font-size: .75rem; }
+.fit .setCard .btn { padding: .4rem .8rem; font-size: .8rem; }
+
+@media (max-height: 760px) {
+  .fit .subtitle { display: none; }
+  .fit .title { font-size: 1.6rem; }
+  .fit .header { margin-bottom: .6rem; }
+}
+@media (max-width: 560px) {
+  .fit .grid { grid-template-columns: 1fr 1fr; gap: .5rem; }
+  .fit .preview { font-size: .95rem; }
+}
+@media (max-height: 520px) {
+  .viewport { height: auto; min-height: 100dvh; overflow: auto; }
+}

@@ -1,8 +1,10 @@
 import styles from "./proverbs.module.css";
 
-export default function ProverbFrame({ title, subtitle, narrow = false, children }) {
+export default function ProverbFrame({ title, subtitle, narrow = false, fit = false, children }) {
+    const shellClass = fit ? `${styles.shell} ${styles.fit}` : styles.shell;
+
     return (
-        <div className={styles.shell}>
+        <div className={shellClass}>
             <main className={narrow ? `${styles.page} ${styles.narrow}` : styles.page}>
                 {title && (
                     <header className={styles.header}>
