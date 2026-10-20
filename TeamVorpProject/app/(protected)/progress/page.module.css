@@ -30,7 +30,7 @@
 .more:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 .section { margin: 2rem 0 .8rem; font-size: 1.25rem; font-weight: 700; color: var(--ink); }
 
-.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: .9rem; align-items: start; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: .9rem; align-items: stretch; }
 .skills { display: grid; grid-template-columns: repeat(4, 1fr); gap: .9rem; align-items: start; }
 .badges { display: grid; grid-template-columns: repeat(3, 1fr); gap: .9rem; align-items: start; }
 
@@ -107,8 +107,6 @@
 .tileOff { color: #8B879C; background: #E4E1D8; }
 .badgeHow { margin: 0; font-size: .82rem; line-height: 1.4; color: var(--ink-soft); }
 
-
-
 .scores { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: .9rem; }
 .score { display: flex; justify-content: space-between; align-items: center; padding: .8rem 1rem; background: var(--card); border: 1px solid var(--line); border-radius: 10px; }
 .score strong { font-size: 1.2rem; }
@@ -121,3 +119,4 @@
 @media (max-width: 560px) {
   .stats, .skills, .badges, .scores { grid-template-columns: 1fr; }
 }
+.bottom { margin-top: auto; }

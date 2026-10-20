@@ -7,19 +7,23 @@ import Navbar from "../../../components/Navbar/Navbar";
 import SavePhrase from "../../../components/SavePhrase/SavePhrase";
 import ProverbFrame from "../ProverbFrame";
 import { useProverbs, chunk, shuffle } from "../../../../lib/useProverbs";
+import { useUid } from "../../../../lib/useuid";
+import { recordAnswer, recordDaily, recordHighScore, recordProverbSet, BADGE_NAMES } from "../../../../lib/progress";
 import styles from "../proverbs.module.css";
 
-// Remove punctuation and spaces so only the characters remain
 const clean = (text) => text.replace(/[\p{P}\s]/gu, "");
 
 function MixView() {
     const params = useSearchParams();
     const setNumber = Number(params.get("set") ?? 0);
     const { proverbs, loading, error } = useProverbs();
+    const { uid } = useUid();
+    const [badgeMsg, setBadgeMsg] = useState("");
+    const [missed, setMissed] = useState(false);
 
     const [current, setCurrent] = useState(0);
-    const [selected, setSelected] = useState([]);   // tile ids in click order
-    const [status, setStatus] = useState("idle");   // idle | correct | wrong | passed
+    const [selected, setSelected] = useState([]);
+    const [status, setStatus] = useState("idle");
     const [score, setScore] = useState(0);
 
     const cards = useMemo(() => chunk(proverbs)[setNumber] ?? [], [proverbs, setNumber]);
@@ -39,10 +43,31 @@ function MixView() {
         const attempt = selected.map((id) => tiles.find((t) => t.id === id).char).join("");
         const isRight = attempt === clean(card.proverb);
         setStatus(isRight ? "correct" : "wrong");
-        if (isRight) setScore(score + 1);
+        if (isRight && !missed) setScore(score + 1);
+        if (isRight) track(!missed);
+        else if (!missed) { setMissed(true); track(false); }
+    }
+
+    async function track(firstTry) {
+        const a = await recordAnswer(uid, "proverbMix", firstTry);
+        const ids = [...((a && a.newBadges) || [])];
+        if (firstTry) {
+            const d = await recordDaily(uid, "contextGuess");
+            ids.push(...((d && d.newBadges) || []));
+        }
+        if (ids.length) setBadgeMsg("New badge: " + ids.map((b) => BADGE_NAMES[b] || b).join(", "));
+    }
+
+    async function finish() {
+        await recordHighScore(uid, "proverb_mix", score);
+        const r = await recordProverbSet(uid, score, cards.length);
+        if (r.newBadges.length) setBadgeMsg("New badge: " + r.newBadges.map((b) => BADGE_NAMES[b] || b).join(", "));
     }
 
     function nextQuestion() {
+        if (current + 1 === cards.length) finish();
+        setBadgeMsg("");
+        setMissed(false);
         setCurrent(current + 1);
         setSelected([]);
         setStatus("idle");
@@ -65,7 +90,8 @@ function MixView() {
         body = (
             <div className={styles.done}>
                 <h2>All done</h2>
-                <p>You got {score} of {cards.length} right.</p>
+                <p>You got {score} of {cards.length} right on the first try.</p>
+                {badgeMsg && <p className={styles.info}>{badgeMsg}</p>}
                 <div className={styles.actions}>
                     <Link href={`/proverbflashcards/pFlashcards?set=${setNumber}`} className={styles.ghost}>
                         Back to flashcards
@@ -120,6 +146,8 @@ function MixView() {
                     </div>
                 )}
 
+                {badgeMsg && <p className={styles.info}>{badgeMsg}</p>}
+
                 {(status === "correct" || status === "passed") && (
                     <SavePhrase
                         key={card.proverb}
@@ -131,7 +159,7 @@ function MixView() {
                 <div className={styles.footRow}>
                     {status === "idle" && (
                         <>
-                            <button type="button" className={styles.ghost} onClick={() => setStatus("passed")}>
+                            <button type="button" className={styles.ghost} onClick={() => { setStatus("passed"); if (!missed) { setMissed(true); track(false); } }}>
                                 Pass Question
                             </button>
                             <button

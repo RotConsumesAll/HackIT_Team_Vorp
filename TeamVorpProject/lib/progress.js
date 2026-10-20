@@ -20,6 +20,7 @@ export const TIERED_BADGES = {
   mastery_context: { name: "Context master", levels: [10, 30, 60, 100], unit: "points" },
   mastery_pronunciation: { name: "Pronunciation master", levels: [10, 30, 60, 100], unit: "points" },
   mastery_grammar: { name: "Grammar master", levels: [10, 30, 60, 100], unit: "points" },
+  mastery_proverbs: { name: "Proverb master", levels: [10, 30, 60, 100], unit: "points" },
   streak: { name: "Streak star", levels: [5, 10, 20, 30], unit: "in a row (best streak)" },
   login: { name: "Regular visitor", levels: [3, 7, 14, 30], unit: "days logged in" },
 };
@@ -29,6 +30,8 @@ const ONE_OFF_BADGES = {
   perfect: "Perfect score",
   daily_quiz: "Quiz of the Day finisher",
   first_phrase: "First saved phrase",
+  first_proverb: "First proverb set",
+  proverb_perfect: "Proverb perfectionist",
   first_post: "First community post",
   daily3: "3 days in a row",
   daily7: "7 days in a row",
@@ -43,6 +46,8 @@ export const SKILL_BY_QUIZ = {
   tone: "pronunciation",
   character: "grammar",
   measure: "grammar",
+  proverbQuiz: "proverbs",
+  proverbMix: "proverbs",
 };
 
 export const BADGE_NAMES = { ...ONE_OFF_BADGES };
@@ -278,6 +283,27 @@ export async function recordQuizFinished(uid, score, total) {
     return { newBadges };
   } catch (e) {
     console.warn("Could not save quiz badges:", e.message);
+    return { newBadges: [] };
+  }
+}
+
+export async function recordProverbSet(uid, score, total) {
+  if (!uid) return { newBadges: [] };
+  try {
+    const owned = (await get(ref(db, `users/${uid}/badges`))).val() || {};
+    const newBadges = [];
+    if (!owned.first_proverb) newBadges.push("first_proverb");
+    if (total > 0 && score === total && !owned.proverb_perfect) newBadges.push("proverb_perfect");
+    if (newBadges.length > 0) {
+      const updates = {};
+      newBadges.forEach((id) => {
+        updates[`users/${uid}/badges/${id}`] = { earnedAt: Date.now() };
+      });
+      await update(ref(db), updates);
+    }
+    return { newBadges };
+  } catch (e) {
+    console.warn("Could not save proverb badges:", e.message);
     return { newBadges: [] };
   }
 }
