@@ -6,10 +6,10 @@ import styles from "./homepage.module.css"
 // TODO: check these hrefs match your actual routes
 const CORE_FEATURES = [
     {
-    title: "Chinese Adapter",
-    description: "Type anything and get Chinese with pinyin, instantly.",
-    href: "/translate",
-    icon: "/icons/translate.png",
+        title: "Chinese Adapter",
+        description: "Type anything and get Chinese with pinyin, instantly.",
+        href: "/translate",
+        icon: "/icons/Communication.png",
     },
     {
         title: "Sentence Builder",
@@ -33,7 +33,7 @@ const CORE_FEATURES = [
         title: "Context Guess",
         description: "Work out what a word means from the sentence around it.",
         href: "/contextguess",
-        icon: "/icons/context-guess.svg",
+        icon: "/icons/ContextG.png",
     },
 ]
 

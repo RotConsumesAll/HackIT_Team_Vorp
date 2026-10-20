@@ -34,7 +34,13 @@ export default function App(){
                     </li>
                     <li className="list-group-item">
                         <a href="https://www.flaticon.com/free-icons/hardware" title="hardware icons">Hardware icons created by Smashicons - Flaticon</a> 
-                    </li>                      
+                    </li>
+                    <li className="list-group-item">
+                        <a href="https://www.flaticon.com/free-icons/flash-cards" title="flash cards icons">Flash cards icons created by manshagraphics - Flaticon</a>
+                    </li>
+                    <li className="list-group-item">
+                        <a href="https://www.flaticon.com/free-icons/conversation" title="conversation icons">Conversation icons created by winnievinzence - Flaticon</a>
+                    </li>                                                                 
                 </ul>
             </section>
             
