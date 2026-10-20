@@ -177,7 +177,7 @@ function Main({ categoryName, slug }){
                 </div>
                 <div className={styles.revealDock}>
                         <button
-                            className={styles.button}
+                            className={styles.revealButton}
                             onClick={() => setRevealed(true)}
                             disabled={!hasSubmitted}
                             title={hasSubmitted ? "" : "Submit an answer first"}
