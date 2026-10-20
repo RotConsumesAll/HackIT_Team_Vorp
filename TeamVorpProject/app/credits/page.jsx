@@ -22,7 +22,25 @@ export default function App(){
                     </li>
                     <li className="list-group-item">
                         <a href="https://nextjs.org/docs/pages/api-reference/functions/use-router">Use router</a>
-                    </li>                                                  
+                    </li>
+                    <li className="list-group-item">
+                        <a href="https://www.flaticon.com/free-icons/user">User icon created by Phoenix Group - Flaticon</a>
+                    </li>
+                    <li className="list-group-item">
+                        <a href="https://www.flaticon.com/free-icons/dictionary">Dictionary icons created by Erix - Flaticon</a>    
+                    </li>
+                    <li className="list-group-item">
+                        <a href="https://www.flaticon.com/free-icons/picture" title="picture icons">Picture icons created by Pixel perfect - Flaticon</a>
+                    </li>
+                    <li className="list-group-item">
+                        <a href="https://www.flaticon.com/free-icons/hardware" title="hardware icons">Hardware icons created by Smashicons - Flaticon</a> 
+                    </li>
+                    <li className="list-group-item">
+                        <a href="https://www.flaticon.com/free-icons/flash-cards" title="flash cards icons">Flash cards icons created by manshagraphics - Flaticon</a>
+                    </li>
+                    <li className="list-group-item">
+                        <a href="https://www.flaticon.com/free-icons/conversation" title="conversation icons">Conversation icons created by winnievinzence - Flaticon</a>
+                    </li>                                                                 
                 </ul>
             </section>
             
@@ -30,7 +48,7 @@ export default function App(){
                 <h2>Proverb Flashcards</h2>
                 <ul className="list-group">
                     <li className="list-group-item">
-                        <a href="https://github.com/praxeds/chinese-proverbs-api">chinese proverbs api</a>
+                        <a href="https://github.com/praxeds/chinese-proverbs-api">Chinese proverbs api</a>
                     </li>
                 </ul>
             </section>

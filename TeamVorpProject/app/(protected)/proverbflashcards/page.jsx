@@ -3,44 +3,45 @@
 import Link from "next/link";
 import { useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
+import ProverbFrame from "./ProverbFrame";
 import { useProverbs, chunk } from "../../../lib/useProverbs";
+import styles from "./proverbs.module.css";
 
 const SETS_PER_PAGE = 4;
-const btn =
-    "inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-700";
 
 function Body() {
     const { proverbs, loading, error } = useProverbs();
     const [visible, setVisible] = useState(SETS_PER_PAGE);
-
-    if (loading) return <p>Loading proverbs...</p>;
-    if (error) return <p>Couldn't load proverbs: {error}</p>;
-
     const sets = chunk(proverbs);
 
     return (
-        <main className="flex flex-col items-center gap-8 p-8">
-            <h1 className="text-2xl font-bold">Chinese Proverb Learning</h1>
+        <ProverbFrame title="Chinese Proverb Learning" subtitle="Pick a set and start practising.">
+            {loading && <p className={styles.note}>Loading proverbs...</p>}
+            {error && <p className={styles.bad}>Couldn't load proverbs: {error}</p>}
 
-            <div className="flex flex-wrap justify-center gap-6">
+            <div className={styles.grid}>
                 {sets.slice(0, visible).map((set, i) => (
-                    <div key={i} className="flex w-64 flex-col gap-3 border p-4">
-                        <p className="text-xl">{set[0].proverb}</p>
-                        <h2 className="font-semibold">Proverb Learning Set {i + 1}</h2>
-                        <p className="text-sm">Quantity: {set.length}</p>
-                        <Link href={`/proverbflashcards/pFlashcards?set=${i}`} className={btn}>
-                            More info
+                    <div key={i} className={styles.setCard}>
+                        <div className={styles.preview}>
+                            <span className={styles.previewText}>{set[0].proverb}</span>
+                        </div>
+                        <h2 className={styles.setTitle}>Proverb Learning Set {i + 1}</h2>
+                        <p className={styles.setMeta}>Quantity: {set.length}</p>
+                        <Link href={`/proverbflashcards/pFlashcards?set=${i}`} className={styles.btn}>
+                            More info →
                         </Link>
                     </div>
                 ))}
             </div>
 
             {visible < sets.length && (
-                <button onClick={() => setVisible(visible + SETS_PER_PAGE)} className={btn}>
-                    See More
-                </button>
+                <div className={styles.moreRow}>
+                    <button type="button" className={styles.more} onClick={() => setVisible(visible + SETS_PER_PAGE)}>
+                        See More
+                    </button>
+                </div>
             )}
-        </main>
+        </ProverbFrame>
     );
 }
 

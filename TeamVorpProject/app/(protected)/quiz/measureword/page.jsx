@@ -9,6 +9,7 @@ import { phraseChoices } from "../../../../lib/phraseChoices"
 import { getQuestions, QUIZ_LENGTH } from "../../../../lib/questions"
 import { recordAnswer, recordDaily, recordHighScore, currentUid, BADGE_NAMES, recordQuizFinished } from "../../../../lib/progress"
 import { useUid } from "../../../../lib/useuid"
+import styles from "./page.module.css"
 
 function shuffle(list){
   const a = [...list]
@@ -33,7 +34,8 @@ function MeasureWord(){
   const [daily, setDaily] = useState(null)
   const [badgeMsg, setBadgeMsg] = useState("")
   const [endBadgeMsg, setEndBadgeMsg] = useState("")
-  useUid() 
+  useUid() // also counts today as a login day
+
   useEffect(() => {
     async function load(){
       try {
@@ -47,6 +49,7 @@ function MeasureWord(){
     load()
   }, [])
 
+  // When the quiz ends: save the score, and give any badges for finishing
   useEffect(() => {
     async function finish(){
       const uid = currentUid()
@@ -59,27 +62,32 @@ function MeasureWord(){
     if (questions && questions.length > 0 && index >= questions.length) finish()
   }, [index])
 
-  if (questions === null) return <p>Loading...</p>
-  if (error) return <p>{error}</p>
+  if (questions === null) return <p className={styles.note}>Loading...</p>
+  if (error) return <p className={styles.note}>{error}</p>
   if (questions.length === 0) {
     return (
-      <>
-        <p>No questions found for this quiz yet.</p>
-        <Link href="/contextguess">Back</Link>
-      </>
+      <section className={styles.result}>
+        <h1 className={styles.title}>No questions yet</h1>
+        <p className={styles.small}>No questions found for this quiz yet.</p>
+        <Link href="/contextguess" className={styles.back}>Back to Context Guess</Link>
+      </section>
     )
   }
 
   if (index >= questions.length) {
     return (
-      <>
-        <h1>Nice one!</h1>
-        <p>{score} / {questions.length} right on the first try</p>
-        {endBadgeMsg && <p><strong>{endBadgeMsg}</strong></p>}
-        <ShareButton text={"I got " + score + " / " + questions.length + " on " + "Measure Word" + " in the Mother Tongue app!"} />
-        <button onClick={() => window.location.reload()}>Play again</button>
-        <p><Link href="/contextguess">Pick another quiz</Link></p>
-      </>
+      <section className={styles.result}>
+        <p className={styles.eyebrow}>Round complete</p>
+        <h1 className={styles.title}>Nice one!</h1>
+        <p className={styles.score}><span>{score}</span> / {questions.length}</p>
+        <p className={styles.small}>right on the first try</p>
+        {endBadgeMsg && <p className={styles.badge}>{endBadgeMsg}</p>}
+        <div className={styles.actions}>
+          <button className={styles.primary} onClick={() => window.location.reload()}>Play again</button>
+          <ShareButton text={"I got " + score + " / " + questions.length + " on " + "Measure Word" + " in the Mother Tongue app!"} />
+        </div>
+        <Link href="/contextguess" className={styles.back}>Pick another quiz</Link>
+      </section>
     )
   }
 
@@ -108,6 +116,7 @@ function MeasureWord(){
     } else {
       if (firstTry) track(false)
       setFirstTry(false)
+      // Optional: a specific message for common wrong answers, e.g. wrongAnswers: { "个": "..." }
       const specific = q.wrongAnswers && q.wrongAnswers[answer]
       setMessage(specific || "Not quite. Think about what kind of thing it is and try again.")
       setInput("")
@@ -132,40 +141,57 @@ function MeasureWord(){
     setFirstTry(true)
   }
 
+  const percent = Math.round((index / questions.length) * 100)
+
   return (
     <>
-      <p><Link href="/contextguess">Back</Link></p>
-      <p>Measure Word · {index + 1} / {questions.length}</p>
-      <p>Streak: {streak}</p>
-      {daily && <p>Daily streak: {daily.current} day(s) · Today: {Math.min(daily.todayCount, daily.goal)} / {daily.goal}</p>}
+      <Link href="/contextguess" className={styles.back}>← Back</Link>
 
-      <h2>一 ___ {q.prompt}</h2>
-      {q.gloss && <p>({q.gloss})</p>}
+      <header className={styles.header}>
+        <h1 className={styles.title}>Measure Word</h1>
+        <p className={styles.count}>Question {index + 1} of {questions.length}</p>
+        <div className={styles.progress} role="progressbar" aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100} aria-label="Quiz progress">
+          <div className={styles.fill} style={{ width: percent + "%" }} />
+        </div>
+        <div className={styles.chips}>
+          <span className={styles.chip}>Streak {streak}</span>
+          {daily && <span className={styles.chip}>Daily streak {daily.current} · Today {Math.min(daily.todayCount, daily.goal)} / {daily.goal}</span>}
+        </div>
+      </header>
 
-      <form onSubmit={check}>
+      <section className={styles.prompt}>
+        <p className={styles.label}>Fill in the blank</p>
+        <h2 className={styles.question}>一 ___ {q.prompt}</h2>
+      </section>
+
+      <form className={styles.typedForm} onSubmit={check}>
         <input
+          className={styles.input}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type the measure word"
           disabled={done}
+          aria-label="Measure word"
         />
-        <button type="submit" disabled={done}>Check</button>
-        <button type="button" onClick={skip} disabled={done}>Skip</button>
+        <button className={styles.primary} type="submit" disabled={done}>Check</button>
+        <button className={styles.secondary} type="button" onClick={skip} disabled={done}>Pass question</button>
       </form>
 
-      {message && <p>{message}</p>}
+      {message && <p className={styles.bad} role="status">{message}</p>}
 
-      {done && !skipped && <p><strong>Correct!</strong> 一{q.answerText}{q.prompt}. {q.explanation}</p>}
-      {done && skipped && <p>The answer is <strong>{q.answerText}</strong>: 一{q.answerText}{q.prompt}. {q.explanation}</p>}
+      {done && !skipped && <p className={styles.ok} role="status"><strong>Correct!</strong> 一{q.answerText}{q.prompt}. {q.explanation}</p>}
+      {done && skipped && <p className={styles.bad} role="status"><strong>Passed.</strong> The answer is <strong>{q.answerText}</strong>: 一{q.answerText}{q.prompt}. {q.explanation}</p>}
 
-      {badgeMsg && <p><strong>{badgeMsg}</strong></p>}
+      {badgeMsg && <p className={styles.badge}>{badgeMsg}</p>}
 
-      {done && <SavePhrase key={q.quizType + q.id} choices={phraseChoices(q)} />}
+      {done && <SavePhrase key={q.quizType + q.id} choices={phraseChoices(q)} source="Context Guess · Measure Word" />}
 
       {done && (
-        <button onClick={next}>
-          {index + 1 === questions.length ? "See results" : "Next"}
-        </button>
+        <div className={styles.nextRow}>
+          <button className={styles.primary} onClick={next}>
+            {index + 1 === questions.length ? "See results" : "Next"}
+          </button>
+        </div>
       )}
     </>
   )
@@ -173,10 +199,12 @@ function MeasureWord(){
 
 function MeasureWordPage(){
   return (
-    <>
+    <div className={styles.shell}>
       <Navbar/>
-      <MeasureWord/>
-    </>
+      <main className={styles.page}>
+        <MeasureWord/>
+      </main>
+    </div>
   )
 }
 

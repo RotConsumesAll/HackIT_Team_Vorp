@@ -1,0 +1,87 @@
+/* Self-contained: colours are defined on .shell. */
+.shell {
+  --paper: #E9E6DE;
+  --surface: #FBFAF6;
+  --line: #D6D1C4;
+  --line-strong: #B5AE9C;
+  --ink: #1C1B33;
+  --ink-soft: #5C5974;
+  --blue: #4B75FF;
+  --blue-deep: #3552C9;
+  --blue-tint: #E1E8FF;
+  --bad: #7A1B1F;
+  --bad-tint: #FADFDF;
+
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1.25rem;
+  background: var(--paper);
+  color: var(--ink);
+}
+.shell, .shell *, .shell *::before, .shell *::after { box-sizing: border-box; }
+
+.card {
+  width: 100%;
+  max-width: 26rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.75rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 12px 24px -20px rgba(28, 27, 51, .5);
+}
+
+.title { margin: 0; text-align: center; font-size: clamp(1.7rem, 5vw, 2rem); font-weight: 800; line-height: 1.15; color: var(--blue); }
+
+.form { display: grid; gap: .75rem; }
+
+.input {
+  width: 100%;
+  padding: .7rem .85rem;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--ink);
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  transition: border-color .15s, box-shadow .15s;
+}
+.input::placeholder { color: #8B879C; }
+.input:hover { border-color: var(--line-strong); }
+.input:focus-visible { outline: none; border-color: var(--blue); box-shadow: 0 0 0 4px var(--blue-tint); }
+
+.submit {
+  padding: .75rem 1.3rem;
+  font: inherit;
+  font-weight: 700;
+  color: #fff;
+  background: var(--blue);
+  border: 0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s, opacity .15s;
+}
+.submit:hover:not(:disabled) { background: var(--blue-deep); transform: translateY(-1px); box-shadow: 0 10px 18px -12px rgba(53, 82, 201, .9); }
+.submit:disabled { opacity: .45; cursor: not-allowed; }
+.submit:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+
+.toggle {
+  padding: .65rem 1.1rem;
+  font: inherit;
+  font-weight: 700;
+  color: var(--blue-deep);
+  background: var(--blue-tint);
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.toggle:hover { border-color: var(--blue); }
+.toggle:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+
+.error { padding: .6rem .9rem; background: var(--bad-tint); color: var(--bad); border-radius: 10px; }
+.error h2 { margin: 0; font-size: .92rem; font-weight: 600; }
+
+@media (prefers-reduced-motion: reduce) { .submit, .input { transition: none; } }

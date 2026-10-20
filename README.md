@@ -1,49 +1,6 @@
-# Navigation
-- TeamVorpProject/app/page.tsx is our home page.
-
-- All pages for display e.g. credits, home need to be named as "page.jsx" or it will not render.
-
-- app/(protected)/filenamehere are our individual features
-
-- app/api/ is for API calls to LLM
-
-- globals.css is our global css, not sure if we are using tailwind css or vanilla css.
-
-- Naming for individual page css in your features has to end with ".module.css" e.g. page.module.css
-
-- app/layout.jsx is for anything that should persist across page navigations without re-rendering.
-
-- lib/ is for shared javascript
-
-- components/ is for shared UI
-
-
 # HackIT Team Vorp
-NameOfApp is our one stop learning platform to help young adults integrate mother tongue into their daily lives by tackling the hesitation of practicing an unfamiliar language from multiple angles. We have decided to focus on aspects that range from general vocabulary and grammar to appropriate usage of localized slang:
-- Naming objects to maintain vocabulary,
-- Proverbs gamified into flashcards to not only retain understanding but also mastery of Chinese,
-- Understanding the nuances of how words and sentences morph based on context,
-- Pronounciation and reading aloud to reinforce real time organization of thoughts,
-- Spoken interactions in local environments involves the use of localized slang/Singlish.
 
-From these perspectives, we have created solutions that aim to tackle these problems. 
-
-<br>
-
-# REMOVE LATER ↓↓↓
-
-# Firebase link
-[Firebase link](https://hackit-vorp-db-default-rtdb.asia-southeast1.firebasedatabase.app/)
-
-# Figma wireframing 
-[Wireframe link](https://www.figma.com/design/y6EjeLEndbZzAgAke1slRh/HackIT-wireframe?node-id=0-1&t=C3fNilFaBsavW9Tn-1)
-
-
-# Google Docs discussion
-https://docs.google.com/document/d/1bWnFUjsIkvIGe7DRwe2-Kcbe6fgvTSDnIYdTIaecSPA/edit
-
-
-# Members
+## Members
 
 | Name                                  | Github Username     |
 | ------------------------------------- | --------------------|
@@ -53,14 +10,18 @@ https://docs.google.com/document/d/1bWnFUjsIkvIGe7DRwe2-Kcbe6fgvTSDnIYdTIaecSPA/
 | Matthew Tay                           | Spadnana            |
 | Soh Yong Jia                          | yoooongjiaaaa39b-ux |
 
+## Background
+
+LearnLah! is our one stop learning platform to help young adults integrate mother tongue into their daily lives by tackling the hesitation of practicing an unfamiliar language from multiple angles. We have decided to focus on aspects that range from general vocabulary and grammar to appropriate usage of localized slang:
+- Naming objects to maintain vocabulary,
+- Proverbs gamified into flashcards to not only retain understanding but also mastery of Chinese,
+- Understanding the nuances of how words and sentences morph based on context,
+- Pronounciation and reading aloud to reinforce real time organization of thoughts,
+- Spoken interactions in local environments involves the use of localized slang/Singlish.
+
+From these perspectives, we have created solutions that aim to tackle these problems. 
+
 <br>
-
-# Users
-| Email                                 | Password            |
-| ------------------------------------- | --------------------|
-| Alice@example.com                     | Alice123            |
-| Ben@example.com                       | Ben321              |
-
 
 # Features and explanations
 ## General
@@ -73,6 +34,15 @@ https://docs.google.com/document/d/1bWnFUjsIkvIGe7DRwe2-Kcbe6fgvTSDnIYdTIaecSPA/
 6. If match, login succeeds.<br>Firebase sends signed token, browser saves.
 7. `AuthProvider` listening via `onAuthStateChanged`. Receives user obj, sets `loading` to false and updates state.
 8. Navbar swaps "Login" for "Logout". `RequireAuth` sees state of user obj and `loading`, lets protected pages render instead of redirect.
+
+### Sign up
+1. Input username, email and password
+2. Form's submit handler checks both fields are not empty, calls signup helper.
+3. Form will send all info to be added into the Firebase
+4. Checks if data already exist in the database, if so tells user information already exist
+5. `AuthProvider` listening via `onAuthStateChanged`. Receives user obj, sets `loading` to false and updates state.
+6. Navbar swaps "Login" for "Logout". `RequireAuth` sees state of user obj and `loading`, lets protected pages render instead of redirect.
+
 
 Tl;dr: Firebase checks, app reacts(!!!) to result.
 
@@ -169,6 +139,7 @@ Full response: `errors`, `matches`, `unmatched`, `unrecognised`, `closestAnswer`
 `ok` is true when no entry has severity `error`, so warnings don't fail a sentence. 
 
 <br>
+
 #### Summary
 
 The engine compares the learner's sentence with every accepted answer, then reports problems against the closest one. An answer is an ordered list of segments: a role (its job in the sentence), accepted forms (wordings), and a level (required, expected, or optional).
@@ -190,6 +161,59 @@ The engine compares the learner's sentence with every accepted answer, then repo
 
 6. Respond<br>
 &nbsp;Map spans to tokens and return errors, matches, unexplained tokens, unrecognised words, the closest answer, ok, and the cleaned text.
+
+### Vocabulary check with Gemini LLM
+text
+
+### Local context
+
+<br>
+
+## AI Conversation Practice Feature (Yong Jia)
+
+### Overview
+
+Learners want to practise communicating in Chinese rather than simply memorising vocabulary or translating sentences. However, they may struggle to form responses naturally, use appropriate vocabulary, and identify mistakes in their Chinese.
+
+The AI Conversation Practice feature allows learners to engage in interactive conversations based on their translated text. It provides realistic scenarios, responds to their messages, and highlights mistakes with explanations and suggested improvements.
+
+### Flow
+
+1. **Start conversation practice.** The learner selects the Next button after translating their chosen text to begin practising Chinese.
+
+2. **Generate a conversation scenario.** An AI generates a realistic scenario based on the translated text and the learner's Chinese proficiency level.
+
+3. **Begin the conversation.** The learner is presented with the scenario and an opening message from the AI, which takes on a relevant conversational role.
+
+4. **Submit a response.** The learner replies in Chinese to continue the conversation.
+
+5. **Receive an AI response.** The AI responds naturally to the learner's message while maintaining the context of the conversation.
+
+6. **Identify language errors.** The AI analyses the learner's response and identifies mistakes in grammar, vocabulary, or phrasing, where applicable.
+
+7. **Display personalised feedback.** The learner can view highlighted mistakes, explanations of why they are incorrect or unnatural, and suggested corrections.
+
+8. **Continue practising.** The learner applies the feedback to subsequent responses and continues the conversation to improve their Chinese communication skills.
+
+### Summary
+
+The AI Conversation Practice feature helps learners apply their Chinese knowledge through realistic, interactive conversations.
+
+1. Generate a scenario based on the learner's translated text.
+2. Engage in a conversation with the AI.
+3. Receive contextual responses that encourage further communication.
+4. Identify mistakes and understand why corrections are needed.
+5. Apply personalised feedback to improve grammar, vocabulary, and natural expression.
+
+The feature promotes active learning by allowing learners to practise producing Chinese independently while receiving immediate, contextual feedback on how to improve.
+
+### How it works
+
+The feature uses the translated Chinese text to generate a relevant conversation scenario based on the learner's proficiency level. The learner interacts with an AI through a chat interface, submitting Chinese responses and receiving contextual replies to continue the conversation.
+
+After each response, the AI identifies potential grammar, vocabulary, and phrasing errors, providing explanations and suggested corrections. This allows learners to understand their mistakes immediately and apply the feedback throughout the conversation.
+
+The feature combines interactive dialogue with personalised feedback to help learners improve their Chinese communication skills through practical usage.
 
 ## Proverb Flashcards (Jovan Soo)
 
@@ -222,9 +246,32 @@ Upon choosing the correct option or passing the question if the user decides to 
 When the learner chooses to do the Mix and Match, the meaning of the proverb will be given and the user has to attempt to order the words given into the correct proverb. <br>
 
 Similarly to the quizzes page, the Learner can retry the question if they answer incorrectly and dd the proverb into their saved phrases list or continue if they answer the question correctly ot pass the question.<br>
-### Vocabulary check with Deepseek LLM
-text
 
-### Local context
 
-# Glossary
+## Image Learner (Wynn Lee)
+
+### Overview
+Image Learner is a picture-based vocabulary practice for everyday Chinese words where learners see a picture of an object with its English name and have to type the Chinese word themselves. Words are grouped into categories (Food, Animals, Places, Countries and Everyday Objects), so learners can practise one topic at a time.
+
+### How to use
+1. Choose a category.
+2. Look at the picture and its English name.
+3. Type the Chinese word in the box and press Submit.
+4. If the answer is correct, the learner is taken straight to the answer, which shows the Chinese characters and pinyin.
+5. If it is wrong, the learner can try again. After at least one attempt, they can press Reveal Answer to see the correct word and its pinyin.
+6. Press Next to move on to the next picture.
+
+
+### How it helps
+- Linking a word to a picture makes it easier to remember than reading a word list.
+- Typing the answer from memory shows learners what they really remember, instead of just recognising the word.
+- Seeing the characters and pinyin together after each word helps learners connect how a word looks with how it sounds.
+- Short categories of everyday objects keep each practice quick, so learners can fit it into a busy day.
+
+<br>
+
+# Users
+| Email                                 | Password            |
+| ------------------------------------- | --------------------|
+| Alice@example.com                     | Alice123            |
+| Ben@example.com                       | Ben321              |

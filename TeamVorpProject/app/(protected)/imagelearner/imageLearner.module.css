@@ -1,0 +1,267 @@
+/* Image Learner: same look as the Context Guess page
+   (paper background, blue title, white bordered cards, gradient icon tiles) */
+
+.shell {
+  --paper: #FAF9F6;
+  --card: #FFFFFF;
+  --line: #D8D3C6;
+  --ink: #1C1B33;
+  --ink-soft: #5C5974;
+  --blue: #4B75FF;
+  --blue-dark: #3B61E0;
+  --hanzi: "Noto Sans SC", "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+
+  position: relative;   /* the Reveal Answer dock and category chip are positioned against this */
+  height: 100vh;
+  height: 100dvh;       /* exactly one screen tall, so the page can't scroll vertically */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* Lock scrolling on the browser itself, only on pages that use this shell */
+:global(html):has(.shell),
+:global(body):has(.shell) {
+  overflow: hidden;
+}
+
+.page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;   /* safety net: only scrolls if the content is ever taller than the screen */
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 7.5rem;   /* extra bottom room for the Reveal Answer dock */
+}
+
+/* Answer screen has no Reveal Answer dock, so it doesn't need the extra bottom room */
+.pageTight { padding-bottom: 1.5rem; }
+
+.header { text-align: center; margin-bottom: 1.25rem; }
+.title { margin: 0; font-size: clamp(1.9rem, 4vw, 2.4rem); font-weight: 700; line-height: 1.15; color: var(--blue); }
+.subtitle { margin: .3rem 0 0; font-size: 1rem; color: var(--ink-soft); }
+
+/* ---------- Category page ---------- */
+.grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: .9rem; }
+
+.card {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.1rem;
+  font: inherit;
+  text-align: left;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.card:hover { color: inherit; border-color: var(--blue); }
+.card:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+.wide { grid-column: span 3; }
+
+.icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: grid;
+  place-items: center;
+  margin-bottom: .6rem;
+  font-family: var(--hanzi);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #4B75FF, #954AFF);
+}
+.cardTitle { margin: 0 0 .15rem; font-size: 1.05rem; font-weight: 700; color: var(--ink); }
+.cardDesc { margin: 0 0 .7rem; font-size: .85rem; line-height: 1.35; color: var(--ink-soft); }
+.example {
+  margin-top: auto;
+  align-self: flex-start;
+  padding: .4rem .7rem;
+  border-radius: 8px;
+  background: var(--paper);
+  font-family: var(--hanzi);
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* ---------- Naming page ---------- */
+.panel {
+  flex: 1 0 auto;   /* fills the free space, but grows if the content is taller */
+  width: min(100%, 36rem);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.message { margin: 1.25rem 0; font-size: .95rem; color: var(--ink-soft); text-align: center; }
+.messageError { color: #C5221F; }
+
+.imageBox {
+  width: min(100%, 30rem);
+  height: min(22rem, max(9rem, calc(100dvh - 36rem)));   /* as big as fits; shrinks on short screens */
+  flex: none;   /* never shrink, so the picture is the same size on every screen of the page */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-size: .85rem;
+  color: var(--ink-soft);
+  background: var(--paper);
+  border-radius: 8px;
+}
+.imageBox img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+.english { margin: .75rem 0 1rem; font-size: 1.05rem; font-weight: 700; color: var(--ink); text-transform: capitalize; }
+
+.answerArea {
+  margin-top: auto;   /* sits at the bottom of the panel, just above Reveal Answer */
+  width: 100%;
+  min-height: 5.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .7rem;
+}
+
+.inputRow { display: flex; gap: .5rem; width: 100%; }
+
+.input {
+  flex: 1;
+  min-width: 0;
+  padding: .6rem .8rem;
+  font: inherit;
+  font-family: var(--hanzi);
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.input:focus { outline: none; border-color: var(--blue); }
+.input:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+
+.submitButton,
+.button {
+  padding: .6rem 1.1rem;
+  font: inherit;
+  font-size: .9rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--blue);
+  border: 1px solid var(--blue);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.button { padding: .65rem 2rem; }
+.submitButton:hover,
+.button:hover { background: var(--blue-dark); border-color: var(--blue-dark); }
+.submitButton:focus-visible,
+.button:focus-visible,
+.revealButton:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+
+/* Reveal Answer sits at the bottom middle of the page, hint text right below it */
+.revealDock {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+  width: max-content;
+  max-width: calc(100% - 2rem);
+}
+
+.revealButton {
+  padding: .65rem 1.8rem;
+  font: inherit;
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.revealButton:hover:not(:disabled) { border-color: var(--blue); }
+.revealButton:disabled { color: var(--ink-soft); background: var(--paper); opacity: .7; cursor: not-allowed; }
+
+.hint { margin: 0; font-size: .85rem; color: var(--ink-soft); text-align: center; }
+
+.feedback { margin: 0; font-size: .9rem; font-weight: 600; }
+.wrong { color: #C5221F; }
+.correct { color: #1E8E3E; }
+
+.correctBanner {
+  margin: 0;
+  padding: .35rem .9rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1E8E3E;
+  background: #E6F4EA;
+  border-radius: 8px;
+}
+
+.revealWrap { margin-top: 1rem; width: 100%; display: flex; flex-direction: column; align-items: center; }
+.chinese { margin: 1rem 0 0; font-family: var(--hanzi); font-size: clamp(2.4rem, 8vw, 3rem); font-weight: 700; line-height: 1.1; color: var(--ink); }
+.pinyin { margin: .4rem 0 0; font-size: 1rem; color: var(--ink-soft); }
+.nextWrap { margin-top: 1.75rem; padding-bottom: 2.5rem; }   /* always keep space under Next */
+
+.categoryLabel {
+  position: absolute;
+  right: 1rem;
+  bottom: .75rem;
+  margin: 0;
+  padding: .6rem 1.1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.categoryLabel:hover { color: var(--ink); border-color: var(--blue); }
+.categoryLabel:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+
+@media (max-width: 760px) {
+  .card { grid-column: span 3; }
+  .wide { grid-column: 1 / -1; }
+}
+@media (max-width: 560px) {
+  .grid { grid-template-columns: 1fr; }
+  .card, .wide { grid-column: 1 / -1; }
+  .page { padding-top: 1.25rem; }
+  .inputRow { flex-direction: column; }
+}
+
+/* Small screens: the content can be taller than the screen, so allow scrolling again
+   (otherwise the bottom of the page would be unreachable) */
+@media (max-width: 760px), (max-height: 660px) {
+  .shell {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+  :global(html):has(.shell),
+  :global(body):has(.shell) {
+    overflow: auto;
+  }
+  .page { overflow-y: visible; }
+}

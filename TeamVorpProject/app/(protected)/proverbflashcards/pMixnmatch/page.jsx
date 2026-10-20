@@ -5,55 +5,34 @@ import { Suspense, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Navbar from "../../../components/Navbar/Navbar";
 import SavePhrase from "../../../components/SavePhrase/SavePhrase";
+import ProverbFrame from "../ProverbFrame";
 import { useProverbs, chunk, shuffle } from "../../../../lib/useProverbs";
+import { useUid } from "../../../../lib/useuid";
+import { recordAnswer, recordDaily, recordHighScore, recordProverbSet, BADGE_NAMES } from "../../../../lib/progress";
+import styles from "../proverbs.module.css";
 
-const btn =
-    "inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-700 disabled:opacity-50";
-
-// Remove punctuation and spaces so only the characters remain
 const clean = (text) => text.replace(/[\p{P}\s]/gu, "");
 
 function MixView() {
     const params = useSearchParams();
     const setNumber = Number(params.get("set") ?? 0);
     const { proverbs, loading, error } = useProverbs();
+    const { uid } = useUid();
+    const [badgeMsg, setBadgeMsg] = useState("");
+    const [missed, setMissed] = useState(false);
 
     const [current, setCurrent] = useState(0);
-    const [selected, setSelected] = useState([]);   // tile ids, in click order
-    const [status, setStatus] = useState("idle");   // "idle" | "correct" | "wrong"
-    const [passed, setPassed] = useState(0);
+    const [selected, setSelected] = useState([]);
+    const [status, setStatus] = useState("idle");
+    const [score, setScore] = useState(0);
 
     const cards = useMemo(() => chunk(proverbs)[setNumber] ?? [], [proverbs, setNumber]);
     const card = cards[current];
 
-    // Shuffled tiles for the current question
     const tiles = useMemo(() => {
         if (!card) return [];
-        const chars = [...clean(card.proverb)];
-        return shuffle(chars.map((char, id) => ({ id, char })));
+        return shuffle([...clean(card.proverb)].map((char, id) => ({ id, char })));
     }, [card]);
-
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Couldn't load proverbs: {error}</p>;
-    if (cards.length === 0) return <p>No proverbs in this set.</p>;
-
-    // Finished screen
-    if (!card) {
-        return (
-            <main className="mx-auto flex max-w-2xl flex-col items-center gap-4 p-8">
-                <h1 className="text-2xl font-bold">All done</h1>
-                <p>You got {passed} of {cards.length} right.</p>
-                <div className="flex gap-10">
-                    <Link href={`/proverbflashcards/pFlashcards?set=${setNumber}`} className={btn}>
-                        Back to flashcards
-                    </Link>
-                    <Link href={`/proverbflashcards/pQuiz?set=${setNumber}`} className={btn}>
-                        Short Quiz
-                    </Link>
-                </div>
-            </main>
-        );
-    }
 
     function toggleTile(id) {
         if (status !== "idle") return;
@@ -64,80 +43,130 @@ function MixView() {
         const attempt = selected.map((id) => tiles.find((t) => t.id === id).char).join("");
         const isRight = attempt === clean(card.proverb);
         setStatus(isRight ? "correct" : "wrong");
-        if (isRight) setPassed(passed + 1);
+        if (isRight && !missed) setScore(score + 1);
+        if (isRight) track(!missed);
+        else if (!missed) { setMissed(true); track(false); }
+    }
+
+    async function track(firstTry) {
+        const a = await recordAnswer(uid, "proverbMix", firstTry);
+        const ids = [...((a && a.newBadges) || [])];
+        if (firstTry) {
+            const d = await recordDaily(uid, "contextGuess");
+            ids.push(...((d && d.newBadges) || []));
+        }
+        if (ids.length) setBadgeMsg("New badge: " + ids.map((b) => BADGE_NAMES[b] || b).join(", "));
+    }
+
+    async function finish() {
+        await recordHighScore(uid, "proverb_mix", score);
+        const r = await recordProverbSet(uid, score, cards.length);
+        if (r.newBadges.length) setBadgeMsg("New badge: " + r.newBadges.map((b) => BADGE_NAMES[b] || b).join(", "));
     }
 
     function nextQuestion() {
+        if (current + 1 === cards.length) finish();
+        setBadgeMsg("");
+        setMissed(false);
         setCurrent(current + 1);
         setSelected([]);
         setStatus("idle");
     }
 
-    return (
-        <main className="mx-auto flex max-w-2xl flex-col gap-4 p-8">
-            <div className="text-center">
-                <h1 className="text-2xl font-bold">Mix and Match</h1>
-                {status === "correct" && <p className="text-sm">Correct answer</p>}
-                {status === "wrong" && <p className="text-sm">Not quite</p>}
-                {status === "passed" && <p className="text-sm">Question passed</p>}
-            </div>
+    function tileClass(isSelected) {
+        if (status === "correct") return styles.tileCorrect;
+        if (status === "wrong") return styles.tileWrong;
+        return isSelected ? styles.tileOn : "";
+    }
 
-            <div className="flex flex-col gap-4 border p-6">
-                <div className="flex justify-between text-sm">
+    let body;
+    if (loading) {
+        body = <p className={styles.note}>Loading...</p>;
+    } else if (error) {
+        body = <p className={styles.bad}>Couldn't load proverbs: {error}</p>;
+    } else if (cards.length === 0) {
+        body = <p className={styles.note}>No proverbs in this set.</p>;
+    } else if (!card) {
+        body = (
+            <div className={styles.done}>
+                <h2>All done</h2>
+                <p>You got {score} of {cards.length} right on the first try.</p>
+                {badgeMsg && <p className={styles.info}>{badgeMsg}</p>}
+                <div className={styles.actions}>
+                    <Link href={`/proverbflashcards/pFlashcards?set=${setNumber}`} className={styles.ghost}>
+                        Back to flashcards
+                    </Link>
+                    <Link href={`/proverbflashcards/pQuiz?set=${setNumber}`} className={styles.btn}>
+                        Short Quiz
+                    </Link>
+                </div>
+            </div>
+        );
+    } else {
+        body = (
+            <div className={styles.panel}>
+                <div className={styles.metaRow}>
                     <span>Question {current + 1} of {cards.length}</span>
                     <span>Proverbs</span>
                 </div>
+                <div className={styles.bar}>
+                    <div className={styles.barFill} style={{ width: `${(current / cards.length) * 100}%` }} />
+                </div>
+                <p className={styles.barText}>{current} of {cards.length} complete</p>
 
-                <progress value={current} max={cards.length} className="w-full" />
-                <p className="text-xs">{current} of {cards.length} complete</p>
+                <h2 className={styles.question}>Form the proverb that means: {card.translation}</h2>
 
-                <h2 className="text-lg font-bold">
-                    Form the proverb that means: {card.translation}
-                </h2>
+                {status === "correct" && <p className={styles.good}>Correct answer</p>}
+                {status === "wrong" && <p className={styles.bad}>Not quite, try again</p>}
+                {status === "passed" && <p className={styles.info}>Question passed</p>}
 
-                {/* Tiles */}
-                <div className="flex flex-wrap justify-center gap-3 border p-4">
+                <div className={styles.tiles}>
                     {tiles.map((tile) => {
                         const order = selected.indexOf(tile.id);
                         return (
                             <button
                                 key={tile.id}
+                                type="button"
                                 onClick={() => toggleTile(tile.id)}
-                                className="flex h-14 w-14 flex-col items-center justify-center rounded-md border text-xl"
+                                disabled={status !== "idle"}
+                                className={`${styles.tile} ${tileClass(order >= 0)}`}
                             >
                                 {tile.char}
-                                <span className="text-xs">{order >= 0 ? order + 1 : ""}</span>
+                                <span className={styles.tileNum}>{order >= 0 ? order + 1 : ""}</span>
                             </button>
                         );
                     })}
                 </div>
 
                 {status === "passed" && (
-                    <div className="flex flex-col items-center gap-1 border p-4 text-center">
-                        <p className="text-sm">The answer was:</p>
-                        <p className="text-2xl font-bold">{card.proverb}</p>
-                        <p className="text-sm">{card.pinyin}</p>
+                    <div className={styles.reveal}>
+                        <p className={styles.hint}>The answer was:</p>
+                        <p className={styles.cardHan}>{card.proverb}</p>
+                        <p className={styles.cardPinyin}>{card.pinyin}</p>
                     </div>
                 )}
+
+                {badgeMsg && <p className={styles.info}>{badgeMsg}</p>}
 
                 {(status === "correct" || status === "passed") && (
                     <SavePhrase
                         key={card.proverb}
                         choices={[{ chinese: card.proverb, pinyin: card.pinyin, meaning: card.translation }]}
+                        source="Proverb Flashcards"
                     />
                 )}
 
-                {/* Buttons change with the state */}
-                <div className="flex justify-end gap-4">
+                <div className={styles.footRow}>
                     {status === "idle" && (
                         <>
-                            <button onClick={() => setStatus("passed")} className={btn}>
+                            <button type="button" className={styles.ghost} onClick={() => { setStatus("passed"); if (!missed) { setMissed(true); track(false); } }}>
                                 Pass Question
                             </button>
                             <button
+                                type="button"
+                                className={styles.btn}
                                 onClick={submit}
                                 disabled={selected.length !== tiles.length}
-                                className={btn}
                             >
                                 Submit Answer
                             </button>
@@ -145,23 +174,27 @@ function MixView() {
                     )}
                     {status === "wrong" && (
                         <button
-                            onClick={() => {
-                                setSelected([]);
-                                setStatus("idle");
-                            }}
-                            className={btn}
+                            type="button"
+                            className={styles.btn}
+                            onClick={() => { setSelected([]); setStatus("idle"); }}
                         >
                             Try Again
                         </button>
                     )}
                     {(status === "correct" || status === "passed") && (
-                        <button onClick={nextQuestion} className={btn}>
+                        <button type="button" className={styles.btn} onClick={nextQuestion}>
                             Next Question
                         </button>
                     )}
                 </div>
             </div>
-        </main>
+        );
+    }
+
+    return (
+        <ProverbFrame title="Mix and Match" subtitle={`Set ${setNumber + 1}`} narrow>
+            {body}
+        </ProverbFrame>
     );
 }
 
@@ -169,7 +202,7 @@ export default function PMixnmatch() {
     return (
         <>
             <Navbar />
-            <Suspense fallback={<p>Loading...</p>}>
+            <Suspense fallback={null}>
                 <MixView />
             </Suspense>
         </>
