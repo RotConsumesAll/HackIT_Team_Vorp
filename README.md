@@ -12,7 +12,7 @@
 
 ## Background
 
-Learnlah is our one stop learning platform to help young adults integrate mother tongue into their daily lives by tackling the hesitation of practicing an unfamiliar language from multiple angles. We have decided to focus on aspects that range from general vocabulary and grammar to appropriate usage of localized slang:
+LearnLah! is our one stop learning platform to help young adults integrate mother tongue into their daily lives by tackling the hesitation of practicing an unfamiliar language from multiple angles. We have decided to focus on aspects that range from general vocabulary and grammar to appropriate usage of localized slang:
 - Naming objects to maintain vocabulary,
 - Proverbs gamified into flashcards to not only retain understanding but also mastery of Chinese,
 - Understanding the nuances of how words and sentences morph based on context,
@@ -169,7 +169,7 @@ text
 
 <br>
 
-# AI Conversation Practice Feature (Yong Jia)
+## AI Conversation Practice Feature (Yong Jia)
 
 ### Overview
 
@@ -246,6 +246,27 @@ Upon choosing the correct option or passing the question if the user decides to 
 When the learner chooses to do the Mix and Match, the meaning of the proverb will be given and the user has to attempt to order the words given into the correct proverb. <br>
 
 Similarly to the quizzes page, the Learner can retry the question if they answer incorrectly and dd the proverb into their saved phrases list or continue if they answer the question correctly ot pass the question.<br>
+
+
+## Image Learner (Wynn Lee)
+
+### Overview
+Image Learner is a picture-based vocabulary practice for everyday Chinese words where learners see a picture of an object with its English name and have to type the Chinese word themselves. Words are grouped into categories (Food, Animals, Places, Countries and Everyday Objects), so learners can practise one topic at a time.
+
+### How to use
+1. Choose a category.
+2. Look at the picture and its English name.
+3. Type the Chinese word in the box and press Submit.
+4. If the answer is correct, the learner is taken straight to the answer, which shows the Chinese characters and pinyin.
+5. If it is wrong, the learner can try again. After at least one attempt, they can press Reveal Answer to see the correct word and its pinyin.
+6. Press Next to move on to the next picture.
+
+
+### How it helps
+- Linking a word to a picture makes it easier to remember than reading a word list.
+- Typing the answer from memory shows learners what they really remember, instead of just recognising the word.
+- Seeing the characters and pinyin together after each word helps learners connect how a word looks with how it sounds.
+- Short categories of everyday objects keep each practice quick, so learners can fit it into a busy day.
 
 <br>
 
