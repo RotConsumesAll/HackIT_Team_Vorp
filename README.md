@@ -261,6 +261,83 @@ Image Learner is a picture-based vocabulary practice for everyday Chinese words 
 5. If it is wrong, the learner can try again. After at least one attempt, they can press Reveal Answer to see the correct word and its pinyin.
 6. Press Next to move on to the next picture.
 
+## Context Guess (Matthew Tay)
+ 
+### Overview
+Knowing a word is not the same as knowing how to use it. Learners often pick a phrase that is correct on paper but sounds unnatural, mix up measure words, or mishear a tone. Context Guess is a set of short multiple choice quizzes that train learners to choose the right word or phrase for the situation in front of them.
+ 
+### Quizzes
+- `Natural Phrase`: pick the phrase a native speaker would actually say in the given situation.
+- `Natural Guess`: read a short context and choose the option that fits it best.
+- `Sound` and `Tone`: choose the correct pronunciation or tone for a word.
+- `Character`: choose the correct character for the meaning.
+- `Measure Word`: choose the right measure word for an object.
+- `Mix`: a mixed set of all of the above.
+- `Quiz of the Day`: one set per day that is shared by everyone, with its own daily leaderboard.
+Proverb Quiz and Proverb Mix and Match also count towards the same progress, so learning proverbs is rewarded too.
+ 
+### Flow
+1. The learner picks a quiz from the Context Guess page.
+2. A question is shown with 2-4 options. Each option is a card with a letter badge.
+3. If the learner picks a wrong option, the card is marked and they can try again.
+4. When they choose the correct option, the feedback card explains the answer.
+5. The learner can press `Pass question` at any time. The question counts as wrong, the correct answer is shown and they move on.
+6. After a correct answer or a pass, the learner can save the phrase to My Phrases, then press Next.
+7. At the end, the score is shown and compared with their personal high score for that quiz.
+
+### How scoring and progress work
+- Only the first try counts towards the score. A question answered correctly on the first try earns 10 points and counts towards badges. A correct answer after a wrong try, or a passed question, earns nothing.
+- Every 100 points is one level.
+- Each quiz is linked to a skill (Phrasing, Context, Pronunciation or Grammar), and every first try answer adds to that skill's mastery.
+- Finishing quizzes also updates the daily goal streak, the best streak and the high score for that quiz, and can unlock badges such as First Quiz and Perfect.
+- The Progress page shows the level, skills, streaks and badges. The Leaderboard ranks learners by total points and by Quiz of the Day score.
+
+### How it helps
+- Choosing between realistic options trains learners to judge what sounds natural, not only what is correct.
+- Counting only the first try rewards real recall instead of guessing until something works.
+- Letting learners pass a question keeps them moving, and the saved phrase lets them revise it later.
+- Streaks, levels, badges and the leaderboard give learners a reason to come back every day.
+<br>
+## Saved Phrases (Matthew Tay)
+ 
+### Overview
+Learners meet new phrases all the time, in quizzes, sentence practice, proverbs, pictures and the community, but a phrase is easy to forget once the page is closed. Saved Phrases is a personal phrase book where learners keep anything they want to revise.
+ 
+### How to use
+1. Press `Save phrase` on any quiz question after answering or passing it, on a proverb, on an Image Learner word, in Sentence Builder, or on a community post.
+2. Open `My Phrases` to see everything saved. Each card shows the Chinese, the pinyin and the meaning.
+3. Each card also shows where the phrase came from, for example Natural Phrase, Sentence Builder, Proverb, Image Learner, Community or Added by you.
+4. Add a phrase by hand with the Chinese, pinyin and meaning.
+5. Delete a phrase with the delete button. The card asks to confirm first, so a phrase is not lost by accident.
+6. Press `Share to community` on a phrase to open the community page with the phrase already filled in.
+
+### Details
+- Saving the same phrase twice is blocked, and the learner is told they have already saved it.
+- Phrases are stored per user in Firebase, so they are private and available on any device after logging in.
+- Long phrases shrink to fit the card so that pinyin and meaning always stay close together.
+
+### How it helps
+- Learners build a revision list from what they actually struggled with.
+- The source tag reminds them where they learnt the phrase, which helps recall.
+- Sharing straight from the list connects personal revision with the community.
+<br>
+## Community (Matthew Tay)
+ 
+### Overview
+Learning is easier with other people. The Community page is a shared feed where learners ask questions about Chinese and share phrases they have learnt, and other learners reply and react.
+ 
+### How to use
+1. Press `Create post` to open the question box, type up to 300 characters and press Post.
+2. To share a phrase, press `Share to community` on a phrase in My Phrases. The Chinese, pinyin and meaning are filled in, the learner can add a note, edit anything and press Post. Nothing is shared until they do.
+3. Like a post, open its replies, and write a reply of up to 300 characters.
+4. `Save to my phrases` on someone else's phrase post adds it to the learner's own list, tagged Community.
+5. Click an user's name to open their public profile.
+6. Authors can edit or delete their own posts, and edit their own replies. Edited posts and replies show "edited".
+
+### Details
+- The feed shows the 50 latest posts, newest first, and each post shows how long ago it was made.
+- Posts and replies are stored in Firebase Realtime Database under `community`.
+- Making a first post unlocks the First Post badge.
 
 ### How it helps
 - Linking a word to a picture makes it easier to remember than reading a word list.
@@ -275,3 +352,7 @@ Image Learner is a picture-based vocabulary practice for everyday Chinese words 
 | ------------------------------------- | --------------------|
 | Alice@example.com                     | Alice123            |
 | Ben@example.com                       | Ben321              |
+| meilin@example.com                    | Demo@1234           |
+| aisharahman@example.com               | Demo@1234           |
+| sophietan@example.com                 | Demo@1234           |
+| danielong@example.com                 | Demo@1234           |
