@@ -85,14 +85,14 @@ function Phrases(){
     if (uid) load()
   }, [uid])
 
-  // Messages fade away after a few seconds
+
   useEffect(() => {
     if (!message) return
     const t = setTimeout(() => setMessage(""), 5000)
     return () => clearTimeout(t)
   }, [message])
 
-  // Shows the pinyin we would fill in, so the user can see it before saving
+
   const pinyinHint = useMemo(() => (chinese.trim() ? toPinyin(chinese.trim()) : ""), [chinese])
 
   const shown = useMemo(() => {
@@ -108,7 +108,7 @@ function Phrases(){
       return
     }
     try {
-      const result = await addSavedPhrase(uid, { chinese: chinese.trim(), pinyin: pinyin.trim() || toPinyin(chinese.trim()), meaning: meaning.trim() })
+      const result = await addSavedPhrase(uid, { chinese: chinese.trim(), pinyin: pinyin.trim() || toPinyin(chinese.trim()), meaning: meaning.trim(), source: "Added by you" })
       if (result.duplicate) {
         setMessage("You have already saved " + chinese.trim() + ".")
         return
@@ -133,8 +133,7 @@ function Phrases(){
     }
   }
 
-  // Opens the Community page with this phrase in the share form. Nothing is posted until the user presses Post there.
-  function handleShare(p){
+   function handleShare(p){
     const params = new URLSearchParams({
       chinese: p.chinese || "",
       pinyin: p.pinyin || "",
@@ -217,6 +216,7 @@ function Phrases(){
             <p className={styles.meaning} title={p.meaning}>{p.meaning}</p>
 
             <div className={styles.foot}>
+              {p.source && confirmId !== p.id && <span className={styles.source} title={"Saved from " + p.source}>{p.source}</span>}
               {confirmId === p.id ? (
                 <div className={styles.confirm}>
                   <span>Delete this phrase?</span>
