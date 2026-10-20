@@ -2,31 +2,32 @@ import Navbar from "../components/Navbar/Navbar"
 import Link from "next/link"
 import styles from "./homepage.module.css"
 
+// icon = path to an image in the public folder (.svg or .png), e.g. public/icons/image-learner.svg
 // TODO: check these hrefs match your actual routes
 const CORE_FEATURES = [
     {
         title: "Sentence Builder",
         description: "Put words in the right order and build natural sentences.",
-        href: "/sentencebuilder/builder",
-        icon: "sentence",
+        href: "/sentencebuilder",
+        icon: "/icons/tools.png",
     },
     {
         title: "Proverb Flashcards",
         description: "Flip through proverbs and idioms and learn what they really mean.",
         href: "/proverbflashcards",
-        icon: "cards",
+        icon: "/icons/cards.png",
     },
     {
         title: "Image Learner",
         description: "See a picture, name it in Chinese, and check your answer.",
         href: "/imagelearner",
-        icon: "image",
+        icon: "/icons/image.png",
     },
     {
         title: "Context Guess",
         description: "Work out what a word means from the sentence around it.",
         href: "/contextguess",
-        icon: "question",
+        icon: "/icons/context-guess.svg",
     },
 ]
 
@@ -58,37 +59,6 @@ function Icon({ name }) {
         "aria-hidden": true,
     }
     switch (name) {
-        case "sentence":
-            return (
-                <svg {...common}>
-                    <rect x="3" y="5" width="18" height="12" rx="2.5" />
-                    <path d="M8 21l3-4" />
-                    <path d="M8 9.5h8M8 13h5" />
-                </svg>
-            )
-        case "cards":
-            return (
-                <svg {...common}>
-                    <rect x="3" y="7" width="13" height="13" rx="2" />
-                    <path d="M8 7V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-3" />
-                </svg>
-            )
-        case "image":
-            return (
-                <svg {...common}>
-                    <rect x="3" y="4" width="18" height="16" rx="2.5" />
-                    <circle cx="9" cy="10" r="1.6" />
-                    <path d="M4 18l5.5-5.5 4 4 2.5-2.5L21 18" />
-                </svg>
-            )
-        case "question":
-            return (
-                <svg {...common}>
-                    <circle cx="12" cy="12" r="9" />
-                    <path d="M9.5 9.5a2.6 2.6 0 1 1 3.6 2.4c-.7.4-1.1.9-1.1 1.7" />
-                    <path d="M12 17h.01" />
-                </svg>
-            )
         case "trophy":
             return (
                 <svg {...common} width={28} height={28}>
@@ -133,7 +103,7 @@ function Features() {
             <div className={styles.coreGrid}>
                 {CORE_FEATURES.map((f) => (
                     <Link key={f.title} href={f.href} className={styles.coreCard}>
-                        <span className={styles.coreIcon}><Icon name={f.icon} /></span>
+                        <span className={styles.coreIcon}><img src={f.icon} alt="" width={40} height={40} /></span>
                         <span className={styles.coreTitle}>{f.title}</span>
                         <span className={styles.coreDescription}>{f.description}</span>
                     </Link>
