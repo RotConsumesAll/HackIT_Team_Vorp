@@ -1,6 +1,3 @@
-/* Self-contained: colours are defined on .shell, nothing here depends on globals.css.
-   Same look as the Context Guess page: flat white cards, thin border, small corners. */
-
 .shell {
   --paper: #E9E6DE;
   --card: #FFFFFF;
@@ -33,12 +30,10 @@
 .more:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
 .section { margin: 2rem 0 .8rem; font-size: 1.25rem; font-weight: 700; color: var(--ink); }
 
-/* Grids */
-.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: .9rem; align-items: start; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: .9rem; align-items: stretch; }
 .skills { display: grid; grid-template-columns: repeat(4, 1fr); gap: .9rem; align-items: start; }
 .badges { display: grid; grid-template-columns: repeat(3, 1fr); gap: .9rem; align-items: start; }
 
-/* Card */
 .card { position: relative; display: flex; flex-direction: column; gap: .5rem; padding: 1rem 1.1rem; background: var(--card); border: 1px solid var(--line); border-radius: 10px; }
 .cardOpen { z-index: 5; }
 .locked { background: #F6F4EE; }
@@ -46,7 +41,6 @@
 .cardTitle { margin: 0; font-size: .95rem; font-weight: 700; color: var(--ink); }
 .headRight { display: flex; align-items: center; gap: .5rem; flex: none; }
 
-/* The ? button */
 .help {
   width: 1.5rem;
   height: 1.5rem;
@@ -96,7 +90,6 @@
 .levelOn { background: var(--purple-tint); color: var(--purple-deep); }
 .levelOff { background: var(--paper); color: var(--ink-soft); }
 
-/* Badges */
 .badgeRow { display: flex; align-items: center; gap: .85rem; }
 .tile, .tileOff {
   flex: none;
@@ -114,8 +107,6 @@
 .tileOff { color: #8B879C; background: #E4E1D8; }
 .badgeHow { margin: 0; font-size: .82rem; line-height: 1.4; color: var(--ink-soft); }
 
-
-/* High scores */
 .scores { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: .9rem; }
 .score { display: flex; justify-content: space-between; align-items: center; padding: .8rem 1rem; background: var(--card); border: 1px solid var(--line); border-radius: 10px; }
 .score strong { font-size: 1.2rem; }
@@ -128,3 +119,4 @@
 @media (max-width: 560px) {
   .stats, .skills, .badges, .scores { grid-template-columns: 1fr; }
 }
+.bottom { margin-top: auto; }

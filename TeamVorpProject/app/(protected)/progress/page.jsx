@@ -97,10 +97,6 @@ function list(levels){
   return levels.slice(0, -1).join(", ") + " and " + levels[levels.length - 1]
 }
 
-function levelLine(level){
-  return level ? "Level " + level + " of 4" : "No level yet"
-}
-
 function prettyName(key){
   const spaced = key.replace(/([a-z])([A-Z])/g, "$1 $2")
   return spaced.charAt(0).toUpperCase() + spaced.slice(1)
@@ -219,7 +215,7 @@ function Progress(){
         >
           <p className={styles.big}>{levelFromScore(total)}</p>
           <Bar percent={((total % POINTS_PER_LEVEL) / POINTS_PER_LEVEL) * 100} label="Progress to the next level" />
-          <p className={styles.small}>{total} points · {toNext} to the next level</p>
+          <p className={styles.small}>{total} points<br />{toNext} to the next level</p>
         </Card>
 
         <Card
@@ -227,7 +223,6 @@ function Progress(){
           help="The most questions you have got right in a row. A wrong answer ends a run, but your best streak stays. It earns the Streak star badge."
         >
           <p className={styles.big}>{streak.best || 0}</p>
-          <p className={styles.small}>{levelLine(tierStatus("streak", streak.best).level)}</p>
         </Card>
 
         <Card
@@ -235,18 +230,14 @@ function Progress(){
           help="Counts each day you open the site while logged in, once per day. It earns the Regular visitor badge."
         >
           <p className={styles.big}>{days}</p>
-          <p className={styles.small}>{levelLine(tierStatus("login", days).level)}</p>
         </Card>
 
         <Card
-          title="Daily goal"
-          help={"Answer " + DAILY_GOAL + " Context Guess or Proverb questions in a day to keep your daily streak going. Miss a day and it starts again. 3 and 7 days in a row earn badges."}
+          title="Daily goal streak"
+          help={"Answer " + DAILY_GOAL + " Context Guess or Proverb questions in a day to keep your daily streak going. Miss a day and your current streak starts again, but your highest goal streak is kept. 3 and 7 days in a row earn badges."}
         >
           <p className={styles.big}>{daily.current}<span className={styles.unit}> {daily.current === 1 ? "day" : "days"}</span></p>
-          <p className={styles.small}>
-            {daily.doneToday ? "Today's goal done!" : "Today: " + daily.todayCount + " / " + daily.goal + " questions"}
-            {" · Best: " + daily.best}
-          </p>
+          <p className={styles.small + " " + styles.bottom}>Highest goal: {daily.best} {daily.best === 1 ? "day" : "days"}</p>
         </Card>
       </section>
 
