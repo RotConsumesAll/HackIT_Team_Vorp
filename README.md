@@ -12,7 +12,7 @@
 
 ## Background
 
-LearnLah! is our one stop learning platform to help young adults integrate mother tongue into their daily lives by tackling the hesitation of practicing an unfamiliar language from multiple angles. We have decided to focus on aspects that range from general vocabulary and grammar to appropriate usage of localized slang:
+Learnlah is our one stop learning platform to help young adults integrate mother tongue into their daily lives by tackling the hesitation of practicing an unfamiliar language from multiple angles. We have decided to focus on aspects that range from general vocabulary and grammar to appropriate usage of localized slang:
 - Naming objects to maintain vocabulary,
 - Proverbs gamified into flashcards to not only retain understanding but also mastery of Chinese,
 - Understanding the nuances of how words and sentences morph based on context,
@@ -49,7 +49,7 @@ Tl;dr: Firebase checks, app reacts(!!!) to result.
 ## Sentence builder feature (Bao Shen)
 
 ### How to run
-Create a venv based on `requirements.txt` and run "python -m uvicorn main:app --reload --port 8000" in terminal for grammar check logic.
+Create a venv based on `requirements.txt` and run "python -m uvicorn main:app --reload --port 8000" in terminal for grammar and vocabulary check logic.
 
 ### Overview
 A learner types a Chinese sentence and wants to know what they got right, what is wrong and feedback on why its wrong. Simple string comparison is invalid since:<br>
@@ -162,10 +162,96 @@ The engine compares the learner's sentence with every accepted answer, then repo
 6. Respond<br>
 &nbsp;Map spans to tokens and return errors, matches, unexplained tokens, unrecognised words, the closest answer, ok, and the cleaned text.
 
-### Vocabulary check with Gemini LLM
-text
+### Vocabulary check with Gemini LLM.<br>
+After grammar is checked by the engine, some words in a sentence match nothing such as 面包 where 咖椰吐司 was expected. Instead of guessing, the rule engine passes those words to a second step. This step asks an LLM (currently Gemini) whether each word means the same thing as the exercise wanted and the verdicts appear on the page. Gemini never judges grammar, word order or missing words.<br>
 
-### Local context
+#### Step 1：User submits sentence.<br>
+`handleSubmit` calls `CheckSentence`, which posts to `/api/check`. The route forwards the sentence to the Python service at `localhost:8000/check`. 
+
+<br>
+
+#### Step 2: Grammar check with engine.<br>
+Python segments the sentence (using jieba's tokenizer), tags parts of speech (using Stanza), and runs the rule engine. The result says which segments matched, what is missing or out of order, and which words are `unrecognised`. The route strips the answer key (`expected`) before returning it to the browser.
+
+<br>
+
+#### Step 3: Determines if any word needs to be checked.<br>
+If `unrecognised` is empty, the flow ends here and the grammar result is the final answer. Otherwise the page sets `vocab` to `loading`, and the unknown words pulse with a dotted underline while the banner says “Checking your wording...”.
+
+<br>
+
+#### Step 4: Vocab request.<br>
+`CheckVocab` posts the sentence to `/api/vocab`. This route runs entirely on the server and does the following:
+1. Calls Python again to get the accepted forms for each unknown word. 
+2. Loads the glossary from Firebase and picks the entries whose term appears inside the learner’s word or the accepted forms. For example, the glossary entry 咖椰 matches the accepted form 咖椰吐司.
+3. Finds the English prompt for the exercise in `PROMPTS`
+4. Builds the prompt for Gemini. The prompt consists of: <br>
+&nbsp; - the English sentence, <br>
+&nbsp; - the learner’s sentence, <br>
+&nbsp; - the numbered unknown words with their accepted forms, <br> 
+&nbsp; - and the matching glossary lines. <br>
+The instructions say glossary entries are correct local usage and the reply must be JSON only.
+5. Calls Gemini with a JSON schema that forces a structured reply, then validates the reply with `parseVerdicts`.
+
+<br>
+
+#### Step 5: Validate LLM output.<br>
+`parseVerdicts` returns exactly one result per word that was sent. A missing, unrecognised, or malformed verdict becomes `uncertain`. The word text comes from your server, not from the model, and `reason` and `suggestion` are capped at 200 characters. Extra tokens the model invents are ignored.
+
+<br>
+
+#### Step 6: Display feedback in UI.<br>
+The route returns `{verdicts}`, and `CheckResult` styles each word by verdict.
+
+#### Possible verdicts: <br>
+| Verdict             | Meaning                                  | Effect                                      |
+| ------------------- | ---------------------------------------- | ------------------------------------------- |
+| `equivalent`        | Same meaning as expected                 | Shown as plain text                         |
+| `less_natural`      | Right meaning, but not how locals say it | Shows a tip                                 |
+| `different_meaning` | Means something else                     | Red, with “Try: suggestion”                 |
+| `incorrect`         | Wrong or not a real word                 | Red, like a grammar error                   |
+| `uncertain`         | Can’t tell                               | Stays “We don’t recognise this wording yet” |
+
+### Answer key for grammar engine and local context
+`exercises.json` is the answer key for the grammar rule engine in the Python service. It holds the English prompts and every accepted Chinese answer, plus the rules for how strict to be and the hint text shown to the learner.<br>
+
+#### Fields<br>
+Each of the 4 exercises have none or one of these fields:
+| Field           | Description                                                                                                                                      |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `id`            | Short name used everywhere else, such as `kaya-toast-breakfast`                                                                                  |
+| `pattern`       | A label for the grammar pattern, such as `two-clause-sequence`. |
+| `english`       | The prompt the learner sees                                                                                                                      |
+| `semanticNote`  | An extra note, only on Exer_03 to show how Chinese differentiates paternal grandfather from maternal.                                                                                                                    |
+| `roles`         | How strict to be about each grammatical role: `required`, `expected`, or `optional`                                                              |
+| `answers`       | Every accepted way to say the sentence                                                                                                           |
+| `glossaryTerms` | An ID pointing at a glossary entry, such as `TERM_04`                                                                                            |
+| `hints`         | Teaching messages, in three kinds (below)                                                                                                        |
+
+#### How an answer is built<br>
+An answer is a list of clauses, and each clause is an ordered list of segments. A segment is a role plus the words that can fill it:<br>
+`{ "role": "frequency", "forms": ["经常", "常常", "时常"] }`<br>
+- The segments in order define the correct word order. <br>
+- `forms` are interchangeable words, so 经常, 常常 and 时常 all count. <br>
+- A segment can carry `"optional": true`. Optional segments are skipped if missing. <br>
+- The same role can appear more than once. Exer_02 has 你 / 我 / 你 as three `subject` segments, and 买 / 去 / 帮 repeated as `predicate`. The engine tells them apart by position.<br>
+- There are several answers because Chinese allows several valid word orders and phrasings. The engine scores the learner’s sentence against each answer and picks the closest.<br>
+
+#### Hints<br>
+- `order` is a general message shown when something is out of order.<br>
+- `orderPairs` are specific messages. A key like `"relativeTime>>predicate"` reads as "a time phrase should come before the verb". The engine prefers these and falls back to order.<br>
+- `missing` is one message per role, shown when that role is absent, such as "Say how often he goes."<br>
+
+#### The 4 Exercises<br>
+| Exercise                             | Prompt                                                                                                 | Answers | What it teaches                                                                                                               |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| **Exer_01** `mackerel-market-cook`   | I went to the nearby market to buy some mackerel, I will be cooking it soon.                           | 8       | Two clauses, time phrases (刚刚, 回来后, 等下), chained verbs, optional 了                                                            |
+| **Exer_02** `takeaway-fried-noodles` | Do you want me to help you takeaway anything? I will be going to the foodcourt to order fried noodles. | 2       | A yes/no question ending in 吗, then an intent clause. 打包 appears as both the question verb and an accepted verb in the answer |
+| **Exer_03** `grandfather-coffeeshop` | My grandfather goes to the coffeeshop near our neighbourhood daily to drink his morning coffee.        | 2       | Frequency and time-of-day order. The second answer puts 早上 later and allows optional 他 / 的 / 第一杯                              |
+| **Exer_04** `kaya-toast-breakfast`   | I frequently eat kaya toast for breakfast.                                                             | 4       | Frequency and meal placement, plus two 把-construction answers (把…当作…, 把…当…吃)                                                  |
+
+#### Local vocabulary<br>
+The accepted `forms` use Singaporean words: 巴刹 (market), 食阁 (hawker centre), 咖椰吐司 (kaya toast). These forms are also what the vocab step compares the learner’s unknown words against.
 
 <br>
 

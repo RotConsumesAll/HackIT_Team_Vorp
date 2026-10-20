@@ -3,7 +3,7 @@ export default async function CheckVocab(exerciseId, text) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ exerciseId, text }),
-        signal: AbortSignal.timeout(30000),
+        signal: AbortSignal.timeout(45000)
     });
     if (!res.ok) throw new Error("Vocab check failed");
     const data = await res.json();

@@ -3,7 +3,7 @@
 const API_URL = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions";
 const MODEL = process.env.GEMINI_VOCAB_MODEL || "gemini-3.5-flash-lite";
 const VERDICTS = ["equivalent", "less_natural", "different_meaning", "incorrect", "uncertain"];
-const TIMEOUT_MS = 8000;
+const TIMEOUT_MS = 15000;
 
 function uncertain(item) {
   return { token: item.tokens[0], word: item.text, verdict: "uncertain", suggestion: "", reason: "" };
