@@ -11,7 +11,7 @@ import styles from "./page.module.css"
 
 const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect
 
-const FIT_STEPS = [1, 0.9, 0.8, 0.7, 0.6, 0.52, 0.45]
+const FIT_STEPS = [1, 0.9, 0.8, 0.7, 0.6, 0.52, 0.45, 0.4, 0.35]
 
 function PinyinText({ chinese, pinyin }){
   const box = useRef(null)
@@ -133,7 +133,7 @@ function Phrases(){
     }
   }
 
-   function handleShare(p){
+  function handleShare(p){
     const params = new URLSearchParams({
       chinese: p.chinese || "",
       pinyin: p.pinyin || "",
