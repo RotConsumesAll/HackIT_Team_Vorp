@@ -74,5 +74,4 @@ def check(req: CheckRequest):
     tokens = analyze_text(text)
     result = check_sentence(exercise, PREPARED[req.exerciseId], text, tokens)
     return {"exerciseId": req.exerciseId, **result}
-# (Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned) ; (& c:\Users\lowbs\OneDrive\Documents\School\HackIT\HackIT_Team_Vorp\TeamVorpProject\nlp-service\.venv\Scripts\Activate.ps1)
 # python -m uvicorn main:app --reload --port 8000
