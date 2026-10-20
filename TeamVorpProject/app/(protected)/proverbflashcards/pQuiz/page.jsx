@@ -7,6 +7,8 @@ import Navbar from "../../../components/Navbar/Navbar";
 import SavePhrase from "../../../components/SavePhrase/SavePhrase";
 import ProverbFrame from "../ProverbFrame";
 import { useProverbs, chunk, shuffle } from "../../../../lib/useProverbs";
+import { useUid } from "../../../../lib/useuid";
+import { recordAnswer, recordDaily, recordHighScore, recordProverbSet, BADGE_NAMES } from "../../../../lib/progress";
 import styles from "../proverbs.module.css";
 
 const LETTERS = ["A", "B", "C", "D"];
@@ -15,6 +17,8 @@ function QuizView() {
     const params = useSearchParams();
     const setNumber = Number(params.get("set") ?? 0);
     const { proverbs, loading, error } = useProverbs();
+    const { uid } = useUid();
+    const [badgeMsg, setBadgeMsg] = useState("");
 
     const [current, setCurrent] = useState(0);
     const [picked, setPicked] = useState(null);
@@ -39,18 +43,34 @@ function QuizView() {
 
     const q = questions[current];
 
+    async function track(firstTry) {
+        const a = await recordAnswer(uid, "proverbQuiz", firstTry);
+        const d = await recordDaily(uid, "contextGuess");
+        const ids = [...((a && a.newBadges) || []), ...((d && d.newBadges) || [])];
+        if (ids.length) setBadgeMsg("New badge: " + ids.map((b) => BADGE_NAMES[b] || b).join(", "));
+    }
+
     function choose(option) {
         if (correct) return;
         setPicked(option);
         if (option === q.answer) {
             setCorrect(true);
             if (!missed) setScore(score + 1);
+            track(!missed);
         } else {
             setMissed(true);
         }
     }
 
+    async function finish() {
+        await recordHighScore(uid, "proverb_quiz", score);
+        const r = await recordProverbSet(uid, score, questions.length);
+        if (r.newBadges.length) setBadgeMsg("New badge: " + r.newBadges.map((b) => BADGE_NAMES[b] || b).join(", "));
+    }
+
     function next() {
+        if (current + 1 === questions.length) finish();
+        setBadgeMsg("");
         setCurrent(current + 1);
         setPicked(null);
         setCorrect(false);
@@ -58,6 +78,7 @@ function QuizView() {
     }
 
     function restart() {
+        setBadgeMsg("");
         setCurrent(0);
         setScore(0);
         setPicked(null);
@@ -77,6 +98,7 @@ function QuizView() {
             <div className={styles.done}>
                 <h2>Quiz complete</h2>
                 <p>You scored {score} out of {questions.length} on the first try.</p>
+                {badgeMsg && <p className={styles.info}>{badgeMsg}</p>}
                 <div className={styles.actions}>
                     <Link href={`/proverbflashcards/pFlashcards?set=${setNumber}`} className={styles.ghost}>
                         Back to flashcards
@@ -124,6 +146,8 @@ function QuizView() {
                         );
                     })}
                 </div>
+
+                {badgeMsg && <p className={styles.info}>{badgeMsg}</p>}
 
                 {correct && (
                     <SavePhrase

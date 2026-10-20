@@ -16,16 +16,19 @@ const SKILLS = {
   context: { name: "Context", quizzes: "Natural Guess" },
   pronunciation: { name: "Pronunciation", quizzes: "Sound Guess and Tone Guess" },
   grammar: { name: "Grammar", quizzes: "Character Guess and Measure Word" },
+  proverbs: { name: "Proverbs", quizzes: "Proverb Flashcards quiz and Mix and Match" },
 }
 
 const ONE_OFF = [
   { id: "first_quiz", name: "First quiz", han: "初", how: "Finish any quiz, all the way to the results screen." },
   { id: "perfect", name: "Perfect score", han: "满", how: "Get every question right on the first try in a quiz of 5 or more questions." },
   { id: "daily_quiz", name: "Quiz of the Day finisher", han: "日", how: "Finish the Quiz of the Day. You can earn it on any day, and it only counts the first time you play each day." },
+  { id: "first_proverb", name: "First proverb set", han: "谚", how: "Finish a Proverb Flashcards quiz or Mix and Match set, all the way to the end." },
+  { id: "proverb_perfect", name: "Proverb perfectionist", han: "全", how: "Finish a Proverb Flashcards quiz or Mix and Match set with every question right on the first try." },
   { id: "first_phrase", name: "First saved phrase", han: "存", how: "Save a phrase after a question, or add one yourself on the Saved Phrases page." },
   { id: "first_post", name: "First community post", han: "帖", how: "Post something on the Teh Talk community page." },
-  { id: "daily3", name: "3 days in a row", han: "三", how: "Answer " + DAILY_GOAL + " Context Guess questions a day, for 3 days in a row." },
-  { id: "daily7", name: "7 days in a row", han: "七", how: "Answer " + DAILY_GOAL + " Context Guess questions a day, for 7 days in a row." },
+  { id: "daily3", name: "3 days in a row", han: "三", how: "Answer " + DAILY_GOAL + " Context Guess or Proverb questions a day, for 3 days in a row." },
+  { id: "daily7", name: "7 days in a row", han: "七", how: "Answer " + DAILY_GOAL + " Context Guess or Proverb questions a day, for 7 days in a row." },
 ]
 
 const TIERED_INFO = {
@@ -53,6 +56,11 @@ const TIERED_INFO = {
     han: "音",
     how: (n) => "Get " + n + " correct answers in total in Sound Guess and Tone Guess questions.",
     value: (u) => ((u.mastery || {}).pronunciation || {}).score,
+  },
+  mastery_proverbs: {
+    han: "谚",
+    how: (n) => "Get " + n + " correct answers in total in Proverb Flashcards quiz and Mix and Match questions.",
+    value: (u) => ((u.mastery || {}).proverbs || {}).score,
   },
   mastery_grammar: {
     han: "法",
@@ -232,7 +240,7 @@ function Progress(){
 
         <Card
           title="Daily goal"
-          help={"Answer " + DAILY_GOAL + " Context Guess questions in a day to keep your daily streak going. Miss a day and it starts again. 3 and 7 days in a row earn badges."}
+          help={"Answer " + DAILY_GOAL + " Context Guess or Proverb questions in a day to keep your daily streak going. Miss a day and it starts again. 3 and 7 days in a row earn badges."}
         >
           <p className={styles.big}>{daily.current}<span className={styles.unit}> {daily.current === 1 ? "day" : "days"}</span></p>
           <p className={styles.small}>

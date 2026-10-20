@@ -94,3 +94,5 @@
   .question { font-size: 1.3rem; }
   .nextRow .primary { width: 100%; }
 }
+
+.passRow { display: flex; justify-content: flex-end; margin: -2px 0 14px; }
